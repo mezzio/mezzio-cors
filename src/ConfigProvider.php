@@ -24,14 +24,14 @@ use Mezzio\Cors\Service\ResponseFactoryInterface;
 
 final class ConfigProvider
 {
-    public function __invoke() : array
+    public function __invoke(): array
     {
         return [
             'dependencies' => $this->getServiceDependencies(),
         ];
     }
 
-    public function getServiceDependencies() : array
+    public function getServiceDependencies(): array
     {
         return [
             'factories' => [

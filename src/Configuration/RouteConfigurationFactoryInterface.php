@@ -6,5 +6,5 @@ namespace Mezzio\Cors\Configuration;
 
 interface RouteConfigurationFactoryInterface
 {
-    public function __invoke(array $parameters) : RouteConfigurationInterface;
+    public function __invoke(array $parameters): RouteConfigurationInterface;
 }

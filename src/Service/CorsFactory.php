@@ -9,7 +9,7 @@ use Psr\Http\Message\UriFactoryInterface;
 
 final class CorsFactory
 {
-    public function __invoke(ContainerInterface $container) : Cors
+    public function __invoke(ContainerInterface $container): Cors
     {
         return new Cors($container->get(UriFactoryInterface::class));
     }

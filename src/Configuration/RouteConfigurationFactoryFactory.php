@@ -8,7 +8,7 @@ use Psr\Container\ContainerInterface;
 
 final class RouteConfigurationFactoryFactory
 {
-    public function __invoke(ContainerInterface $container) : RouteConfigurationFactory
+    public function __invoke(ContainerInterface $container): RouteConfigurationFactory
     {
         return new RouteConfigurationFactory();
     }

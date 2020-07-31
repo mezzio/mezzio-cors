@@ -11,7 +11,7 @@ use Psr\Container\ContainerInterface;
 
 final class CorsMiddlewareFactory
 {
-    public function __invoke(ContainerInterface $container) : CorsMiddleware
+    public function __invoke(ContainerInterface $container): CorsMiddleware
     {
         return new CorsMiddleware(
             $container->get(CorsInterface::class),

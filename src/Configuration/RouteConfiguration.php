@@ -23,7 +23,7 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
     /** @var bool */
     protected $explicit = false;
 
-    public function setOverridesProjectConfiguration(bool $overridesProjectConfiguration) : void
+    public function setOverridesProjectConfiguration(bool $overridesProjectConfiguration): void
     {
         $this->overridesProjectConfiguration = $overridesProjectConfiguration;
     }
@@ -32,7 +32,7 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
      * MUST return true if the projects config may be overriden. If it returns false, the project config will get
      * merged.
      */
-    public function overridesProjectConfiguration() : bool
+    public function overridesProjectConfiguration(): bool
     {
         return $this->overridesProjectConfiguration;
     }
@@ -40,17 +40,17 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
     /**
      * @inheritDoc
      */
-    public function explicit() : bool
+    public function explicit(): bool
     {
         return $this->explicit;
     }
 
-    public function setExplicit(bool $explicit) : void
+    public function setExplicit(bool $explicit): void
     {
         $this->explicit = $explicit;
     }
 
-    public function mergeWithConfiguration(ConfigurationInterface $configuration) : RouteConfigurationInterface
+    public function mergeWithConfiguration(ConfigurationInterface $configuration): RouteConfigurationInterface
     {
         if ($configuration === $this) {
             return $configuration;
@@ -76,7 +76,7 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
     /**
      * Should merge the request methods.
      */
-    public function withRequestMethods(array $methods) : RouteConfigurationInterface
+    public function withRequestMethods(array $methods): RouteConfigurationInterface
     {
         $methods = $this->normalizeRequestMethods(array_merge($this->allowedMethods, $methods));
 
@@ -88,10 +88,9 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
 
     /**
      * @param array<int|string,string> $methods
-     *
      * @return array<int,string>
      */
-    private function normalizeRequestMethods(array $methods) : array
+    private function normalizeRequestMethods(array $methods): array
     {
         Assert::allOneOf($methods, CorsMetadata::ALLOWED_REQUEST_METHODS);
 

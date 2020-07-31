@@ -7,23 +7,24 @@ namespace Mezzio\CorsTest\Configuration;
 use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Configuration\ProjectConfiguration;
 use Mezzio\Cors\Configuration\RouteConfiguration;
-use function in_array;
 use PHPUnit\Framework\TestCase;
+
+use function in_array;
+use function sprintf;
 
 final class RouteConfigurationTest extends TestCase
 {
-
     public function testConstructorWillSetProperties(): void
     {
         $parameters = [
             'overrides_project_configuration' => false,
-            'allowed_origins' => ['foo'],
-            'allowed_headers' => ['baz'],
-            'allowed_max_age' => '123',
-            'credentials_allowed' => true,
-            'exposed_headers' => ['foo', 'bar', 'baz'],
+            'allowed_origins'                 => ['foo'],
+            'allowed_headers'                 => ['baz'],
+            'allowed_max_age'                 => '123',
+            'credentials_allowed'             => true,
+            'exposed_headers'                 => ['foo', 'bar', 'baz'],
         ];
-        $config = new RouteConfiguration($parameters);
+        $config     = new RouteConfiguration($parameters);
 
         $this->assertFalse($config->overridesProjectConfiguration());
         $this->assertSame(['foo'], $config->allowedOrigins());
@@ -37,7 +38,7 @@ final class RouteConfigurationTest extends TestCase
     public function testWillMergeAnyValueFromConfiguration(): void
     {
         $routeConfiguration = new RouteConfiguration([]);
-        $config = $this->createMock(ConfigurationInterface::class);
+        $config             = $this->createMock(ConfigurationInterface::class);
 
         $config
             ->expects($this->once())
@@ -99,28 +100,28 @@ final class RouteConfigurationTest extends TestCase
         ]))
             ->withRequestMethods(['GET']);
 
-        $routeConfigurationWithSomeAllowedHeaders = new RouteConfiguration([
+        $routeConfigurationWithSomeAllowedHeaders                                 = new RouteConfiguration([
             'allowed_headers' => ['X-Foo', 'X-Bar'],
         ]);
-        $routeConfigurationWithSomeAllowedOrigins = new RouteConfiguration([
+        $routeConfigurationWithSomeAllowedOrigins                                 = new RouteConfiguration([
             'allowed_origins' => ['foobar'],
         ]);
-        $routeConfigurationWithWildcardAllowedOrigins = new RouteConfiguration([
-            'allowed_origins' => ['*'], # Wildcard will drop any other allowed origin
+        $routeConfigurationWithWildcardAllowedOrigins                             = new RouteConfiguration([
+            'allowed_origins' => ['*'], // Wildcard will drop any other allowed origin
         ]);
-        $routeConfigurationWithSomeExposedHeaders = new RouteConfiguration([
+        $routeConfigurationWithSomeExposedHeaders                                 = new RouteConfiguration([
             'exposed_headers' => ['X-Another-Header'],
         ]);
-        $routeConfigurationWithSomeRequestMethods = (new RouteConfiguration([]))->withRequestMethods([
+        $routeConfigurationWithSomeRequestMethods                                 = (new RouteConfiguration([]))->withRequestMethods([
             'POST',
         ]);
-        $routeConfigurationWithAllowedMaxAge = new RouteConfiguration([
+        $routeConfigurationWithAllowedMaxAge                                      = new RouteConfiguration([
             'allowed_max_age' => '12345',
         ]);
-        $routeConfigurationWithHigherMaxAgeButIgnoredDueToAlreadySetMaxAge = new RouteConfiguration([
+        $routeConfigurationWithHigherMaxAgeButIgnoredDueToAlreadySetMaxAge        = new RouteConfiguration([
             'allowed_max_age' => '54321',
         ]);
-        $routeConfigurationWithCredentialsAllowed = new RouteConfiguration([
+        $routeConfigurationWithCredentialsAllowed                                 = new RouteConfiguration([
             'credentials_allowed' => true,
         ]);
         $routeConfigurationWithCredentialsDisallowedButIngoredDueToAlreadyAllowed = new RouteConfiguration([
@@ -144,15 +145,15 @@ final class RouteConfigurationTest extends TestCase
             $this->assertTrue(in_array($header, $routeConfiguration->allowedHeaders(), true), sprintf('Missing header %s', $header));
         }
         $this->assertEquals(['*'], $routeConfiguration->allowedOrigins());
-        $this->assertEquals(['X-Another-Header','X-Special-Header'], $routeConfiguration->exposedHeaders());
+        $this->assertEquals(['X-Another-Header', 'X-Special-Header'], $routeConfiguration->exposedHeaders());
         $this->assertEquals(['GET', 'POST'], $routeConfiguration->allowedMethods());
     }
 
     public function testWillMergeAllowedHeadersWithoutDuplicates()
     {
         $project = new ProjectConfiguration(['allowed_headers' => ['X-Foo']]);
-        $route = (new RouteConfiguration(['allowed_headers' => ['X-Foo']]));
-        $merged = $route->mergeWithConfiguration($project);
+        $route   = new RouteConfiguration(['allowed_headers' => ['X-Foo']]);
+        $merged  = $route->mergeWithConfiguration($project);
         $this->assertEquals($merged->allowedHeaders(), ['X-Foo']);
     }
 

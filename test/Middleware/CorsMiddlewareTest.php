@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mezzio\CorsTest\Middleware;
 
+use Fig\Http\Message\RequestMethodInterface;
 use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Configuration\RouteConfigurationInterface;
 use Mezzio\Cors\Middleware\CorsMiddleware;
@@ -12,30 +13,31 @@ use Mezzio\Cors\Service\ConfigurationLocatorInterface;
 use Mezzio\Cors\Service\CorsInterface;
 use Mezzio\Cors\Service\CorsMetadata;
 use Mezzio\Cors\Service\ResponseFactoryInterface;
-use Fig\Http\Message\RequestMethodInterface;
-use PHPUnit\Framework\MockObject\MockObject;
+use Mezzio\Router\RouteResult;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Mezzio\Router\RouteResult;
 
 final class CorsMiddlewareTest extends TestCase
 {
-    /** @var CorsInterface&MockObject */
+    /** @psalm-var CorsInterface&MockObject */
     private $cors;
 
-    /** @var ConfigurationLocatorInterface&MockObject */
+    /** @psalm-var ConfigurationLocatorInterface&MockObject */
     private $configurationLocator;
 
-    /** @var ResponseFactoryInterface&MockObject */
+    /** @psalm-var ResponseFactoryInterface&MockObject */
     private $responseFactoryInterface;
 
     /** @var CorsMiddleware */
     private $middleware;
 
-    public function varyHeaderProvider()
+    /**
+     * @return array<string,mixed>
+     */
+    public function varyHeaderProvider(): array
     {
         return [
             'just origin'                                => [
@@ -77,7 +79,7 @@ final class CorsMiddlewareTest extends TestCase
         );
     }
 
-    public function testWillThrowExceptionOnInvalidConfiguration() : void
+    public function testWillThrowExceptionOnInvalidConfiguration(): void
     {
         $this->expectException(InvalidConfigurationException::class);
 
@@ -93,7 +95,7 @@ final class CorsMiddlewareTest extends TestCase
         $this->middleware->process($request, $handler);
     }
 
-    public function testWillIgnoreNonCorsRequests() : void
+    public function testWillIgnoreNonCorsRequests(): void
     {
         $request  = $this->createMock(ServerRequestInterface::class);
         $handler  = $this->createMock(RequestHandlerInterface::class);
@@ -127,8 +129,7 @@ final class CorsMiddlewareTest extends TestCase
     private function createResponseMock(
         bool $varyHeaderExists = false,
         bool $varyHeaderContainsOrigin = false
-    ) : ResponseInterface
-    {
+    ): ResponseInterface {
         $response = $this->createMock(ResponseInterface::class);
         $response
             ->expects($this->once())
@@ -169,7 +170,7 @@ final class CorsMiddlewareTest extends TestCase
         return $response;
     }
 
-    public function testWillHandlePreflightRequest() : void
+    public function testWillHandlePreflightRequest(): void
     {
         $request = $this->createMock(ServerRequestInterface::class);
         $handler = $this->createMock(RequestHandlerInterface::class);
@@ -236,7 +237,7 @@ final class CorsMiddlewareTest extends TestCase
         $this->assertEquals($response, $responseFromMiddleware);
     }
 
-    public function testWillHandleUnauthorizedCorsRequest() : void
+    public function testWillHandleUnauthorizedCorsRequest(): void
     {
         $request = $this->createMock(ServerRequestInterface::class);
         $handler = $this->createMock(RequestHandlerInterface::class);
@@ -306,7 +307,7 @@ final class CorsMiddlewareTest extends TestCase
         $this->assertEquals($response, $responseFromMiddleware);
     }
 
-    public function testWillHandleCorsRequest() : void
+    public function testWillHandleCorsRequest(): void
     {
         $request = $this->createMock(ServerRequestInterface::class);
         $handler = $this->createMock(RequestHandlerInterface::class);

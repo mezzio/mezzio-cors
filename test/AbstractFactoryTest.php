@@ -1,26 +1,27 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Mezzio\CorsTest;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+
 use function gettype;
 use function is_array;
 use function is_object;
 use function is_string;
+use function sprintf;
 
 abstract class AbstractFactoryTest extends TestCase
 {
-
     /**
      * @var callable
      */
     protected $factory;
 
     /**
-     * @var MockObject&ContainerInterface
+     * @psalm-var MockObject&ContainerInterface
      */
     private $container;
 
@@ -34,26 +35,24 @@ abstract class AbstractFactoryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->factory = $this->factory();
+        $this->factory   = $this->factory();
         $this->container = $this->createMock(ContainerInterface::class);
         $this->setupContainer($this->container);
     }
 
     /**
-     * @param ContainerInterface&MockObject $container
-     *
-     * @return void
+     * @psalm-param ContainerInterface&MockObject $container
      */
     private function setupContainer(ContainerInterface $container): void
     {
         $dependencies = $this->dependencies();
-        if (!$dependencies) {
+        if (! $dependencies) {
             return;
         }
 
         $consecutiveParameters = $consecutiveReturnValues = [];
         foreach ($dependencies as $dependency => $definition) {
-            $consecutiveParameters[] = [$dependency];
+            $consecutiveParameters[]   = [$dependency];
             $consecutiveReturnValues[] = $this->createReturnValueFromDefinition($definition);
         }
 
@@ -66,14 +65,13 @@ abstract class AbstractFactoryTest extends TestCase
 
     public function testInstantiation(): void
     {
-        $factory = $this->factory;
+        $factory  = $this->factory;
         $instance = $factory($this->container);
         $this->postCreationAssertions($instance);
     }
 
     /**
      * @param string|array|object $definition
-     *
      * @return array|object
      */
     private function createReturnValueFromDefinition($definition)
@@ -98,6 +96,8 @@ abstract class AbstractFactoryTest extends TestCase
 
     /**
      * Implement this for post creation assertions.
+     *
+     * @param mixed $instance
      */
     abstract protected function postCreationAssertions($instance): void;
 }

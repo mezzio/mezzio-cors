@@ -17,34 +17,34 @@ interface ConfigurationInterface
      *
      * @return string[]
      */
-    public function allowedMethods() : array;
+    public function allowedMethods(): array;
 
     /**
      * Should return all allowed headers, the request path can handle.
      *
      * @return string[]
      */
-    public function allowedHeaders() : array;
+    public function allowedHeaders(): array;
 
     /**
      * Should return the maximum age, the response may be cached by a client.
      */
-    public function allowedMaxAge() : string;
+    public function allowedMaxAge(): string;
 
     /**
      * Should return all headers which are being exposed of the endpoint.
      *
      * @return string[]
      */
-    public function exposedHeaders() : array;
+    public function exposedHeaders(): array;
 
     /**
      * If a request is allowed to pass cookies, this method should return true.
      */
-    public function credentialsAllowed() : bool;
+    public function credentialsAllowed(): bool;
 
     /**
      * @return string[]
      */
-    public function allowedOrigins() : array;
+    public function allowedOrigins(): array;
 }

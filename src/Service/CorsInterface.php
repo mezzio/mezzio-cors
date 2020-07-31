@@ -11,15 +11,15 @@ interface CorsInterface
     /**
      * Creates the cors metadata from
      */
-    public function metadata(ServerRequestInterface $request) : CorsMetadata;
+    public function metadata(ServerRequestInterface $request): CorsMetadata;
 
     /**
      * Should detect if a request is a request which needs CORS informations.
      */
-    public function isCorsRequest(ServerRequestInterface $request) : bool;
+    public function isCorsRequest(ServerRequestInterface $request): bool;
 
     /**
      * Should detect if a request is a preflight request.
      */
-    public function isPreflightRequest(ServerRequestInterface $request) : bool;
+    public function isPreflightRequest(ServerRequestInterface $request): bool;
 }

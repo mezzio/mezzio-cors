@@ -51,7 +51,7 @@ abstract class AbstractConfiguration implements ConfigurationInterface
     /**
      * @param array<string,mixed> $data
      */
-    public function exchangeArray(array $data) : self
+    public function exchangeArray(array $data): self
     {
         $instance = clone $this;
 
@@ -69,7 +69,7 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         return $instance;
     }
 
-    public function setAllowedOrigins(array $origins) : void
+    public function setAllowedOrigins(array $origins): void
     {
         Assert::allString($origins);
 
@@ -82,23 +82,23 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         $this->allowedOrigins = $origins;
     }
 
-    public function allowedMethods() : array
+    public function allowedMethods(): array
     {
         return $this->allowedMethods;
     }
 
-    public function setAllowedHeaders(array $headers) : void
+    public function setAllowedHeaders(array $headers): void
     {
         Assert::allString($headers);
         $this->allowedHeaders = array_values(array_unique($headers));
     }
 
-    public function allowedHeaders() : array
+    public function allowedHeaders(): array
     {
         return $this->allowedHeaders;
     }
 
-    public function setAllowedMaxAge(string $age) : void
+    public function setAllowedMaxAge(string $age): void
     {
         if ($age) {
             Assert::numeric($age);
@@ -107,28 +107,28 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         $this->allowedMaxAge = $age;
     }
 
-    public function allowedMaxAge() : string
+    public function allowedMaxAge(): string
     {
         return $this->allowedMaxAge;
     }
 
-    public function setExposedHeaders(array $headers) : void
+    public function setExposedHeaders(array $headers): void
     {
         Assert::allString($headers);
         $this->exposedHeaders = array_values(array_unique($headers));
     }
 
-    public function exposedHeaders() : array
+    public function exposedHeaders(): array
     {
         return $this->exposedHeaders;
     }
 
-    public function credentialsAllowed() : bool
+    public function credentialsAllowed(): bool
     {
         return $this->credentialsAllowed;
     }
 
-    public function setCredentialsAllowed(bool $credentialsAllowed) : void
+    public function setCredentialsAllowed(bool $credentialsAllowed): void
     {
         $this->credentialsAllowed = $credentialsAllowed;
     }
@@ -136,7 +136,7 @@ abstract class AbstractConfiguration implements ConfigurationInterface
     /**
      * @return string[]
      */
-    public function allowedOrigins() : array
+    public function allowedOrigins(): array
     {
         return $this->allowedOrigins;
     }

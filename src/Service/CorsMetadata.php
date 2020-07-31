@@ -44,7 +44,7 @@ class CorsMetadata
         $this->requestedMethod = $requestMethod;
     }
 
-    public function origin(ConfigurationInterface $configuration) : string
+    public function origin(ConfigurationInterface $configuration): string
     {
         $allowed = $configuration->allowedOrigins();
         $origin  = (string) $this->origin;

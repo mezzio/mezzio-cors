@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Mezzio\CorsTest\Service;
@@ -10,7 +11,6 @@ use Psr\Http\Message\UriFactoryInterface;
 
 final class CorsFactoryTest extends AbstractFactoryTest
 {
-
     /**
      * @return array<string,string|array|object>
      */
@@ -28,6 +28,8 @@ final class CorsFactoryTest extends AbstractFactoryTest
 
     /**
      * Implement this for post creation assertions.
+     *
+     * @param mixed $instance
      */
     protected function postCreationAssertions($instance): void
     {

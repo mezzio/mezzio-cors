@@ -8,7 +8,7 @@ use Psr\Container\ContainerInterface;
 
 final class ProjectConfigurationFactory
 {
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container): ProjectConfiguration
     {
         return new ProjectConfiguration(
             $container->get('config')[ProjectConfiguration::CONFIGURATION_IDENTIFIER] ?? []

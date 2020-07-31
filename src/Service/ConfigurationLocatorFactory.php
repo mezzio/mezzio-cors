@@ -12,7 +12,7 @@ use Psr\Http\Message\ServerRequestFactoryInterface;
 
 final class ConfigurationLocatorFactory
 {
-    public function __invoke(ContainerInterface $container) : ConfigurationLocator
+    public function __invoke(ContainerInterface $container): ConfigurationLocator
     {
         return new ConfigurationLocator(
             $container->get(ConfigurationInterface::class),

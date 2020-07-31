@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Mezzio\CorsTest\Configuration;
@@ -9,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 final class RouteConfigurationFactoryTest extends TestCase
 {
-
     /**
      * @var RouteConfigurationFactory
      */
@@ -23,7 +23,7 @@ final class RouteConfigurationFactoryTest extends TestCase
 
     public function testWillInstantiateRouteConfiguration(): void
     {
-        $factory = $this->factory;
+        $factory  = $this->factory;
         $instance = $factory([]);
         $this->assertInstanceOf(RouteConfigurationInterface::class, $instance);
     }

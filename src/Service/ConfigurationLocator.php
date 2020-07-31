@@ -44,7 +44,7 @@ final class ConfigurationLocator implements ConfigurationLocatorInterface
     /**
      * @inheritDoc
      */
-    public function locate(CorsMetadata $metadata) : ?ConfigurationInterface
+    public function locate(CorsMetadata $metadata): ?ConfigurationInterface
     {
         $factory       = $this->routeConfigurationFactory;
         $configuration = $factory([])->mergeWithConfiguration($this->configuration);
@@ -80,7 +80,7 @@ final class ConfigurationLocator implements ConfigurationLocatorInterface
         return $configuration;
     }
 
-    private function configurationFromRoute(RouteResult $result) : RouteConfigurationInterface
+    private function configurationFromRoute(RouteResult $result): RouteConfigurationInterface
     {
         $allowedMethods = $result->getAllowedMethods();
         if ($allowedMethods === Route::HTTP_METHOD_ANY) {
@@ -109,7 +109,7 @@ final class ConfigurationLocator implements ConfigurationLocatorInterface
         return $routeConfiguration->mergeWithConfiguration($this->configuration);
     }
 
-    private function explicit(array $allowedMethods) : bool
+    private function explicit(array $allowedMethods): bool
     {
         return $allowedMethods === CorsMetadata::ALLOWED_REQUEST_METHODS;
     }

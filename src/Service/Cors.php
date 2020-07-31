@@ -25,14 +25,14 @@ final class Cors implements CorsInterface
         $this->uriFactory = $uriFactory;
     }
 
-    public function isPreflightRequest(ServerRequestInterface $request) : bool
+    public function isPreflightRequest(ServerRequestInterface $request): bool
     {
         return $this->isCorsRequest($request)
             && strtoupper($request->getMethod()) === RequestMethodInterface::METHOD_OPTIONS
             && $request->hasHeader('Access-Control-Request-Method');
     }
 
-    public function isCorsRequest(ServerRequestInterface $request) : bool
+    public function isCorsRequest(ServerRequestInterface $request): bool
     {
         $origin = $this->origin($request);
         if (! $origin instanceof UriInterface) {
@@ -46,7 +46,7 @@ final class Cors implements CorsInterface
             || $uri->getHost() !== $origin->getHost();
     }
 
-    private function origin(ServerRequestInterface $request) : ?UriInterface
+    private function origin(ServerRequestInterface $request): ?UriInterface
     {
         $origin = $request->getHeaderLine('Origin');
 
@@ -61,7 +61,7 @@ final class Cors implements CorsInterface
         }
     }
 
-    public function metadata(ServerRequestInterface $request) : CorsMetadata
+    public function metadata(ServerRequestInterface $request): CorsMetadata
     {
         $origin = $this->origin($request);
         Assert::isInstanceOf($origin, UriInterface::class);

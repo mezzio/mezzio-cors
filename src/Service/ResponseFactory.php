@@ -21,7 +21,7 @@ final class ResponseFactory implements ResponseFactoryInterface
         $this->responseFactory = $responseFactory;
     }
 
-    public function preflight(string $origin, ConfigurationInterface $config) : ResponseInterface
+    public function preflight(string $origin, ConfigurationInterface $config): ResponseInterface
     {
         $response = $this->responseFactory->createResponse(204, 'CORS Details')
             ->withAddedHeader('Content-Length', '0')
@@ -41,7 +41,7 @@ final class ResponseFactory implements ResponseFactoryInterface
         ResponseInterface $response,
         string $origin,
         ConfigurationInterface $config
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $response = $response
             ->withAddedHeader('Access-Control-Allow-Origin', $origin)
             ->withAddedHeader('Access-Control-Expose-Headers', implode(', ', $config->exposedHeaders()));
@@ -53,7 +53,7 @@ final class ResponseFactory implements ResponseFactoryInterface
         return $response->withAddedHeader('Access-Control-Allow-Credentials', 'true');
     }
 
-    public function unauthorized(string $origin) : ResponseInterface
+    public function unauthorized(string $origin): ResponseInterface
     {
         return $this->responseFactory->createResponse(403, sprintf('The origin "%s" is not authorized', $origin));
     }

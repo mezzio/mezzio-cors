@@ -41,7 +41,7 @@ final class CorsMiddleware implements MiddlewareInterface
     /**
      * @inheritDoc
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         /** @var RouteResult|null $route */
         $route = $request->getAttribute(RouteResult::class);
@@ -61,7 +61,7 @@ final class CorsMiddleware implements MiddlewareInterface
         return $this->cors($metadata, $request, $handler);
     }
 
-    private function vary(ResponseInterface $response) : ResponseInterface
+    private function vary(ResponseInterface $response): ResponseInterface
     {
         if (! $response->hasHeader('Vary')) {
             return $response->withAddedHeader('Vary', 'Origin');
@@ -75,7 +75,7 @@ final class CorsMiddleware implements MiddlewareInterface
         return $response->withHeader('Vary', $vary . ', Origin');
     }
 
-    private function preflight(CorsMetadata $metadata) : ?ResponseInterface
+    private function preflight(CorsMetadata $metadata): ?ResponseInterface
     {
         $configurationToApply = $this->configurationLocator->locate($metadata);
         if (! $configurationToApply) {
@@ -92,7 +92,7 @@ final class CorsMiddleware implements MiddlewareInterface
         CorsMetadata $metadata,
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
-    ) : ResponseInterface {
+    ): ResponseInterface {
         $configurationToApply = $this->configurationLocator->locate($metadata);
         if (! $configurationToApply) {
             return $handler->handle($request);

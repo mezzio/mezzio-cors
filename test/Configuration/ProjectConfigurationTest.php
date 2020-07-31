@@ -14,7 +14,7 @@ use function ucwords;
 
 final class ProjectConfigurationTest extends TestCase
 {
-    public function testConstructorWillSetProperties() : void
+    public function testConstructorWillSetProperties(): void
     {
         $parameters = [
             'allowed_origins'     => ['foo'],

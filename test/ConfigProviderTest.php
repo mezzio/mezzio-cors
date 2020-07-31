@@ -26,7 +26,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ConfigProviderTest extends TestCase
 {
-    public function testWillProvideExpectedConfiguration() : void
+    public function testWillProvideExpectedConfiguration(): void
     {
         $provider = new ConfigProvider();
         $config   = $provider();
@@ -36,7 +36,7 @@ final class ConfigProviderTest extends TestCase
         ], $config);
     }
 
-    public function testWillProvideExpectedServices() : void
+    public function testWillProvideExpectedServices(): void
     {
         $provider = new ConfigProvider();
         $services = $provider->getServiceDependencies();

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Mezzio\CorsTest\Configuration;
@@ -10,7 +11,6 @@ use Mezzio\CorsTest\AbstractFactoryTest;
 
 final class ProjectConfigurationFactoryTest extends AbstractFactoryTest
 {
-
     protected function dependencies(): array
     {
         return [
@@ -25,6 +25,8 @@ final class ProjectConfigurationFactoryTest extends AbstractFactoryTest
 
     /**
      * Implement this for post creation assertions.
+     *
+     * @param mixed $instance
      */
     protected function postCreationAssertions($instance): void
     {

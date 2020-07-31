@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Mezzio\CorsTest\Service;
@@ -9,16 +10,17 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 
+use function implode;
+
 final class ResponseFactoryTest extends TestCase
 {
-
     /**
      * @var ResponseFactory
      */
     private $responseFactory;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject&ResponseFactoryInterface
+     * @psalm-var MockObject&ResponseFactoryInterface
      */
     private $psrResponseFactory;
 
@@ -26,12 +28,12 @@ final class ResponseFactoryTest extends TestCase
     {
         parent::setUp();
         $this->psrResponseFactory = $this->createMock(ResponseFactoryInterface::class);
-        $this->responseFactory = new ResponseFactory($this->psrResponseFactory);
+        $this->responseFactory    = new ResponseFactory($this->psrResponseFactory);
     }
 
     public function testWillApplyExpectedHeadersToPreflightResponseWithoutCredentialsAllowed(): void
     {
-        $origin = 'http://www.example.org';
+        $origin        = 'http://www.example.org';
         $configuration = $this->createMock(ConfigurationInterface::class);
 
         $response = $this->createMock(ResponseInterface::class);
@@ -83,7 +85,7 @@ final class ResponseFactoryTest extends TestCase
 
     public function testWillApplyExpectedHeadersToPreflightResponseWithCredentialsAllowed(): void
     {
-        $origin = 'http://www.example.org';
+        $origin        = 'http://www.example.org';
         $configuration = $this->createMock(ConfigurationInterface::class);
 
         $response = $this->createMock(ResponseInterface::class);
@@ -127,7 +129,7 @@ final class ResponseFactoryTest extends TestCase
                 ['Access-Control-Allow-Headers', implode(', ', $headers)],
                 ['Access-Control-Max-Age', 0],
                 ['Access-Control-Allow-Credentials', 'true'],
-                )
+            )
             ->willReturnSelf();
 
         $responseFromFactory = $this->responseFactory->preflight($origin, $configuration);
@@ -135,7 +137,7 @@ final class ResponseFactoryTest extends TestCase
         $this->assertEquals($response, $responseFromFactory);
     }
 
-    public function testWillCreateUnauthorizedResponse()
+    public function testWillCreateUnauthorizedResponse(): void
     {
         $response = $this->createMock(ResponseInterface::class);
 
@@ -153,7 +155,7 @@ final class ResponseFactoryTest extends TestCase
 
     public function testWillApplyExpectedHeadersToCorsResponseWithoutCredentialsAllowed(): void
     {
-        $origin = 'http://www.example.org';
+        $origin        = 'http://www.example.org';
         $configuration = $this->createMock(ConfigurationInterface::class);
 
         $response = $this->createMock(ResponseInterface::class);
@@ -189,7 +191,7 @@ final class ResponseFactoryTest extends TestCase
 
     public function testWillApplyExpectedHeadersToCorsResponseWithCredentialsAllowed(): void
     {
-        $origin = 'http://www.example.org';
+        $origin        = 'http://www.example.org';
         $configuration = $this->createMock(ConfigurationInterface::class);
 
         $response = $this->createMock(ResponseInterface::class);

@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseFactoryInterface as PsrResponseFactoryInterface;
 
 final class ResponseFactoryFactory
 {
-    public function __invoke(ContainerInterface $container) : ResponseFactory
+    public function __invoke(ContainerInterface $container): ResponseFactory
     {
         return new ResponseFactory($container->get(PsrResponseFactoryInterface::class));
     }

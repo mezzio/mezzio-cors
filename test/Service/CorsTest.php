@@ -1,22 +1,24 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Mezzio\CorsTest\Service;
 
+use InvalidArgumentException;
 use Mezzio\Cors\Exception\InvalidOriginValueException;
 use Mezzio\Cors\Service\Cors;
-use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use Psr\Http\Message\UriInterface;
 
+use function sprintf;
+
 final class CorsTest extends TestCase
 {
-
     /**
-     * @var MockObject&UriFactoryInterface
+     * @psalm-var MockObject&UriFactoryInterface
      */
     private $uriFactory;
 
@@ -110,7 +112,7 @@ final class CorsTest extends TestCase
     }
 
     /**
-     * @param MockObject&UriInterface $uri
+     * @psalm-param MockObject&UriInterface $uri
      */
     private function applyUriInterfaceMethodAssertions(
         MockObject $uri,
@@ -137,15 +139,15 @@ final class CorsTest extends TestCase
     public function crossOriginProvider(): array
     {
         return [
-            'secured' => [
+            'secured'           => [
                 'https',
                 'example.org',
             ],
-            'non secured' => [
+            'non secured'       => [
                 'http',
                 'example.org',
             ],
-            'custom scheme' => [
+            'custom scheme'     => [
                 'android',
                 'example.org',
             ],
@@ -162,7 +164,7 @@ final class CorsTest extends TestCase
         $request = $this->createMock(ServerRequestInterface::class);
 
         $requestUri = $this->createMock(UriInterface::class);
-        $originUri = $this->createMock(UriInterface::class);
+        $originUri  = $this->createMock(UriInterface::class);
         $this->applyUriInterfaceMethodAssertions($requestUri, 'http', 'foo', null);
         $this->applyUriInterfaceMethodAssertions($originUri, 'http', 'bar', null);
 
@@ -211,7 +213,7 @@ final class CorsTest extends TestCase
         $request
             ->expects($this->any())
             ->method('getHeaderLine')
-            ->withConsecutive(['Origin'],['Access-Control-Request-Method'])
+            ->withConsecutive(['Origin'], ['Access-Control-Request-Method'])
             ->willReturnOnConsecutiveCalls('foo', 'get');
 
         $this->uriFactory
@@ -247,7 +249,7 @@ final class CorsTest extends TestCase
         $request
             ->expects($this->any())
             ->method('getHeaderLine')
-            ->withConsecutive(['Origin'],['Access-Control-Request-Method'])
+            ->withConsecutive(['Origin'], ['Access-Control-Request-Method'])
             ->willReturnOnConsecutiveCalls('foo', '');
 
         $request
@@ -278,6 +280,6 @@ final class CorsTest extends TestCase
         parent::setUp();
 
         $this->uriFactory = $this->createMock(UriFactoryInterface::class);
-        $this->cors = new Cors($this->uriFactory);
+        $this->cors       = new Cors($this->uriFactory);
     }
 }

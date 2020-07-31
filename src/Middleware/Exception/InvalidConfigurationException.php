@@ -14,7 +14,7 @@ use function sprintf;
 
 final class InvalidConfigurationException extends LogicException implements ExceptionInterface
 {
-    public static function fromInvalidPipelineConfiguration() : self
+    public static function fromInvalidPipelineConfiguration(): self
     {
         return new self(sprintf(
             'Please re-configure your pipeline. It seems that the `%s` is not between the `%s` and the `%s`',

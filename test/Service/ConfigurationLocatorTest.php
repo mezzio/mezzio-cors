@@ -4,47 +4,46 @@ declare(strict_types=1);
 
 namespace Mezzio\CorsTest\Service;
 
+use Fig\Http\Message\RequestMethodInterface;
 use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Configuration\RouteConfigurationFactoryInterface;
 use Mezzio\Cors\Configuration\RouteConfigurationInterface;
 use Mezzio\Cors\Service\ConfigurationLocator;
 use Mezzio\Cors\Service\CorsMetadata;
-use Fig\Http\Message\RequestMethodInterface;
-use PHPUnit\Framework\MockObject\MockObject;
+use Mezzio\Router\RouteResult;
+use Mezzio\Router\RouterInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
-use function strpos;
-use Mezzio\Router\RouteResult;
-use Mezzio\Router\RouterInterface;
+
 use function array_diff;
 use function array_fill;
 use function array_merge;
+use function count;
 
 final class ConfigurationLocatorTest extends TestCase
 {
-
     /** @var ConfigurationLocator */
     private $locator;
 
-    /** @var ConfigurationInterface&MockObject */
+    /** @psalm-var ConfigurationInterface&MockObject */
     private $projectConfiguration;
 
-    /** @var MockObject&ServerRequestFactoryInterface */
+    /** @psalm-var MockObject&ServerRequestFactoryInterface */
     private $requestFactory;
 
-    /** @var MockObject&RouterInterface */
+    /** @psalm-var MockObject&RouterInterface */
     private $router;
 
-    /** @var RouteConfigurationFactoryInterface&MockObject */
+    /** @psalm-var RouteConfigurationFactoryInterface&MockObject */
     private $routeConfigurationFactory;
 
     public function testWontLocateAnyConfigurationIfRouteIsUnknown(): void
     {
-        $originUri = $this->createMock(UriInterface::class);
+        $originUri  = $this->createMock(UriInterface::class);
         $requestUri = $this->createMock(UriInterface::class);
-        $metadata = new CorsMetadata($originUri, $requestUri, RequestMethodInterface::METHOD_GET);
+        $metadata   = new CorsMetadata($originUri, $requestUri, RequestMethodInterface::METHOD_GET);
 
         $request = $this->createMock(ServerRequestInterface::class);
         $this->requestFactory
@@ -83,9 +82,9 @@ final class ConfigurationLocatorTest extends TestCase
 
     public function testWillLocateProjectConfigDueRoutesWithoutConfigWithMergedRouteResultsMethods(): void
     {
-        $originUri = $this->createMock(UriInterface::class);
+        $originUri  = $this->createMock(UriInterface::class);
         $requestUri = $this->createMock(UriInterface::class);
-        $metadata = new CorsMetadata($originUri, $requestUri, RequestMethodInterface::METHOD_GET);
+        $metadata   = new CorsMetadata($originUri, $requestUri, RequestMethodInterface::METHOD_GET);
 
         $request = $this->createMock(ServerRequestInterface::class);
         $this->requestFactory
@@ -142,9 +141,9 @@ final class ConfigurationLocatorTest extends TestCase
 
     public function testWillHandleRouteThatOverridesProjectConfiguration(): void
     {
-        $originUri = $this->createMock(UriInterface::class);
+        $originUri  = $this->createMock(UriInterface::class);
         $requestUri = $this->createMock(UriInterface::class);
-        $method = 'GET';
+        $method     = 'GET';
 
         $request = $this->createMock(ServerRequestInterface::class);
 
@@ -217,14 +216,14 @@ final class ConfigurationLocatorTest extends TestCase
 
     public function testWillMergeFromMultipleMatchingRoutes(): void
     {
-        $originUri = $this->createMock(UriInterface::class);
+        $originUri  = $this->createMock(UriInterface::class);
         $requestUri = $this->createMock(UriInterface::class);
 
-        $method = 'GET';
+        $method   = 'GET';
         $metadata = new CorsMetadata($originUri, $requestUri, $method);
 
         $consecutiveParameters = $this->createServerRequestArguments($method, $requestUri);
-        $request = $this->createMock(ServerRequestInterface::class);
+        $request               = $this->createMock(ServerRequestInterface::class);
 
         $this->requestFactory
             ->expects($this->any())
@@ -251,8 +250,7 @@ final class ConfigurationLocatorTest extends TestCase
             ->method('isFailure')
             ->willReturn(true);
 
-
-        $routeConfigurationParameters = [
+        $routeConfigurationParameters         = [
             RouteConfigurationInterface::PARAMETER_IDENTIFIER => [],
         ];
         $matchingRouteResultWithConfiguration = $this->createMock(RouteResult::class);
@@ -312,7 +310,7 @@ final class ConfigurationLocatorTest extends TestCase
 
     private function createServerRequestArguments(string $initialRequestMethod, UriInterface $requestUri): array
     {
-        $initialArgument = [$initialRequestMethod, $requestUri];
+        $initialArgument     = [$initialRequestMethod, $requestUri];
         $otherRequestMethods = array_diff(CorsMetadata::ALLOWED_REQUEST_METHODS, [$initialRequestMethod]);
 
         $consecutiveArguments = [];
@@ -325,10 +323,10 @@ final class ConfigurationLocatorTest extends TestCase
 
     public function testWillEarlyReturnExplicitRouteConfiguration(): void
     {
-        $originUri = $this->createMock(UriInterface::class);
+        $originUri  = $this->createMock(UriInterface::class);
         $requestUri = $this->createMock(UriInterface::class);
 
-        $method = 'GET';
+        $method   = 'GET';
         $metadata = new CorsMetadata($originUri, $requestUri, $method);
 
         $failedRouteResult = $this->createMock(RouteResult::class);
@@ -388,9 +386,9 @@ final class ConfigurationLocatorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->projectConfiguration = $this->createMock(ConfigurationInterface::class);
-        $this->requestFactory = $this->createMock(ServerRequestFactoryInterface::class);
-        $this->router = $this->createMock(RouterInterface::class);
+        $this->projectConfiguration      = $this->createMock(ConfigurationInterface::class);
+        $this->requestFactory            = $this->createMock(ServerRequestFactoryInterface::class);
+        $this->router                    = $this->createMock(RouterInterface::class);
         $this->routeConfigurationFactory = $this->createMock(RouteConfigurationFactoryInterface::class);
 
         $this->locator = new ConfigurationLocator(
