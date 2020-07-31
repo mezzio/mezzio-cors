@@ -36,6 +36,6 @@ $ composer require mezzio/mezzio-cors
 
 mezzio-cors provides a [`CorsMiddleware`](middleware.md) which works out of the box with once created a global configuration file. It can safely be added to the projects pipeline as CORS details are needed for *every* request (in case its a CORS request).
 
-It uses the [mezzio-router](mezzio/mezzio-router) to match the incoming URI. It starts with the HTTP request method which is provided by the Request via the `Access-Control-Request-Method` header and checks *all* request methods until it matches a route. If that route states to be explicit, the response is created immediately.
+It uses the [mezzio-router](https://github.com/mezzio/mezzio-router) to match the incoming URI. It starts with the HTTP request method which is provided by the Request via the `Access-Control-Request-Method` header and checks *all* request methods until it matches a route. If that route states to be explicit, the response is created immediately.
 
 If the route is not explicit, *all* request methods are checked to provide a list of possible request methods to the client.
