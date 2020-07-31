@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mezzio\CorsTest\Service;
 
+use Generator;
 use InvalidArgumentException;
 use Mezzio\Cors\Exception\InvalidOriginValueException;
 use Mezzio\Cors\Service\Cors;
@@ -61,58 +62,6 @@ final class CorsTest extends TestCase
         $this->assertTrue($this->cors->isCorsRequest($request));
     }
 
-    public function testWontDetectRequestAsCrossOriginIfNoOriginHeaderIsPresent(): void
-    {
-        $request = $this->createMock(ServerRequestInterface::class);
-        $request
-            ->expects($this->once())
-            ->method('getHeaderLine')
-            ->with('Origin')
-            ->willReturn('');
-
-        $this->assertFalse($this->cors->isCorsRequest($request));
-    }
-
-    // phpcs:disable Generic.Files.LineLength.TooLong
-    public function testWillThrowInvalidOriginValueExceptionIfOriginContainsValueWhichCannotBeParsedOnIsCorsRequestMethodCall(): void
-    {
-        $this->expectException(InvalidOriginValueException::class);
-
-        $request = $this->createMock(ServerRequestInterface::class);
-        $request
-            ->expects($this->once())
-            ->method('getHeaderLine')
-            ->willReturn('foo');
-
-        $this->uriFactory
-            ->expects($this->once())
-            ->method('createUri')
-            ->with('foo')
-            ->willThrowException(new InvalidArgumentException('Whatever'));
-
-        $this->cors->isCorsRequest($request);
-    }
-
-    // phpcs:disable Generic.Files.LineLength.TooLong
-    public function testWillThrowInvalidOriginValueExceptionIfOriginContainsValueWhichCannotBeParsedOnIsPreflightRequestMethodCall(): void
-    {
-        $this->expectException(InvalidOriginValueException::class);
-
-        $request = $this->createMock(ServerRequestInterface::class);
-        $request
-            ->expects($this->once())
-            ->method('getHeaderLine')
-            ->willReturn('foo');
-
-        $this->uriFactory
-            ->expects($this->once())
-            ->method('createUri')
-            ->with('foo')
-            ->willThrowException(new InvalidArgumentException('Whatever'));
-
-        $this->cors->isPreflightRequest($request);
-    }
-
     /**
      * @psalm-param MockObject&UriInterface $uri
      */
@@ -138,26 +87,81 @@ final class CorsTest extends TestCase
             ->willReturn($port);
     }
 
-    public function crossOriginProvider(): array
+    // phpcs:disable Generic.Files.LineLength.TooLong
+
+    public function testWontDetectRequestAsCrossOriginIfNoOriginHeaderIsPresent(): void
     {
-        return [
-            'secured'           => [
-                'https',
-                'example.org',
-            ],
-            'non secured'       => [
-                'http',
-                'example.org',
-            ],
-            'custom scheme'     => [
-                'android',
-                'example.org',
-            ],
-            'request with port' => [
-                'https',
-                'example.org',
-                8080,
-            ],
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request
+            ->expects($this->once())
+            ->method('getHeaderLine')
+            ->with('Origin')
+            ->willReturn('');
+
+        $this->assertFalse($this->cors->isCorsRequest($request));
+    }
+
+    // phpcs:disable Generic.Files.LineLength.TooLong
+
+    public function testWillThrowInvalidOriginValueExceptionIfOriginContainsValueWhichCannotBeParsedOnIsCorsRequestMethodCall(): void
+    {
+        $this->expectException(InvalidOriginValueException::class);
+
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request
+            ->expects($this->once())
+            ->method('getHeaderLine')
+            ->willReturn('foo');
+
+        $this->uriFactory
+            ->expects($this->once())
+            ->method('createUri')
+            ->with('foo')
+            ->willThrowException(new InvalidArgumentException('Whatever'));
+
+        $this->cors->isCorsRequest($request);
+    }
+
+    public function testWillThrowInvalidOriginValueExceptionIfOriginContainsValueWhichCannotBeParsedOnIsPreflightRequestMethodCall(): void
+    {
+        $this->expectException(InvalidOriginValueException::class);
+
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request
+            ->expects($this->once())
+            ->method('getHeaderLine')
+            ->willReturn('foo');
+
+        $this->uriFactory
+            ->expects($this->once())
+            ->method('createUri')
+            ->with('foo')
+            ->willThrowException(new InvalidArgumentException('Whatever'));
+
+        $this->cors->isPreflightRequest($request);
+    }
+
+    /**
+     * @psalm-return Generator<string,array<int,string|int>>
+     */
+    public function crossOriginProvider(): Generator
+    {
+        yield 'secured' => [
+            'https',
+            'example.org',
+        ];
+        yield 'non secured' => [
+            'http',
+            'example.org',
+        ];
+        yield'custom scheme' => [
+            'android',
+            'example.org',
+        ];
+        yield 'request with port' => [
+            'https',
+            'example.org',
+            8080,
         ];
     }
 

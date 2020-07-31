@@ -39,6 +39,9 @@ abstract class AbstractConfiguration implements ConfigurationInterface
     /** @var string[] */
     protected $exposedHeaders = [];
 
+    /**
+     * @psalm-param array<string,mixed> $parameters
+     */
     public function __construct(array $parameters)
     {
         try {
@@ -69,6 +72,9 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         return $instance;
     }
 
+    /**
+     * @psalm-param list<string> $origins
+     */
     public function setAllowedOrigins(array $origins): void
     {
         Assert::allString($origins);
@@ -82,17 +88,26 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         $this->allowedOrigins = $origins;
     }
 
+    /**
+     * @psalm-return list<string>
+     */
     public function allowedMethods(): array
     {
         return $this->allowedMethods;
     }
 
+    /**
+     * @psalm-param list<string> $headers
+     */
     public function setAllowedHeaders(array $headers): void
     {
         Assert::allString($headers);
         $this->allowedHeaders = array_values(array_unique($headers));
     }
 
+    /**
+     * @psalm-return list<string>
+     */
     public function allowedHeaders(): array
     {
         return $this->allowedHeaders;
@@ -112,12 +127,18 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         return $this->allowedMaxAge;
     }
 
+    /**
+     * @psalm-param list<string> $headers
+     */
     public function setExposedHeaders(array $headers): void
     {
         Assert::allString($headers);
         $this->exposedHeaders = array_values(array_unique($headers));
     }
 
+    /**
+     * @psalm-return list<string>
+     */
     public function exposedHeaders(): array
     {
         return $this->exposedHeaders;

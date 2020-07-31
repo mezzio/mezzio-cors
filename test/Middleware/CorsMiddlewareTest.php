@@ -389,7 +389,7 @@ final class CorsMiddlewareTest extends TestCase
     /**
      * @dataProvider varyHeaderProvider
      */
-    public function testWillFindOriginInResponseHeaders(string $vary)
+    public function testWillFindOriginInResponseHeaders(string $vary): void
     {
         $request  = $this->createMock(ServerRequestInterface::class);
         $handler  = $this->createMock(RequestHandlerInterface::class);
@@ -428,7 +428,7 @@ final class CorsMiddlewareTest extends TestCase
         $this->assertEquals($response, $responseFromMiddleware);
     }
 
-    public function testWillDelegateUnknownRouteForPreflightRequestToRequestHandler()
+    public function testWillDelegateUnknownRouteForPreflightRequestToRequestHandler(): void
     {
         $request  = $this->createMock(ServerRequestInterface::class);
         $handler  = $this->createMock(RequestHandlerInterface::class);
@@ -458,7 +458,7 @@ final class CorsMiddlewareTest extends TestCase
         $this->middleware->process($request, $handler);
     }
 
-    public function testWillDelegateUnknownRouteForRequestToRequestHandler()
+    public function testWillDelegateUnknownRouteForRequestToRequestHandler(): void
     {
         $request  = $this->createMock(ServerRequestInterface::class);
         $handler  = $this->createMock(RequestHandlerInterface::class);

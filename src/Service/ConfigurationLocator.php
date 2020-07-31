@@ -109,6 +109,9 @@ final class ConfigurationLocator implements ConfigurationLocatorInterface
         return $routeConfiguration->mergeWithConfiguration($this->configuration);
     }
 
+    /**
+     * @psalm-param list<string> $allowedMethods
+     */
     private function explicit(array $allowedMethods): bool
     {
         return $allowedMethods === CorsMetadata::ALLOWED_REQUEST_METHODS;

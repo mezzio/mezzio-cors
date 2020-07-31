@@ -16,5 +16,9 @@ interface ResponseFactoryInterface
 
     public function unauthorized(string $origin): ResponseInterface;
 
-    public function cors(ResponseInterface $response, string $origin, ConfigurationInterface $config);
+    public function cors(
+        ResponseInterface $response,
+        string $origin,
+        ConfigurationInterface $config
+    ): ResponseInterface;
 }

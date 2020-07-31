@@ -92,7 +92,7 @@ final class RouteConfigurationTest extends TestCase
     }
 
     // phpcs:disable Generic.Files.LineLength.TooLong
-    public function testWillMergeMultipleConfigurations()
+    public function testWillMergeMultipleConfigurations(): void
     {
         $routeConfiguration = (new RouteConfiguration([
             'allowed_headers' => ['X-Baz'],
@@ -153,7 +153,7 @@ final class RouteConfigurationTest extends TestCase
         $this->assertEquals(['GET', 'POST'], $routeConfiguration->allowedMethods());
     }
 
-    public function testWillMergeAllowedHeadersWithoutDuplicates()
+    public function testWillMergeAllowedHeadersWithoutDuplicates(): void
     {
         $project = new ProjectConfiguration(['allowed_headers' => ['X-Foo']]);
         $route   = new RouteConfiguration(['allowed_headers' => ['X-Foo']]);
@@ -161,13 +161,13 @@ final class RouteConfigurationTest extends TestCase
         $this->assertEquals($merged->allowedHeaders(), ['X-Foo']);
     }
 
-    public function testWillProvideExplicitFromParameters()
+    public function testWillProvideExplicitFromParameters(): void
     {
         $routeConfiguration = new RouteConfiguration(['explicit' => true]);
         $this->assertTrue($routeConfiguration->explicit());
     }
 
-    public function testWontMergeItself()
+    public function testWontMergeItself(): void
     {
         $routeConfiguration = new RouteConfiguration([]);
         $routeConfiguration = $routeConfiguration->mergeWithConfiguration($routeConfiguration);
