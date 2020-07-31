@@ -91,6 +91,7 @@ final class RouteConfigurationTest extends TestCase
         $this->assertEquals(['DELETE', 'GET', 'HEAD', 'POST'], $routeConfiguration->allowedMethods());
     }
 
+    // phpcs:disable Generic.Files.LineLength.TooLong
     public function testWillMergeMultipleConfigurations()
     {
         $routeConfiguration = (new RouteConfiguration([
@@ -142,7 +143,10 @@ final class RouteConfigurationTest extends TestCase
         $this->assertTrue($routeConfiguration->credentialsAllowed());
         $this->assertEquals('12345', $routeConfiguration->allowedMaxAge());
         foreach (['X-Baz', 'X-Foo', 'X-Bar'] as $header) {
-            $this->assertTrue(in_array($header, $routeConfiguration->allowedHeaders(), true), sprintf('Missing header %s', $header));
+            $this->assertTrue(
+                in_array($header, $routeConfiguration->allowedHeaders(), true),
+                sprintf('Missing header %s', $header)
+            );
         }
         $this->assertEquals(['*'], $routeConfiguration->allowedOrigins());
         $this->assertEquals(['X-Another-Header', 'X-Special-Header'], $routeConfiguration->exposedHeaders());

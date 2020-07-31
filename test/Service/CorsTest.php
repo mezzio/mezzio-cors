@@ -73,6 +73,7 @@ final class CorsTest extends TestCase
         $this->assertFalse($this->cors->isCorsRequest($request));
     }
 
+    // phpcs:disable Generic.Files.LineLength.TooLong
     public function testWillThrowInvalidOriginValueExceptionIfOriginContainsValueWhichCannotBeParsedOnIsCorsRequestMethodCall(): void
     {
         $this->expectException(InvalidOriginValueException::class);
@@ -92,6 +93,7 @@ final class CorsTest extends TestCase
         $this->cors->isCorsRequest($request);
     }
 
+    // phpcs:disable Generic.Files.LineLength.TooLong
     public function testWillThrowInvalidOriginValueExceptionIfOriginContainsValueWhichCannotBeParsedOnIsPreflightRequestMethodCall(): void
     {
         $this->expectException(InvalidOriginValueException::class);

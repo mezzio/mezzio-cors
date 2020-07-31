@@ -33,7 +33,11 @@ final class ProjectConfigurationTest extends TestCase
 
         $camelCasedParameters = [];
         foreach ($parameters as $parameter => $value) {
-            $camelCasedParameter                        = str_replace(' ', '', lcfirst(ucwords(str_replace('_', ' ', $parameter))));
+            $camelCasedParameter                        = str_replace(
+                ' ',
+                '',
+                lcfirst(ucwords(str_replace('_', ' ', $parameter)))
+            );
             $camelCasedParameters[$camelCasedParameter] = $value;
         }
 
