@@ -1,0 +1,42 @@
+<?php
+declare(strict_types=1);
+
+namespace Mezzio\CorsTest\Service;
+
+use Mezzio\Cors\Configuration\ConfigurationInterface;
+use Mezzio\Cors\Configuration\RouteConfigurationFactoryInterface;
+use Mezzio\Cors\Service\ConfigurationLocator;
+use Mezzio\Cors\Service\ConfigurationLocatorFactory;
+use Mezzio\CorsTest\AbstractFactoryTest;
+use Psr\Http\Message\ServerRequestFactoryInterface;
+use Mezzio\Router\RouterInterface;
+
+final class ConfigurationLocatorFactoryTest extends AbstractFactoryTest
+{
+
+    /**
+     * @return array<string,string|array|object>
+     */
+    protected function dependencies(): array
+    {
+        return [
+            ConfigurationInterface::class => ConfigurationInterface::class,
+            ServerRequestFactoryInterface::class => ServerRequestFactoryInterface::class,
+            RouterInterface::class => RouterInterface::class,
+            RouteConfigurationFactoryInterface::class => RouteConfigurationFactoryInterface::class,
+        ];
+    }
+
+    protected function factory(): callable
+    {
+        return new ConfigurationLocatorFactory();
+    }
+
+    /**
+     * Implement this for post creation assertions.
+     */
+    protected function postCreationAssertions($instance): void
+    {
+        $this->assertInstanceOf(ConfigurationLocator::class, $instance);
+    }
+}

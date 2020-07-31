@@ -1,0 +1,9 @@
+docs_dir: docs/book
+site_dir: docs/html
+nav:
+  - Home: index.md
+  - Introduction: v1/intro.md
+  - Middleware: v1/middleware.md
+site_name: 'mezzio-cors'
+site_description: 'CORS subcomponent for Mezzio'
+repo_url: 'https://github.com/mezzio/mezzio-cors'

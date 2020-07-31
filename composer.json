@@ -1,0 +1,64 @@
+{
+    "name": "mezzio/mezzio-cors",
+    "type": "library",
+    "description": "CORS subcomponent for Mezzio",
+    "keywords": [
+        "cors",
+        "mezzio"
+    ],
+    "license": "BSD-3-Clause",
+
+    "require": {
+        "php": "^7.3",
+        "fig/http-message-util": "^1.1",
+        "psr/container": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.0",
+        "psr/http-server-handler": "^1.0",
+        "psr/http-server-middleware": "^1.0",
+        "mezzio/mezzio-router": "^3.1",
+        "webmozart/assert": "^1.5"
+    },
+    "require-dev": {
+        "laminas/laminas-coding-standard": "^2.0",
+        "maglnet/composer-require-checker": "^2.0",
+        "phpstan/extension-installer": "^1.0",
+        "phpstan/phpstan": "^0.11.15",
+        "phpstan/phpstan-phpunit": "^0.11.2",
+        "phpstan/phpstan-webmozart-assert": "^0.11.3",
+        "phpunit/phpunit": "^9.2"
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "zf": {
+            "config-provider": "Mezzio\\Cors\\ConfigProvider"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Mezzio\\Cors\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mezzio\\CorsTest\\": "test"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "analyze": "phpstan analyze --no-progress",
+        "check": [
+            "@cs-check",
+            "@test"
+        ],
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "test": "phpunit --colors=always",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+        "crc": "composer-require-checker check"
+    }
+}
