@@ -130,7 +130,7 @@ final class CorsTest extends TestCase
 
         $uri
             ->expects($this->once())
-            ->method('getScheme')
+            ->method('getPort')
             ->willReturn($port);
     }
 
