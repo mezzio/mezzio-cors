@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mezzio\CorsTest;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
@@ -43,7 +44,7 @@ abstract class AbstractFactoryTest extends TestCase
     /**
      * @psalm-param ContainerInterface&MockObject $container
      */
-    private function setupContainer(ContainerInterface $container): void
+    private function setupContainer(MockObject $container): void
     {
         $dependencies = $this->dependencies();
         if (! $dependencies) {

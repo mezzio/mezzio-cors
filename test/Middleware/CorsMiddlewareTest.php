@@ -14,6 +14,7 @@ use Mezzio\Cors\Service\CorsInterface;
 use Mezzio\Cors\Service\CorsMetadata;
 use Mezzio\Cors\Service\ResponseFactoryInterface;
 use Mezzio\Router\RouteResult;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -129,7 +130,7 @@ final class CorsMiddlewareTest extends TestCase
     private function createResponseMock(
         bool $varyHeaderExists = false,
         bool $varyHeaderContainsOrigin = false
-    ): ResponseInterface {
+    ): MockObject {
         $response = $this->createMock(ResponseInterface::class);
         $response
             ->expects($this->once())
