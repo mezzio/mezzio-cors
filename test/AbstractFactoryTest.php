@@ -8,11 +8,8 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
-use function gettype;
-use function is_array;
 use function is_object;
 use function is_string;
-use function sprintf;
 
 abstract class AbstractFactoryTest extends TestCase
 {
@@ -27,7 +24,7 @@ abstract class AbstractFactoryTest extends TestCase
     private $container;
 
     /**
-     * @return array<string,string|array|object>
+     * @return array<string,class-string|array|object>
      */
     abstract protected function dependencies(): array;
 
@@ -73,7 +70,9 @@ abstract class AbstractFactoryTest extends TestCase
 
     /**
      * @param string|array|object $definition
+     * @psalm-param class-string|array<mixed>|object $definition
      * @return array|object
+     * @psalm-return array<mixed>|object
      */
     private function createReturnValueFromDefinition($definition)
     {
@@ -85,14 +84,7 @@ abstract class AbstractFactoryTest extends TestCase
             return $definition;
         }
 
-        if (is_array($definition)) {
-            return $definition;
-        }
-
-        $this->fail(sprintf(
-            'Invalid return value definition provided for factory test: %s',
-            gettype($definition)
-        ));
+        return $definition;
     }
 
     /**

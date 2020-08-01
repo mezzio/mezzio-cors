@@ -49,7 +49,7 @@ final class ProjectConfigurationTest extends TestCase
         $this->assertSame(['foo', 'bar', 'baz'], $config->exposedHeaders());
     }
 
-    public function testWillThrowExceptionOnUnknownParameter()
+    public function testWillThrowExceptionOnUnknownParameter(): void
     {
         $this->expectException(InvalidConfigurationException::class);
         new ProjectConfiguration(['foo' => 'bar']);

@@ -6,6 +6,7 @@ namespace Mezzio\CorsTest\Service;
 
 use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Service\ResponseFactory;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -20,6 +21,7 @@ final class ResponseFactoryTest extends TestCase
     private $responseFactory;
 
     /**
+     * @var MockObject
      * @psalm-var MockObject&ResponseFactoryInterface
      */
     private $psrResponseFactory;

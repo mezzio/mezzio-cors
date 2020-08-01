@@ -66,15 +66,29 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
             $instance->setAllowedMaxAge($configuration->allowedMaxAge());
         }
 
-        $instance->setAllowedHeaders(array_merge($configuration->allowedHeaders(), $instance->allowedHeaders()));
-        $instance->setAllowedOrigins(array_merge($configuration->allowedOrigins(), $instance->allowedOrigins()));
-        $instance->setExposedHeaders(array_merge($configuration->exposedHeaders(), $instance->exposedHeaders()));
+        $instance->setAllowedHeaders(
+            array_values(
+                array_merge($configuration->allowedHeaders(), $instance->allowedHeaders())
+            )
+        );
+        $instance->setAllowedOrigins(
+            array_values(
+                array_merge($configuration->allowedOrigins(), $instance->allowedOrigins())
+            )
+        );
+        $instance->setExposedHeaders(
+            array_values(
+                array_merge($configuration->exposedHeaders(), $instance->exposedHeaders())
+            )
+        );
 
         return $instance->withRequestMethods($configuration->allowedMethods());
     }
 
     /**
      * Should merge the request methods.
+     *
+     * @psalm-param list<string> $methods
      */
     public function withRequestMethods(array $methods): RouteConfigurationInterface
     {

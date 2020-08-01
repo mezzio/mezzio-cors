@@ -24,6 +24,9 @@ use Mezzio\Cors\Service\ResponseFactoryInterface;
 
 final class ConfigProvider
 {
+    /**
+     * @return array<string,mixed>
+     */
     public function __invoke(): array
     {
         return [
@@ -31,6 +34,9 @@ final class ConfigProvider
         ];
     }
 
+    /**
+     * @return array<string,mixed>
+     */
     public function getServiceDependencies(): array
     {
         return [

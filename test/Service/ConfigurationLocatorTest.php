@@ -12,6 +12,7 @@ use Mezzio\Cors\Service\ConfigurationLocator;
 use Mezzio\Cors\Service\CorsMetadata;
 use Mezzio\Router\RouteResult;
 use Mezzio\Router\RouterInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -27,16 +28,28 @@ final class ConfigurationLocatorTest extends TestCase
     /** @var ConfigurationLocator */
     private $locator;
 
-    /** @psalm-var ConfigurationInterface&MockObject */
+    /**
+     * @var MockObject
+     * @psalm-var ConfigurationInterface&MockObject
+     */
     private $projectConfiguration;
 
-    /** @psalm-var MockObject&ServerRequestFactoryInterface */
+    /**
+     * @var MockObject
+     * @psalm-var MockObject&ServerRequestFactoryInterface
+     */
     private $requestFactory;
 
-    /** @psalm-var MockObject&RouterInterface */
+    /**
+     * @var MockObject
+     * @psalm-var MockObject&RouterInterface
+     */
     private $router;
 
-    /** @psalm-var RouteConfigurationFactoryInterface&MockObject */
+    /**
+     * @var MockObject
+     * @psalm-var RouteConfigurationFactoryInterface&MockObject
+     */
     private $routeConfigurationFactory;
 
     public function testWontLocateAnyConfigurationIfRouteIsUnknown(): void
@@ -308,6 +321,9 @@ final class ConfigurationLocatorTest extends TestCase
         $this->assertSame($routeConfiguration, $locatedConfiguration);
     }
 
+    /**
+     * @psalm-return array<mixed>
+     */
     private function createServerRequestArguments(string $initialRequestMethod, UriInterface $requestUri): array
     {
         $initialArgument     = [$initialRequestMethod, $requestUri];

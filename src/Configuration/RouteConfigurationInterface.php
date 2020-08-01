@@ -27,6 +27,8 @@ interface RouteConfigurationInterface extends ConfigurationInterface
 
     /**
      * Should merge the request methods.
+     *
+     * @psalm-param list<string> $methods
      */
     public function withRequestMethods(array $methods): self;
 
