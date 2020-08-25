@@ -212,4 +212,4 @@ Result of this configuration for the `CORS preflight` of `/foo` for the upcoming
 | `credentials_allowed` | `true`|
 | `allowed_methods` | `['GET', 'DELETE']` |
 
-**Did you note the `ANY_ORIGIN` detail? This is, because if `ANY_ORIGIN` is allowed for an endpoint, we remove** 
+**Did you note the `ANY_ORIGIN` detail? This is, because if `ANY_ORIGIN` is allowed for an endpoint, we remove all other origins for that route.** 
