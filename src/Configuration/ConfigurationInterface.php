@@ -16,6 +16,7 @@ interface ConfigurationInterface
      * Should return all allowed methods, the requested path can handle.
      *
      * @return string[]
+     * @psalm-return list<string>
      */
     public function allowedMethods(): array;
 
@@ -23,6 +24,7 @@ interface ConfigurationInterface
      * Should return all allowed headers, the request path can handle.
      *
      * @return string[]
+     * @psalm-return list<string>
      */
     public function allowedHeaders(): array;
 
@@ -35,6 +37,7 @@ interface ConfigurationInterface
      * Should return all headers which are being exposed of the endpoint.
      *
      * @return string[]
+     * @psalm-return list<string>
      */
     public function exposedHeaders(): array;
 
@@ -45,6 +48,7 @@ interface ConfigurationInterface
 
     /**
      * @return string[]
+     * @psalm-return list<string>
      */
     public function allowedOrigins(): array;
 }

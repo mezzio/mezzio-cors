@@ -10,15 +10,26 @@ use Mezzio\Router\RouterInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 
+use function assert;
+
 final class ConfigurationLocatorFactory
 {
     public function __invoke(ContainerInterface $container): ConfigurationLocator
     {
+        $configuration = $container->get(ConfigurationInterface::class);
+        assert($configuration instanceof ConfigurationInterface);
+        $requestFactory = $container->get(ServerRequestFactoryInterface::class);
+        assert($requestFactory instanceof ServerRequestFactoryInterface);
+        $router = $container->get(RouterInterface::class);
+        assert($router instanceof RouterInterface);
+        $routeConfigurationFactory = $container->get(RouteConfigurationFactoryInterface::class);
+        assert($routeConfigurationFactory instanceof RouteConfigurationFactoryInterface);
+
         return new ConfigurationLocator(
-            $container->get(ConfigurationInterface::class),
-            $container->get(ServerRequestFactoryInterface::class),
-            $container->get(RouterInterface::class),
-            $container->get(RouteConfigurationFactoryInterface::class)
+            $configuration,
+            $requestFactory,
+            $router,
+            $routeConfigurationFactory
         );
     }
 }

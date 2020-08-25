@@ -9,14 +9,22 @@ use Mezzio\Cors\Service\CorsInterface;
 use Mezzio\Cors\Service\ResponseFactoryInterface;
 use Psr\Container\ContainerInterface;
 
+use function assert;
+
 final class CorsMiddlewareFactory
 {
     public function __invoke(ContainerInterface $container): CorsMiddleware
     {
+        $cors = $container->get(CorsInterface::class);
+        assert($cors instanceof CorsInterface);
+        $configurationLocator = $container->get(ConfigurationLocatorInterface::class);
+        assert($configurationLocator instanceof ConfigurationLocatorInterface);
+        $responseFactory = $container->get(ResponseFactoryInterface::class);
+        assert($responseFactory instanceof ResponseFactoryInterface);
         return new CorsMiddleware(
-            $container->get(CorsInterface::class),
-            $container->get(ConfigurationLocatorInterface::class),
-            $container->get(ResponseFactoryInterface::class)
+            $cors,
+            $configurationLocator,
+            $responseFactory
         );
     }
 }

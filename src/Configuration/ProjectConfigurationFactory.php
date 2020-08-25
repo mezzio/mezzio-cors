@@ -10,8 +10,8 @@ final class ProjectConfigurationFactory
 {
     public function __invoke(ContainerInterface $container): ProjectConfiguration
     {
-        return new ProjectConfiguration(
-            $container->get('config')[ProjectConfiguration::CONFIGURATION_IDENTIFIER] ?? []
-        );
+        /** @var array<string,mixed> $parameters */
+        $parameters = $container->get('config')[ProjectConfiguration::CONFIGURATION_IDENTIFIER] ?? [];
+        return new ProjectConfiguration($parameters);
     }
 }

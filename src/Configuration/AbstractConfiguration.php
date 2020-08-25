@@ -21,13 +21,22 @@ use function ucwords;
 
 abstract class AbstractConfiguration implements ConfigurationInterface
 {
-    /** @var string[] */
+    /**
+     * @var string[]
+     * @psalm-var list<string>
+     */
     protected $allowedOrigins = [];
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     * @psalm-var list<string>
+     */
     protected $allowedMethods = [];
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     * @psalm-var list<string>
+     */
     protected $allowedHeaders = [];
 
     /** @var string */
@@ -36,7 +45,10 @@ abstract class AbstractConfiguration implements ConfigurationInterface
     /** @var bool */
     protected $credentialsAllowed = false;
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     * @psalm-var list<string>
+     */
     protected $exposedHeaders = [];
 
     /**
@@ -58,6 +70,7 @@ abstract class AbstractConfiguration implements ConfigurationInterface
     {
         $instance = clone $this;
 
+        /** @psalm-suppress MixedAssignment */
         foreach ($data as $property => $value) {
             $property = lcfirst(str_replace('_', '', ucwords($property, '_')));
             $setter   = sprintf('set%s', ucfirst($property));
@@ -88,9 +101,6 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         $this->allowedOrigins = $origins;
     }
 
-    /**
-     * @psalm-return list<string>
-     */
     public function allowedMethods(): array
     {
         return $this->allowedMethods;
@@ -105,9 +115,6 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         $this->allowedHeaders = array_values(array_unique($headers));
     }
 
-    /**
-     * @psalm-return list<string>
-     */
     public function allowedHeaders(): array
     {
         return $this->allowedHeaders;
@@ -136,9 +143,6 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         $this->exposedHeaders = array_values(array_unique($headers));
     }
 
-    /**
-     * @psalm-return list<string>
-     */
     public function exposedHeaders(): array
     {
         return $this->exposedHeaders;
@@ -154,9 +158,6 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         $this->credentialsAllowed = $credentialsAllowed;
     }
 
-    /**
-     * @return string[]
-     */
     public function allowedOrigins(): array
     {
         return $this->allowedOrigins;

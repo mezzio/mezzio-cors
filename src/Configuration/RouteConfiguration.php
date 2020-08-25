@@ -102,15 +102,16 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
 
     /**
      * @param array<int|string,string> $methods
-     * @return array<int,string>
+     * @return string[]
+     * @psalm-return list<string>
      */
     private function normalizeRequestMethods(array $methods): array
     {
         Assert::allOneOf($methods, CorsMetadata::ALLOWED_REQUEST_METHODS);
 
-        $methods = array_values(array_unique($methods));
+        $methods = array_unique($methods);
         sort($methods, SORT_ASC | SORT_STRING);
 
-        return $methods;
+        return array_values($methods);
     }
 }

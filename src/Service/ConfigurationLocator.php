@@ -7,13 +7,13 @@ namespace Mezzio\Cors\Service;
 use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Configuration\RouteConfigurationFactoryInterface;
 use Mezzio\Cors\Configuration\RouteConfigurationInterface;
-use Mezzio\Router\Route;
 use Mezzio\Router\RouteResult;
 use Mezzio\Router\RouterInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 
 use function array_diff;
 use function array_merge;
+use function array_values;
 
 final class ConfigurationLocator implements ConfigurationLocatorInterface
 {
@@ -82,14 +82,15 @@ final class ConfigurationLocator implements ConfigurationLocatorInterface
 
     private function configurationFromRoute(RouteResult $result): RouteConfigurationInterface
     {
-        $allowedMethods = $result->getAllowedMethods();
-        if ($allowedMethods === Route::HTTP_METHOD_ANY) {
+        $allowedMethods = array_values($result->getAllowedMethods() ?? []);
+        if ($allowedMethods === []) {
             $allowedMethods = CorsMetadata::ALLOWED_REQUEST_METHODS;
         }
 
         $explicit                  = $this->explicit($allowedMethods);
         $routeConfigurationFactory = $this->routeConfigurationFactory;
 
+        /** @var array<string,mixed>|null $routeParameters */
         $routeParameters = $result->getMatchedParams()[RouteConfigurationInterface::PARAMETER_IDENTIFIER] ?? null;
         if ($routeParameters === null) {
             return $routeConfigurationFactory(['explicit' => $explicit])
