@@ -5,10 +5,6 @@ mezzio-cors provides middleware consuming
 
 This middleware checks, if the incoming request is a CORS request. If so, it makes a distinction between a so called [Preflight request](#preflight-request) or the [regular request](#cors-request).
 
-```php
-
-```
-
 ## Preflight request
 
 A Preflight request should be a light call which provides the Browser with the CORS informations it needs to execute the regular (CORS) request.
