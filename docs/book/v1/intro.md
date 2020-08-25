@@ -1,10 +1,6 @@
 # mezzio-cors
 
-[![Build Status](https://travis-ci.org/mezzio/mezzio-cors.svg?branch=master)](https://travis-ci.org/mezzio/mezzio-cors)
-[![Coverage Status](https://coveralls.io/repos/github/mezzio/mezzio-cors/badge.svg?branch=master)](https://coveralls.io/github/mezzio/mezzio-cors?branch=master)
-
 CORS subcomponent for [Mezzio](https://github.com/mezzio/mezzio).
-
 
 This extension creates CORS details for your application. If the `CorsMiddleware` detects a `CORS preflight`, the middleware will start do detect the proper `CORS` configuration.
 The `Router` is being used to detect every allowed request method by executing a route match with all possible request methods. Therefore, for every preflight request, there is at least one `Router` request (depending on the configuration of the route, it might be just one or we are executing a check for **every** request method).

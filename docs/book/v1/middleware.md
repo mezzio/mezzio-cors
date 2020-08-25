@@ -16,7 +16,6 @@ These informations are:
 - Which Headers are provided in the response?
 - Which HTTP Methods are accepted by that Endpoint?
 
-
 ## CORS request
 
 The CORS request is the actual request. That request SHOULD to be already verified. If its not verified by a previous [Preflight request](#preflight-request), the request will be aborted with a `403 Forbidden` response.
@@ -29,12 +28,11 @@ On the project level, you can only configure the following Headers:
 
 | Configuration | Type | Header
 |:-------------|:-------------:|:-----:
-| `allowed_origins` | string[] | Access-Control-Allow-Origin       
-| `allowed_headers` | string[] | Access-Control-Allow-Headers      
-| `allowed_max_age` | string (TTL in seconds) | Access-Control-Allowed-Max-Age    
+| `allowed_origins` | string[] | Access-Control-Allow-Origin
+| `allowed_headers` | string[] | Access-Control-Allow-Headers
+| `allowed_max_age` | string (TTL in seconds) | Access-Control-Allowed-Max-Age
 | `credentials_allowed` | bool | Access-Control-Allow-Credentials
 | `exposed_headers` | string[] | Access-Control-Exposed-Headers
-
 
 On the route level, you can configure all of the projects configuration settings and if the configuration of the route should either override the project configuration (default) or merge it.
 
@@ -43,20 +41,23 @@ On the route level, you can configure all of the projects configuration settings
 |:------------- |:-------------:|:-----:
 | `overrides_project_configuration` | bool | -
 | `explicit` | bool | -
-| `allowed_origins` | string[] | Access-Control-Allow-Origin       
-| `allowed_headers` | string[] | Access-Control-Allow-Headers      
-| `allowed_max_age` | string (TTL in seconds) | Access-Control-Allowed-Max-Age    
+| `allowed_origins` | string[] | Access-Control-Allow-Origin
+| `allowed_headers` | string[] | Access-Control-Allow-Headers
+| `allowed_max_age` | string (TTL in seconds) | Access-Control-Allowed-Max-Age
 | `credentials_allowed` | bool | Access-Control-Allow-Credentials
 | `exposed_headers` | string[] | Access-Control-Exposed-Headers
- 
+
 The parameter `overrides_project_configuration` handles the way how the configuration is being merged. The default setting is `true` to ensure that a route configuration has to specify every information it will provide.
 
 The parameter `explicit` tells the `ConfigurationLocator` to stop trying other request methods to match the same route because there wont be any other method.
 
 ### Examples for project configurations
+
 #### Allow every origin
+
 ```php
 <?php
+// In config/autoload/cors.global.php
 declare(strict_types=1);
 
 use Mezzio\Cors\Configuration\ConfigurationInterface;
@@ -73,8 +74,11 @@ return [
 ```
 
 #### Allow every origin from a specific domain and its subdomains
+
 ```php
 <?php
+// In config/autoload/cors.global.php
+
 declare(strict_types=1);
 
 use Mezzio\Cors\Configuration\ConfigurationInterface;
@@ -90,11 +94,13 @@ return [
 ];
 ```
 
-
 ### Examples for route configurations
+
 #### Make the configuration explicit to avoid multiple router match requests
+
 ```php
 <?php
+// In config/autoload/cors.global.php
 declare(strict_types=1);
 
 use Mezzio\Cors\Configuration\ConfigurationInterface;
@@ -143,18 +149,17 @@ Result of this configuration for the `CORS preflight` of `/foo` for the upcoming
 
 | Configuration | Parameter |
 |:------------- |:-------------:|
-| `allowed_origins` | `['someotherdomain.com']` |
-| `allowed_headers` | `['X-Specific-Header-For-Foo-Endpoint']` |
-| `allowed_max_age` | `3600` |
-| `exposed_headers` | `[]` |
-| `credentials_allowed` | `false`|
-| `allowed_methods` | `['GET']` |
-
+| `allowed_origins` | `['someotherdomain.com']`
+| `allowed_headers` | `['X-Specific-Header-For-Foo-Endpoint']`
+| `allowed_max_age` | `3600`
+| `exposed_headers` | `[]`
+| `credentials_allowed` | `false`
+| `allowed_methods` | `['GET']`
 
 **Did you note the missing `DELETE`? This is because of the `explicit` flag! Also note the empty `exposed_headers` which is due to the project overriding (`overrides_project_configuration`) parameter.**
 
-
 #### Enable project merging
+
 ```php
 <?php
 declare(strict_types=1);
@@ -205,11 +210,11 @@ Result of this configuration for the `CORS preflight` of `/foo` for the upcoming
 
 | Configuration | Parameter |
 |:-------------|:-------------:|
-| `allowed_origins` | `[RouteConfigurationInterface::ANY_ORIGIN]` |
-| `allowed_headers` | `['X-Specific-Header-For-Foo-Endpoint', 'X-Project-Header']` |
-| `allowed_max_age` | `7200` |
-| `exposed_headers` | `['X-Some-Header']` |
-| `credentials_allowed` | `true`|
-| `allowed_methods` | `['GET', 'DELETE']` |
+| `allowed_origins` | `[RouteConfigurationInterface::ANY_ORIGIN]`
+| `allowed_headers` | `['X-Specific-Header-For-Foo-Endpoint', 'X-Project-Header']`
+| `allowed_max_age` | `7200`
+| `exposed_headers` | `['X-Some-Header']`
+| `credentials_allowed` | `true`
+| `allowed_methods` | `['GET', 'DELETE']`
 
-**Did you note the `ANY_ORIGIN` detail? This is, because if `ANY_ORIGIN` is allowed for an endpoint, we remove all other origins for that route.** 
+**Did you note the `ANY_ORIGIN` detail? This is, because if `ANY_ORIGIN` is allowed for an endpoint, we remove all other origins for that route.**

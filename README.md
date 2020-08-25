@@ -6,7 +6,7 @@
 CORS subcomponent for [Mezzio](https://github.com/mezzio/mezzio).
 
 
-This extension creates CORS details for your application. 
+This extension creates CORS details for your application.
 
 ## Installation
 
