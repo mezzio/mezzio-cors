@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CORS subcomponent for Mezzio">  
+    <link rel="canonical" href="https://docs.mezzio.dev/mezzio-cors/v1/middleware/">
+    <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Middleware - mezzio-cors - Laminas Docs</title>
+
+    <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
+    
+</head>
+<body id="page-top" class="mezzio" data-spy="scroll" data-target=".toc" data-offset="20">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="https://docs.laminas.dev/img/laminas-foundation-white.svg" height="28" alt="Laminas">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <div class="dropdown sub-project-selector">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a href="https://docs.mezzio.dev/" class="dropdown-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-sm-12">
+                                        <img src="https://docs.laminas.dev/img/laminas-mezzio-rgb.svg">
+                                    </div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <strong>Mezzio</strong><br>
+                                        PSR-15 Middleware in Minutes
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="https://docs.laminas.dev/components/" class="dropdown-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-sm-12">
+                                        <img src="https://docs.laminas.dev/img/laminas-components-rgb.svg">
+                                    </div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <strong>Components</strong><br>
+                                        Components for Enterprise Applications
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="https://docs.laminas.dev/mvc" class="dropdown-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-sm-12">
+                                        <img src="https://docs.laminas.dev/img/laminas-mvc-rgb.svg">
+                                    </div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <strong>MVC</strong><br>
+                                        MVC for Enterprise Applications
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="https://api-tools.getlaminas.org/documentation" class="dropdown-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-sm-12">
+                                        <img src="https://docs.laminas.dev/img/laminas-api-tools-rgb.svg">
+                                    </div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <strong>API Tools</strong><br>
+                                        Build RESTful APIs in Minutes
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item dropdown-item--secondardy" href="https://docs.laminas.dev/migration/">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8 offset-md-4 col-sm-12">
+                                        Migration to Laminas
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item dropdown-item--secondardy" href="https://docs.laminas.dev/tutorials/">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8 offset-md-4 col-sm-12">
+                                        Tutorials
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../..">mezzio-cors</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item subnavigation__list-item--active">
+                                <a href="./" class="subnavigation__link">Middleware</a>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-8">
+                <h1 class="header__title">
+                    Mezzio
+
+                    
+                        <small class="header__subtitle">mezzio-cors</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/mezzio/mezzio-cors/" class="header__link header__link--github" title="Go to repository of mezzio-cors">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-12 content" role="main">
+                
+                
+                    
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#preflight-request" class="toc__link nav-link">Preflight request</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#cors-request" class="toc__link nav-link">CORS request</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#configuration" class="toc__link nav-link">Configuration</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+                
+
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="https://docs.laminas.dev/">Overview</a></li>
+            <li class="breadcrumb-item"><a href="https://docs.mezzio.dev/">Mezzio</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="../..">mezzio-cors</a></li>
+
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Middleware</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+
+    <h1 id="cors-middleware">CORS Middleware</h1>
+<p>mezzio-cors provides middleware consuming
+<a href="http://www.php-fig.org/psr/psr-7/">PSR-7</a> HTTP message instances, via implementation of <a href="https://www.php-fig.org/psr/psr-15/">PSR-15</a> interfaces.</p>
+<p>This middleware checks, if the incoming request is a CORS request. If so, it makes a distinction between a so called <a href="#preflight-request">Preflight request</a> or the <a href="#cors-request">regular request</a>.</p>
+<h2 id="preflight-request">Preflight request</h2>
+<p>A Preflight request should be a light call which provides the Browser with the CORS informations it needs to execute the regular (CORS) request.</p>
+<p>These informations are:
+- Domain accepted for executing CORS request?
+- Cookies accepted?
+- Which Headers are allowed to be sent?
+- Which Headers are provided in the response?
+- Which HTTP Methods are accepted by that Endpoint?</p>
+<h2 id="cors-request">CORS request</h2>
+<p>The CORS request is the actual request. That request SHOULD to be already verified. If its not verified by a previous <a href="#preflight-request">Preflight request</a>, the request will be aborted with a <code>403 Forbidden</code> response.</p>
+<h2 id="configuration">Configuration</h2>
+<p>There are 2 ways of configuring CORS in your project. Either create a global configuration file like <code>cors.global.php</code> or add a route specific configuration.</p>
+<p>On the project level, you can only configure the following Headers:</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th align="left">Configuration</th>
+<th align="center">Type</th>
+<th align="center">Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>allowed_origins</code></td>
+<td align="center">string[]</td>
+<td align="center">Access-Control-Allow-Origin</td>
+</tr>
+<tr>
+<td align="left"><code>allowed_headers</code></td>
+<td align="center">string[]</td>
+<td align="center">Access-Control-Allow-Headers</td>
+</tr>
+<tr>
+<td align="left"><code>allowed_max_age</code></td>
+<td align="center">string (TTL in seconds)</td>
+<td align="center">Access-Control-Allowed-Max-Age</td>
+</tr>
+<tr>
+<td align="left"><code>credentials_allowed</code></td>
+<td align="center">bool</td>
+<td align="center">Access-Control-Allow-Credentials</td>
+</tr>
+<tr>
+<td align="left"><code>exposed_headers</code></td>
+<td align="center">string[]</td>
+<td align="center">Access-Control-Exposed-Headers</td>
+</tr>
+</tbody>
+</table></div>
+<p>On the route level, you can configure all of the projects configuration settings and if the configuration of the route should either override the project configuration (default) or merge it.</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th align="left">Configuration</th>
+<th align="center">Type</th>
+<th align="center">Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>overrides_project_configuration</code></td>
+<td align="center">bool</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left"><code>explicit</code></td>
+<td align="center">bool</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="left"><code>allowed_origins</code></td>
+<td align="center">string[]</td>
+<td align="center">Access-Control-Allow-Origin</td>
+</tr>
+<tr>
+<td align="left"><code>allowed_headers</code></td>
+<td align="center">string[]</td>
+<td align="center">Access-Control-Allow-Headers</td>
+</tr>
+<tr>
+<td align="left"><code>allowed_max_age</code></td>
+<td align="center">string (TTL in seconds)</td>
+<td align="center">Access-Control-Allowed-Max-Age</td>
+</tr>
+<tr>
+<td align="left"><code>credentials_allowed</code></td>
+<td align="center">bool</td>
+<td align="center">Access-Control-Allow-Credentials</td>
+</tr>
+<tr>
+<td align="left"><code>exposed_headers</code></td>
+<td align="center">string[]</td>
+<td align="center">Access-Control-Exposed-Headers</td>
+</tr>
+</tbody>
+</table></div>
+<p>The parameter <code>overrides_project_configuration</code> handles the way how the configuration is being merged. The default setting is <code>true</code> to ensure that a route configuration has to specify every information it will provide.</p>
+<p>The parameter <code>explicit</code> tells the <code>ConfigurationLocator</code> to stop trying other request methods to match the same route because there wont be any other method.</p>
+<h3>Examples for project configurations</h3>
+<h4>Allow every origin</h4>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
+<span class="c1">// In config/autoload/cors.global.php</span>
+<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">use</span> <span class="nx">Mezzio\Cors\Configuration\ConfigurationInterface</span><span class="p">;</span>
+
+<span class="k">return</span> <span class="p">[</span>
+    <span class="nx">ConfigurationInterface</span><span class="o">::</span><span class="na">CONFIGURATION_IDENTIFIER</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;allowed_origins&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">ConfigurationInterface</span><span class="o">::</span><span class="na">ANY_ORIGIN</span><span class="p">],</span> <span class="c1">// Allow any origin</span>
+        <span class="s1">&#39;allowed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span> <span class="c1">// No custom headers allowed</span>
+        <span class="s1">&#39;allowed_max_age&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;600&#39;</span><span class="p">,</span> <span class="c1">// 10 minutes</span>
+        <span class="s1">&#39;credentials_allowed&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span> <span class="c1">// Allow cookies</span>
+        <span class="s1">&#39;exposed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;X-Custom-Header&#39;</span><span class="p">],</span> <span class="c1">// Tell client that the API will always return this header  </span>
+    <span class="p">],</span>
+<span class="p">];</span>
+</code></pre></div>
+
+<h4>Allow every origin from a specific domain and its subdomains</h4>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
+<span class="c1">// In config/autoload/cors.global.php</span>
+
+<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">use</span> <span class="nx">Mezzio\Cors\Configuration\ConfigurationInterface</span><span class="p">;</span>
+
+<span class="k">return</span> <span class="p">[</span>
+    <span class="nx">ConfigurationInterface</span><span class="o">::</span><span class="na">CONFIGURATION_IDENTIFIER</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;allowed_origins&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;*.example.com&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;allowed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span> <span class="c1">// No custom headers allowed</span>
+        <span class="s1">&#39;allowed_max_age&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;3600&#39;</span><span class="p">,</span> <span class="c1">// 60 minutes</span>
+        <span class="s1">&#39;credentials_allowed&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span> <span class="c1">// Disallow cookies</span>
+        <span class="s1">&#39;exposed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span> <span class="c1">// No headers are exposed  </span>
+    <span class="p">],</span>
+<span class="p">];</span>
+</code></pre></div>
+
+<h3>Examples for route configurations</h3>
+<h4>Make the configuration explicit to avoid multiple router match requests</h4>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
+<span class="c1">// In config/autoload/cors.global.php</span>
+<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">use</span> <span class="nx">Mezzio\Cors\Configuration\ConfigurationInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Mezzio\Cors\Configuration\RouteConfigurationInterface</span><span class="p">;</span>
+
+<span class="k">return</span> <span class="p">[</span>
+    <span class="nx">ConfigurationInterface</span><span class="o">::</span><span class="na">CONFIGURATION_IDENTIFIER</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;allowed_origins&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;*.example.com&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;allowed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;X-Project-Header&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;exposed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;X-Some-Header&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;allowed_max_age&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;3600&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;credentials_allowed&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;routes&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+          <span class="p">[</span>
+            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo-get&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/foo&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;middleware&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="c1">// ...</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;options&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">&#39;defaults&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                    <span class="nx">RouteConfigurationInterface</span><span class="o">::</span><span class="na">PARAMETER_IDENTIFIER</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                        <span class="s1">&#39;explicit&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+                        <span class="s1">&#39;allowed_origins&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;someotherdomain.com&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;allowed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;X-Specific-Header-For-Foo-Endpoint&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;allowed_max_age&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;3600&#39;</span><span class="p">,</span>
+                    <span class="p">],</span>
+                <span class="p">],</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;allowed_methods&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">],</span>
+        <span class="p">],</span>
+        <span class="p">[</span>
+            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo-delete&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/foo&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;middleware&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="c1">// ...</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;allowed_methods&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;DELETE&#39;</span><span class="p">],</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+</code></pre></div>
+
+<p>Result of this configuration for the <code>CORS preflight</code> of <code>/foo</code> for the upcoming <code>GET</code> request will look like this:</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th align="left">Configuration</th>
+<th align="center">Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>allowed_origins</code></td>
+<td align="center"><code>['someotherdomain.com']</code></td>
+</tr>
+<tr>
+<td align="left"><code>allowed_headers</code></td>
+<td align="center"><code>['X-Specific-Header-For-Foo-Endpoint']</code></td>
+</tr>
+<tr>
+<td align="left"><code>allowed_max_age</code></td>
+<td align="center"><code>3600</code></td>
+</tr>
+<tr>
+<td align="left"><code>exposed_headers</code></td>
+<td align="center"><code>[]</code></td>
+</tr>
+<tr>
+<td align="left"><code>credentials_allowed</code></td>
+<td align="center"><code>false</code></td>
+</tr>
+<tr>
+<td align="left"><code>allowed_methods</code></td>
+<td align="center"><code>['GET']</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Did you note the missing <code>DELETE</code>? This is because of the <code>explicit</code> flag! Also note the empty <code>exposed_headers</code> which is due to the project overriding (<code>overrides_project_configuration</code>) parameter.</strong></p>
+<h4>Enable project merging</h4>
+<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
+<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="k">use</span> <span class="nx">Mezzio\Cors\Configuration\ConfigurationInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Mezzio\Cors\Configuration\RouteConfigurationInterface</span><span class="p">;</span>
+
+<span class="k">return</span> <span class="p">[</span>
+    <span class="nx">ConfigurationInterface</span><span class="o">::</span><span class="na">CONFIGURATION_IDENTIFIER</span> <span class="o">=&gt;</span> <span class="p">[</span>
+        <span class="s1">&#39;allowed_origins&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;*.example.com&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;allowed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;X-Project-Header&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;exposed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;X-Some-Header&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;allowed_max_age&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;3600&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;routes&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+          <span class="p">[</span>
+            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo-get&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/foo&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;middleware&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="c1">// ...</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;options&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="s1">&#39;defaults&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                    <span class="nx">RouteConfigurationInterface</span><span class="o">::</span><span class="na">PARAMETER_IDENTIFIER</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                        <span class="s1">&#39;overrides_project_configuration&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+                        <span class="s1">&#39;allowed_origins&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">RouteConfigurationInterface</span><span class="o">::</span><span class="na">ANY_ORIGIN</span><span class="p">],</span>
+                        <span class="s1">&#39;allowed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;X-Specific-Header-For-Foo-Endpoint&#39;</span><span class="p">],</span>
+                        <span class="s1">&#39;allowed_max_age&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;7200&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;credentials_allowed&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+                    <span class="p">],</span>
+                <span class="p">],</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;allowed_methods&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">],</span>
+        <span class="p">],</span>
+        <span class="p">[</span>
+            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo-delete&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/foo&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;middleware&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                <span class="c1">// ...</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;allowed_methods&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;DELETE&#39;</span><span class="p">],</span>
+        <span class="p">],</span>
+    <span class="p">],</span>
+<span class="p">];</span>
+</code></pre></div>
+
+<p>Result of this configuration for the <code>CORS preflight</code> of <code>/foo</code> for the upcoming <code>GET</code> request will look like this:</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th align="left">Configuration</th>
+<th align="center">Parameter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>allowed_origins</code></td>
+<td align="center"><code>[RouteConfigurationInterface::ANY_ORIGIN]</code></td>
+</tr>
+<tr>
+<td align="left"><code>allowed_headers</code></td>
+<td align="center"><code>['X-Specific-Header-For-Foo-Endpoint', 'X-Project-Header']</code></td>
+</tr>
+<tr>
+<td align="left"><code>allowed_max_age</code></td>
+<td align="center"><code>7200</code></td>
+</tr>
+<tr>
+<td align="left"><code>exposed_headers</code></td>
+<td align="center"><code>['X-Some-Header']</code></td>
+</tr>
+<tr>
+<td align="left"><code>credentials_allowed</code></td>
+<td align="center"><code>true</code></td>
+</tr>
+<tr>
+<td align="left"><code>allowed_methods</code></td>
+<td align="center"><code>['GET', 'DELETE']</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Did you note the <code>ANY_ORIGIN</code> detail? This is, because if <code>ANY_ORIGIN</code> is allowed for an endpoint, we remove all other origins for that route.</strong></p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../intro/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/mezzio/mezzio-cors/edit/master/docs/book/v1/middleware.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                <div class="donation-banner">
+    <a href="https://getlaminas.org/support/">
+        <h2>Donate</h2>
+        <p>Support Laminas Developers Directly</p>
+        <img src="https://funding.communitybridge.org/assets/cb-f-horizontal-white.svg">
+    </a>
+</div>
+
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../..">mezzio-cors</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item subnavigation__list-item--active">
+                                <a href="./" class="subnavigation__link">Middleware</a>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+
+                    
+                    <div class="col-md-4">
+                        <h4 class="footer__headline">Support</h4>
+                        <ul class="support__list">
+                            <li class="support__list-item">
+                                <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://getlaminas.org/blog/rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    
+                    <div class="col-md-4">
+                        <h4 class="footer__headline">License</h4>
+                        <p>
+                            Code licensed under <a
+                                href="https://github.com/mezzio/mezzio-cors/blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        </p>
+                    </div>
+
+                    
+                    <div class="col-md-4">
+                        <h4 class="footer__headline">Copyright</h4>
+                        <p>
+                            <!--Built with love by the Laminas team with the help of our
+                            <a href="https://github.com/mezzio/mezzio-cors/graphs/contributors">contributors</a>.<br>-->
+                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '../..',
+            project  = "mezzio",
+            siteName = 'mezzio-cors';
+    </script>
+    <script src="https://docs.laminas.dev/js/scripts.js"></script>
+    
+        <script src="../../search/main.js"></script>
+    
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in mezzio-cors" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>
