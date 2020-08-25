@@ -4,7 +4,9 @@
     "description": "CORS subcomponent for Mezzio",
     "keywords": [
         "cors",
-        "mezzio"
+        "mezzio",
+        "psr-7",
+        "psr-15"
     ],
     "license": "BSD-3-Clause",
     "require": {
@@ -32,7 +34,7 @@
         "sort-packages": true
     },
     "extra": {
-        "zf": {
+        "laminas": {
             "config-provider": "Mezzio\\Cors\\ConfigProvider"
         }
     },
@@ -46,8 +48,6 @@
             "Mezzio\\CorsTest\\": "test"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "scripts": {
         "analyze": "phpstan analyze --no-progress",
         "check": [
