@@ -6,15 +6,14 @@ namespace Mezzio\Cors\Service;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\UriFactoryInterface;
-
-use function assert;
+use Webmozart\Assert\Assert;
 
 final class CorsFactory
 {
     public function __invoke(ContainerInterface $container): Cors
     {
         $uriFactory = $container->get(UriFactoryInterface::class);
-        assert($uriFactory instanceof UriFactoryInterface);
+        Assert::isInstanceOf($uriFactory, UriFactoryInterface::class);
         return new Cors($uriFactory);
     }
 }
