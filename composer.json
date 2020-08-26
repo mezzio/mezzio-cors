@@ -46,14 +46,15 @@
         }
     },
     "scripts": {
-        "analyze": "psalm",
         "check": [
             "@cs-check",
-            "@test"
+            "@test",
+            "@static-analysis"
         ],
         "crc": "composer-require-checker check",
         "cs-check": "phpcs -s",
         "cs-fix": "phpcbf",
+        "static-analysis": "psalm --shepherd --stats",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
