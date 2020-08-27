@@ -102,7 +102,6 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
 
     /**
      * @param array<int|string,string> $methods
-     * @return string[]
      * @psalm-return list<string>
      */
     private function normalizeRequestMethods(array $methods): array

@@ -10,8 +10,8 @@ use Mezzio\Cors\Configuration\RouteConfigurationInterface;
 use Mezzio\Router\RouteResult;
 use Mezzio\Router\RouterInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
-
 use Webmozart\Assert\Assert;
+
 use function array_diff;
 use function array_merge;
 use function array_values;

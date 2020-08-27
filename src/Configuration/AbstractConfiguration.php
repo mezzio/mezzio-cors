@@ -22,19 +22,16 @@ use function ucwords;
 abstract class AbstractConfiguration implements ConfigurationInterface
 {
     /**
-     * @var string[]
      * @psalm-var list<string>
      */
     protected $allowedOrigins = [];
 
     /**
-     * @var string[]
      * @psalm-var list<string>
      */
     protected $allowedMethods = [];
 
     /**
-     * @var string[]
      * @psalm-var list<string>
      */
     protected $allowedHeaders = [];
@@ -46,7 +43,6 @@ abstract class AbstractConfiguration implements ConfigurationInterface
     protected $credentialsAllowed = false;
 
     /**
-     * @var string[]
      * @psalm-var list<string>
      */
     protected $exposedHeaders = [];

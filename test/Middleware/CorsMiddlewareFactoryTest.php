@@ -14,7 +14,7 @@ use Mezzio\CorsTest\AbstractFactoryTest;
 final class CorsMiddlewareFactoryTest extends AbstractFactoryTest
 {
     /**
-     * @return string[]
+     * @return array<string,string>
      */
     protected function dependencies(): array
     {
