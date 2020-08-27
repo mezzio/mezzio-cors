@@ -72,9 +72,7 @@ abstract class AbstractFactoryTest extends TestCase
     }
 
     /**
-     * @param string|array|object $definition
-     * @psalm-param class-string|array<mixed>|object $definition
-     * @return array|object
+     * @psalm-param class-string|array<string,mixed>|object $definition
      * @psalm-return array<mixed>|object
      */
     private function createReturnValueFromDefinition($definition)
