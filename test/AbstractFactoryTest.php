@@ -14,7 +14,7 @@ use function is_string;
 abstract class AbstractFactoryTest extends TestCase
 {
     /**
-     * @var callable(ContainerInterface $container):object
+     * @psalm-var callable(ContainerInterface $container):object
      */
     protected $factory;
 
@@ -29,7 +29,7 @@ abstract class AbstractFactoryTest extends TestCase
     abstract protected function dependencies(): array;
 
     /**
-     * @return callable(ContainerInterface $container):object
+     * @psalm-return callable(ContainerInterface $container):object
      */
     abstract protected function factory(): callable;
 
