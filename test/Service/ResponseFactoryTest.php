@@ -21,6 +21,7 @@ final class ResponseFactoryTest extends TestCase
     private $responseFactory;
 
     /**
+     * @var MockObject
      * @psalm-var MockObject&ResponseFactoryInterface
      */
     private $psrResponseFactory;
