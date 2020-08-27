@@ -10,9 +10,6 @@ use Mezzio\CorsTest\AbstractFactoryTest;
 
 final class RouteConfigurationFactoryFactoryTest extends AbstractFactoryTest
 {
-    /**
-     * @return array<string,string|array|object>
-     */
     protected function dependencies(): array
     {
         return [];

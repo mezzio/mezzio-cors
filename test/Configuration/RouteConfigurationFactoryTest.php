@@ -25,6 +25,11 @@ final class RouteConfigurationFactoryTest extends TestCase
     {
         $factory  = $this->factory;
         $instance = $factory([]);
-        $this->assertInstanceOf(RouteConfigurationInterface::class, $instance);
+        self::assertEmpty($instance->allowedMaxAge());
+        self::assertEmpty($instance->allowedMethods());
+        self::assertEmpty($instance->allowedOrigins());
+        self::assertEmpty($instance->allowedHeaders());
+        self::assertEmpty($instance->exposedHeaders());
+        self::assertFalse($instance->credentialsAllowed());
     }
 }

@@ -11,9 +11,6 @@ use Psr\Http\Message\UriFactoryInterface;
 
 final class CorsFactoryTest extends AbstractFactoryTest
 {
-    /**
-     * @return array<string,string|array|object>
-     */
     protected function dependencies(): array
     {
         return [

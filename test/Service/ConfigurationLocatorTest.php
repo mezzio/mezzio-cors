@@ -322,7 +322,7 @@ final class ConfigurationLocatorTest extends TestCase
     }
 
     /**
-     * @psalm-return array<mixed>
+     * @psalm-return list<list<string|UriInterface>>
      */
     private function createServerRequestArguments(string $initialRequestMethod, UriInterface $requestUri): array
     {

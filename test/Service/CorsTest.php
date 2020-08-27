@@ -36,7 +36,10 @@ final class CorsTest extends TestCase
         $requestUri = $this->createMock(UriInterface::class);
         $this->applyUriInterfaceMethodAssertions($requestUri, $scheme, sprintf('subdomain.%s', $host), $port);
 
-        $origin = sprintf('%s://%s:%s', $scheme, $host, $port);
+        $origin = sprintf('%s://%s', $scheme, $host);
+        if ($port !== null) {
+            $origin = sprintf('%s:%d', $origin, $port);
+        }
 
         $request = $this->createMock(ServerRequestInterface::class);
         $request

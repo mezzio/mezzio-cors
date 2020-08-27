@@ -11,9 +11,6 @@ use Psr\Http\Message\ResponseFactoryInterface;
 
 final class ResponseFactoryFactoryTest extends AbstractFactoryTest
 {
-    /**
-     * @return array<string,string|array|object>
-     */
     protected function dependencies(): array
     {
         return [
