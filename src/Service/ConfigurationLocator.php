@@ -11,6 +11,7 @@ use Mezzio\Router\RouteResult;
 use Mezzio\Router\RouterInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 
+use Webmozart\Assert\Assert;
 use function array_diff;
 use function array_merge;
 use function array_values;
@@ -90,8 +91,8 @@ final class ConfigurationLocator implements ConfigurationLocatorInterface
         $explicit                  = $this->explicit($allowedMethods);
         $routeConfigurationFactory = $this->routeConfigurationFactory;
 
-        /** @var array<string,mixed>|null $routeParameters */
         $routeParameters = $result->getMatchedParams()[RouteConfigurationInterface::PARAMETER_IDENTIFIER] ?? null;
+        Assert::nullOrIsMap($routeParameters);
         if ($routeParameters === null) {
             return $routeConfigurationFactory(['explicit' => $explicit])
                 ->mergeWithConfiguration($this->configuration)
