@@ -29,11 +29,6 @@ final class ConfigurationLocatorFactoryTest extends AbstractFactoryTest
         return new ConfigurationLocatorFactory();
     }
 
-    /**
-     * Implement this for post creation assertions.
-     *
-     * @param mixed $instance
-     */
     protected function postCreationAssertions($instance): void
     {
         $this->assertInstanceOf(ConfigurationLocator::class, $instance);

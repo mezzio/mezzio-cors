@@ -20,11 +20,6 @@ final class RouteConfigurationFactoryFactoryTest extends AbstractFactoryTest
         return new RouteConfigurationFactoryFactory();
     }
 
-    /**
-     * Implement this for post creation assertions.
-     *
-     * @param mixed $instance
-     */
     protected function postCreationAssertions($instance): void
     {
         $this->assertInstanceOf(RouteConfigurationFactory::class, $instance);

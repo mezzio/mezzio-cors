@@ -23,11 +23,6 @@ final class CorsFactoryTest extends AbstractFactoryTest
         return new CorsFactory();
     }
 
-    /**
-     * Implement this for post creation assertions.
-     *
-     * @param mixed $instance
-     */
     protected function postCreationAssertions($instance): void
     {
         $this->assertInstanceOf(Cors::class, $instance);
