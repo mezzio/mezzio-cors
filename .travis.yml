@@ -20,6 +20,7 @@ matrix:
         - DEPS=latest
         - CS_CHECK=true
         - TEST_COVERAGE=true
+        - STATIC_CODE_ANALYSIS=true
     - php: 7.4
       env:
         - DEPS=lowest
@@ -52,7 +53,7 @@ install:
 script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
   - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
-  - composer static-analysis
+  - if [[ $STATIC_CODE_ANALYSIS == 'true' ]]; then composer static-analysis ; fi
   - composer crc
 
 after_script:
