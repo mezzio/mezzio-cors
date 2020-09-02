@@ -1,13 +1,17 @@
-# CORS Middleware
+# Middleware
 
 mezzio-cors provides middleware consuming
-[PSR-7](http://www.php-fig.org/psr/psr-7/) HTTP message instances, via implementation of [PSR-15](https://www.php-fig.org/psr/psr-15/) interfaces.
+[PSR-7](http://www.php-fig.org/psr/psr-7/) HTTP message instances, via
+implementation of [PSR-15](https://www.php-fig.org/psr/psr-15/) interfaces.
 
-This middleware checks, if the incoming request is a CORS request. If so, it makes a distinction between a so called [Preflight request](#preflight-request) or the [regular request](#cors-request).
+This middleware checks, if the incoming request is a CORS request. If so, it
+makes a distinction between a so called [Preflight request](#preflight-request)
+or the [regular request](#cors-request).
 
-## Preflight request
+## Preflight Request
 
-A Preflight request should be a light call which provides the Browser with the CORS informations it needs to execute the regular (CORS) request.
+A Preflight request should be a light call which provides the Browser with the
+CORS informations it needs to execute the regular (CORS) request.
 
 These informations are:
 - Domain accepted for executing CORS request?
@@ -16,13 +20,16 @@ These informations are:
 - Which Headers are provided in the response?
 - Which HTTP Methods are accepted by that Endpoint?
 
-## CORS request
+## CORS Request
 
-The CORS request is the actual request. That request SHOULD to be already verified. If its not verified by a previous [Preflight request](#preflight-request), the request will be aborted with a `403 Forbidden` response.
+The CORS request is the actual request. That request SHOULD to be already
+verified. If its not verified by a previous [Preflight request](#preflight-request),
+the request will be aborted with a `403 Forbidden` response.
 
 ## Configuration
 
-There are 2 ways of configuring CORS in your project. Either create a global configuration file like `cors.global.php` or add a route specific configuration.
+There are 2 ways of configuring CORS in your project. Either create a global
+configuration file like `cors.global.php` or add a route specific configuration.
 
 On the project level, you can only configure the following Headers:
 
@@ -34,7 +41,9 @@ On the project level, you can only configure the following Headers:
 | `credentials_allowed` | bool | Access-Control-Allow-Credentials
 | `exposed_headers` | string[] | Access-Control-Exposed-Headers
 
-On the route level, you can configure all of the projects configuration settings and if the configuration of the route should either override the project configuration (default) or merge it.
+On the route level, you can configure all of the projects configuration settings
+and if the configuration of the route should either override the project
+configuration (default) or merge it.
 
 
 | Configuration | Type | Header
@@ -47,13 +56,16 @@ On the route level, you can configure all of the projects configuration settings
 | `credentials_allowed` | bool | Access-Control-Allow-Credentials
 | `exposed_headers` | string[] | Access-Control-Exposed-Headers
 
-The parameter `overrides_project_configuration` handles the way how the configuration is being merged. The default setting is `true` to ensure that a route configuration has to specify every information it will provide.
+The parameter `overrides_project_configuration` handles the way how the
+configuration is being merged. The default setting is `true` to ensure that a
+route configuration has to specify every information it will provide.
 
-The parameter `explicit` tells the `ConfigurationLocator` to stop trying other request methods to match the same route because there wont be any other method.
+The parameter `explicit` tells the `ConfigurationLocator` to stop trying other
+request methods to match the same route because there wont be any other method.
 
-### Examples for project configurations
+### Examples for Project Configurations
 
-#### Allow every origin
+#### Allow Every Origin
 
 ```php
 <?php
@@ -73,7 +85,7 @@ return [
 ];
 ```
 
-#### Allow every origin from a specific domain and its subdomains
+#### Allow Every Origin from a Specific Domain and Its Subdomains
 
 ```php
 <?php
@@ -94,9 +106,9 @@ return [
 ];
 ```
 
-### Examples for route configurations
+### Examples for Route Configurations
 
-#### Make the configuration explicit to avoid multiple router match requests
+#### Make the Configuration Explicit to Avoid Multiple Router Match Requests
 
 ```php
 <?php
@@ -145,7 +157,8 @@ return [
 ];
 ```
 
-Result of this configuration for the `CORS preflight` of `/foo` for the upcoming `GET` request will look like this:
+Result of this configuration for the `CORS preflight` of `/foo` for the upcoming
+`GET` request will look like this:
 
 | Configuration | Parameter |
 |:------------- |:-------------:|
@@ -158,7 +171,7 @@ Result of this configuration for the `CORS preflight` of `/foo` for the upcoming
 
 **Did you note the missing `DELETE`? This is because of the `explicit` flag! Also note the empty `exposed_headers` which is due to the project overriding (`overrides_project_configuration`) parameter.**
 
-#### Enable project merging
+#### Enable Project Merging
 
 ```php
 <?php
@@ -206,7 +219,8 @@ return [
 ];
 ```
 
-Result of this configuration for the `CORS preflight` of `/foo` for the upcoming `GET` request will look like this:
+Result of this configuration for the `CORS preflight` of `/foo` for the upcoming
+`GET` request will look like this:
 
 | Configuration | Parameter |
 |:-------------|:-------------:|
