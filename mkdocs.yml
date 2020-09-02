@@ -6,7 +6,7 @@ nav:
   - Installation: v1/installation.md
   - Middleware: v1/middleware.md
 site_name: mezzio-cors
-site_description: 'CORS subcomponent for Mezzio'
+site_description: 'CORS component for Mezzio and other PSR-15 middleware runners.'
 repo_url: 'https://github.com/mezzio/mezzio-cors'
 extra:
     project: Mezzio
