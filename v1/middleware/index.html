@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CORS subcomponent for Mezzio">  
+    <meta name="description" content="CORS component for Mezzio and other PSR-15 middleware runners.">  
     <link rel="canonical" href="https://docs.mezzio.dev/mezzio-cors/v1/middleware/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
@@ -143,6 +143,20 @@
                     
                     
                         
+                            <li class="subnavigation__list-item ">
+                                <a href="../installation/" class="subnavigation__link">Installation</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
                             <li class="subnavigation__list-item subnavigation__list-item--active">
                                 <a href="./" class="subnavigation__link">Middleware</a>
                             </li>
@@ -220,11 +234,11 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#preflight-request" class="toc__link nav-link">Preflight request</a>
+                        <a href="#preflight-request" class="toc__link nav-link">Preflight Request</a>
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#cors-request" class="toc__link nav-link">CORS request</a>
+                        <a href="#cors-request" class="toc__link nav-link">CORS Request</a>
                     </li>
                 
                     <li class="toc__entry">
@@ -263,22 +277,29 @@
     
     
 
-    <h1 id="cors-middleware">CORS Middleware</h1>
+    <h1 id="middleware">Middleware</h1>
 <p>mezzio-cors provides middleware consuming
-<a href="http://www.php-fig.org/psr/psr-7/">PSR-7</a> HTTP message instances, via implementation of <a href="https://www.php-fig.org/psr/psr-15/">PSR-15</a> interfaces.</p>
-<p>This middleware checks, if the incoming request is a CORS request. If so, it makes a distinction between a so called <a href="#preflight-request">Preflight request</a> or the <a href="#cors-request">regular request</a>.</p>
-<h2 id="preflight-request">Preflight request</h2>
-<p>A Preflight request should be a light call which provides the Browser with the CORS informations it needs to execute the regular (CORS) request.</p>
+<a href="http://www.php-fig.org/psr/psr-7/">PSR-7</a> HTTP message instances, via
+implementation of <a href="https://www.php-fig.org/psr/psr-15/">PSR-15</a> interfaces.</p>
+<p>This middleware checks, if the incoming request is a CORS request. If so, it
+makes a distinction between a so called <a href="#preflight-request">Preflight request</a>
+or the <a href="#cors-request">regular request</a>.</p>
+<h2 id="preflight-request">Preflight Request</h2>
+<p>A Preflight request should be a light call which provides the Browser with the
+CORS informations it needs to execute the regular (CORS) request.</p>
 <p>These informations are:
 - Domain accepted for executing CORS request?
 - Cookies accepted?
 - Which Headers are allowed to be sent?
 - Which Headers are provided in the response?
 - Which HTTP Methods are accepted by that Endpoint?</p>
-<h2 id="cors-request">CORS request</h2>
-<p>The CORS request is the actual request. That request SHOULD to be already verified. If its not verified by a previous <a href="#preflight-request">Preflight request</a>, the request will be aborted with a <code>403 Forbidden</code> response.</p>
+<h2 id="cors-request">CORS Request</h2>
+<p>The CORS request is the actual request. That request SHOULD to be already
+verified. If its not verified by a previous <a href="#preflight-request">Preflight request</a>,
+the request will be aborted with a <code>403 Forbidden</code> response.</p>
 <h2 id="configuration">Configuration</h2>
-<p>There are 2 ways of configuring CORS in your project. Either create a global configuration file like <code>cors.global.php</code> or add a route specific configuration.</p>
+<p>There are 2 ways of configuring CORS in your project. Either create a global
+configuration file like <code>cors.global.php</code> or add a route specific configuration.</p>
 <p>On the project level, you can only configure the following Headers:</p>
 <div class="table-responsive"><table>
 <thead>
@@ -316,7 +337,9 @@
 </tr>
 </tbody>
 </table></div>
-<p>On the route level, you can configure all of the projects configuration settings and if the configuration of the route should either override the project configuration (default) or merge it.</p>
+<p>On the route level, you can configure all of the projects configuration settings
+and if the configuration of the route should either override the project
+configuration (default) or merge it.</p>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -363,10 +386,13 @@
 </tr>
 </tbody>
 </table></div>
-<p>The parameter <code>overrides_project_configuration</code> handles the way how the configuration is being merged. The default setting is <code>true</code> to ensure that a route configuration has to specify every information it will provide.</p>
-<p>The parameter <code>explicit</code> tells the <code>ConfigurationLocator</code> to stop trying other request methods to match the same route because there wont be any other method.</p>
-<h3>Examples for project configurations</h3>
-<h4>Allow every origin</h4>
+<p>The parameter <code>overrides_project_configuration</code> handles the way how the
+configuration is being merged. The default setting is <code>true</code> to ensure that a
+route configuration has to specify every information it will provide.</p>
+<p>The parameter <code>explicit</code> tells the <code>ConfigurationLocator</code> to stop trying other
+request methods to match the same route because there wont be any other method.</p>
+<h3>Examples for Project Configurations</h3>
+<h4>Allow Every Origin</h4>
 <pre class="highlight"><code class="language-php">&lt;?php
 // In config/autoload/cors.global.php
 declare(strict_types=1);
@@ -383,7 +409,7 @@ return [
     ],
 ];</code></pre>
 
-<h4>Allow every origin from a specific domain and its subdomains</h4>
+<h4>Allow Every Origin from a Specific Domain and Its Subdomains</h4>
 <pre class="highlight"><code class="language-php">&lt;?php
 // In config/autoload/cors.global.php
 
@@ -401,8 +427,8 @@ return [
     ],
 ];</code></pre>
 
-<h3>Examples for route configurations</h3>
-<h4>Make the configuration explicit to avoid multiple router match requests</h4>
+<h3>Examples for Route Configurations</h3>
+<h4>Make the Configuration Explicit to Avoid Multiple Router Match Requests</h4>
 <pre class="highlight"><code class="language-php">&lt;?php
 // In config/autoload/cors.global.php
 declare(strict_types=1);
@@ -448,7 +474,8 @@ return [
     ],
 ];</code></pre>
 
-<p>Result of this configuration for the <code>CORS preflight</code> of <code>/foo</code> for the upcoming <code>GET</code> request will look like this:</p>
+<p>Result of this configuration for the <code>CORS preflight</code> of <code>/foo</code> for the upcoming
+<code>GET</code> request will look like this:</p>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -484,7 +511,7 @@ return [
 </tbody>
 </table></div>
 <p><strong>Did you note the missing <code>DELETE</code>? This is because of the <code>explicit</code> flag! Also note the empty <code>exposed_headers</code> which is due to the project overriding (<code>overrides_project_configuration</code>) parameter.</strong></p>
-<h4>Enable project merging</h4>
+<h4>Enable Project Merging</h4>
 <pre class="highlight"><code class="language-php">&lt;?php
 declare(strict_types=1);
 
@@ -529,7 +556,8 @@ return [
     ],
 ];</code></pre>
 
-<p>Result of this configuration for the <code>CORS preflight</code> of <code>/foo</code> for the upcoming <code>GET</code> request will look like this:</p>
+<p>Result of this configuration for the <code>CORS preflight</code> of <code>/foo</code> for the upcoming
+<code>GET</code> request will look like this:</p>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -575,7 +603,7 @@ return [
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../intro/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../installation/">
                     <i class="fa fa-chevron-left"></i> Previous
                 </a>
             
@@ -639,6 +667,20 @@ return [
                         
                             <li class="subnavigation__list-item ">
                                 <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../installation/" class="subnavigation__link">Installation</a>
                             </li>
                         
                     

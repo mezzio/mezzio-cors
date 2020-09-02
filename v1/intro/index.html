@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CORS subcomponent for Mezzio">  
+    <meta name="description" content="CORS component for Mezzio and other PSR-15 middleware runners.">  
     <link rel="canonical" href="https://docs.mezzio.dev/mezzio-cors/v1/intro/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
@@ -144,6 +144,20 @@
                     
                         
                             <li class="subnavigation__list-item ">
+                                <a href="../installation/" class="subnavigation__link">Installation</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
                                 <a href="../middleware/" class="subnavigation__link">Middleware</a>
                             </li>
                         
@@ -220,10 +234,6 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#installation" class="toc__link nav-link">Installation</a>
-                    </li>
-                
-                    <li class="toc__entry">
                         <a href="#features" class="toc__link nav-link">Features</a>
                     </li>
                 
@@ -259,11 +269,16 @@
     
     
 
-    <h1 id="mezzio-cors">mezzio-cors</h1>
-<p>CORS subcomponent for <a href="https://github.com/mezzio/mezzio">Mezzio</a>.</p>
-<p>This extension creates CORS details for your application. If the <code>CorsMiddleware</code> detects a <code>CORS preflight</code>, the middleware will start do detect the proper <code>CORS</code> configuration.
-The <code>Router</code> is being used to detect every allowed request method by executing a route match with all possible request methods. Therefore, for every preflight request, there is at least one <code>Router</code> request (depending on the configuration of the route, it might be just one or we are executing a check for <strong>every</strong> request method).</p>
-<p>Here is a list of the request methods being checked for the <code>CORS preflight</code> information:</p>
+    <h1 id="introduction">Introduction</h1>
+<p>This component creates CORS details for your application. If the
+<code>CorsMiddleware</code> detects a <code>CORS preflight</code>, the middleware will start do detect
+the proper <code>CORS</code> configuration. The <code>Router</code> is being used to detect every
+allowed request method by executing a route match with all possible request
+methods. Therefore, for every preflight request, there is at least one <code>Router</code>
+request (depending on the configuration of the route, it might be just one or we
+are executing a check for <strong>every</strong> request method).</p>
+<p>Here is a list of the request methods being checked for the <code>CORS preflight</code>
+information:</p>
 <ul>
 <li>DELETE</li>
 <li>GET</li>
@@ -274,16 +289,25 @@ The <code>Router</code> is being used to detect every allowed request method by 
 <li>PUT</li>
 <li>TRACE</li>
 </ul>
-<p>The order of the headers might vary, depending on what request method is being requested with the <code>CORS preflight</code> request.
-In the end, the response contains <strong>every</strong> possible request method of the route due to what the router tells the <code>ConfigurationLocator</code>.</p>
-<p>The allowed origins can be configured as strings which can be matched with <a href="https://www.php.net/manual/en/function.fnmatch.php"><code>fnmatch</code></a>. Therefore, wildcards are possible.</p>
-<h2 id="installation">Installation</h2>
-<pre class="highlight"><code class="language-bash">$ composer require mezzio/mezzio-cors</code></pre>
-
+<p>The order of the headers might vary, depending on what request method is being
+requested with the <code>CORS preflight</code> request. In the end, the response contains
+<strong>every</strong> possible request method of the route due to what the router tells the
+<code>ConfigurationLocator</code>.</p>
+<p>The allowed origins can be configured as strings which can be matched with
+<a href="https://www.php.net/manual/en/function.fnmatch.php"><code>fnmatch</code></a>. Therefore,
+wildcards are possible.</p>
 <h2 id="features">Features</h2>
-<p>mezzio-cors provides a <a href="../middleware/"><code>CorsMiddleware</code></a> which works out of the box with once created a global configuration file. It can safely be added to the projects pipeline as CORS details are needed for <em>every</em> request (in case its a CORS request).</p>
-<p>It uses the <a href="https://github.com/mezzio/mezzio-router">mezzio-router</a> to match the incoming URI. It starts with the HTTP request method which is provided by the Request via the <code>Access-Control-Request-Method</code> header and checks <em>all</em> request methods until it matches a route. If that route states to be explicit, the response is created immediately.</p>
-<p>If the route is not explicit, <em>all</em> request methods are checked to provide a list of possible request methods to the client.</p>
+<p>mezzio-cors provides a <a href="../middleware/"><code>CorsMiddleware</code></a> which works out of the
+box with once created a global configuration file. It can safely be added to the
+projects pipeline as CORS details are needed for <em>every</em> request (in case its a
+CORS request).</p>
+<p>It uses the <a href="https://github.com/mezzio/mezzio-router">mezzio-router</a> to match
+the incoming URI. It starts with the HTTP request method which is provided by
+the Request via the <code>Access-Control-Request-Method</code> header and checks <em>all</em>
+request methods until it matches a route. If that route states to be explicit,
+the response is created immediately.</p>
+<p>If the route is not explicit, <em>all</em> request methods are checked to provide a
+list of possible request methods to the client.</p>
 
 
 
@@ -303,7 +327,7 @@ In the end, the response contains <strong>every</strong> possible request method
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../middleware/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../installation/">
                     Next <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -362,6 +386,20 @@ In the end, the response contains <strong>every</strong> possible request method
                         
                             <li class="subnavigation__list-item subnavigation__list-item--active">
                                 <a href="./" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../installation/" class="subnavigation__link">Installation</a>
                             </li>
                         
                     
