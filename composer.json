@@ -1,7 +1,7 @@
 {
     "name": "mezzio/mezzio-cors",
     "type": "library",
-    "description": "CORS subcomponent for Mezzio",
+    "description": "CORS component for Mezzio and other PSR-15 middleware runners.",
     "keywords": [
         "cors",
         "mezzio",
