@@ -2,9 +2,29 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 1.1.0 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 1.0.1 - 2020-09-02
-
-
 
 -----
 
@@ -21,6 +41,7 @@ All notable changes to this project will be documented in this file, in reverse 
 #### Documentation,Enhancement
 
  - [6: Updates documentation](https://github.com/mezzio/mezzio-cors/pull/6) thanks to @froschdesign
+
 ## 1.0.0 - 2020-09-02
 
 ### Added
