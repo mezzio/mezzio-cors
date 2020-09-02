@@ -7,6 +7,7 @@ namespace Mezzio\Cors\Service;
 use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Configuration\RouteConfigurationFactoryInterface;
 use Mezzio\Cors\Configuration\RouteConfigurationInterface;
+use Mezzio\Router\Route;
 use Mezzio\Router\RouteResult;
 use Mezzio\Router\RouterInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
@@ -83,10 +84,10 @@ final class ConfigurationLocator implements ConfigurationLocatorInterface
 
     private function configurationFromRoute(RouteResult $result): RouteConfigurationInterface
     {
-        $allowedMethods = array_values($result->getAllowedMethods() ?? []);
-        if ($allowedMethods === []) {
-            $allowedMethods = CorsMetadata::ALLOWED_REQUEST_METHODS;
-        }
+        $allowedMethods = $result->getAllowedMethods();
+        $allowedMethods = $allowedMethods === Route::HTTP_METHOD_ANY
+            ? CorsMetadata::ALLOWED_REQUEST_METHODS
+            : array_values($allowedMethods);
 
         $explicit                  = $this->explicit($allowedMethods);
         $routeConfigurationFactory = $this->routeConfigurationFactory;
