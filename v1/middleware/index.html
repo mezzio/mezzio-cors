@@ -367,89 +367,86 @@
 <p>The parameter <code>explicit</code> tells the <code>ConfigurationLocator</code> to stop trying other request methods to match the same route because there wont be any other method.</p>
 <h3>Examples for project configurations</h3>
 <h4>Allow every origin</h4>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
-<span class="c1">// In config/autoload/cors.global.php</span>
-<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+<pre class="highlight"><code class="language-php">&lt;?php
+// In config/autoload/cors.global.php
+declare(strict_types=1);
 
-<span class="k">use</span> <span class="nx">Mezzio\Cors\Configuration\ConfigurationInterface</span><span class="p">;</span>
+use Mezzio\Cors\Configuration\ConfigurationInterface;
 
-<span class="k">return</span> <span class="p">[</span>
-    <span class="nx">ConfigurationInterface</span><span class="o">::</span><span class="na">CONFIGURATION_IDENTIFIER</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;allowed_origins&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">ConfigurationInterface</span><span class="o">::</span><span class="na">ANY_ORIGIN</span><span class="p">],</span> <span class="c1">// Allow any origin</span>
-        <span class="s1">&#39;allowed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span> <span class="c1">// No custom headers allowed</span>
-        <span class="s1">&#39;allowed_max_age&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;600&#39;</span><span class="p">,</span> <span class="c1">// 10 minutes</span>
-        <span class="s1">&#39;credentials_allowed&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span> <span class="c1">// Allow cookies</span>
-        <span class="s1">&#39;exposed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;X-Custom-Header&#39;</span><span class="p">],</span> <span class="c1">// Tell client that the API will always return this header  </span>
-    <span class="p">],</span>
-<span class="p">];</span>
-</code></pre></div>
+return [
+    ConfigurationInterface::CONFIGURATION_IDENTIFIER =&gt; [
+        'allowed_origins' =&gt; [ConfigurationInterface::ANY_ORIGIN], // Allow any origin
+        'allowed_headers' =&gt; [], // No custom headers allowed
+        'allowed_max_age' =&gt; '600', // 10 minutes
+        'credentials_allowed' =&gt; true, // Allow cookies
+        'exposed_headers' =&gt; ['X-Custom-Header'], // Tell client that the API will always return this header  
+    ],
+];</code></pre>
 
 <h4>Allow every origin from a specific domain and its subdomains</h4>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
-<span class="c1">// In config/autoload/cors.global.php</span>
+<pre class="highlight"><code class="language-php">&lt;?php
+// In config/autoload/cors.global.php
 
-<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+declare(strict_types=1);
 
-<span class="k">use</span> <span class="nx">Mezzio\Cors\Configuration\ConfigurationInterface</span><span class="p">;</span>
+use Mezzio\Cors\Configuration\ConfigurationInterface;
 
-<span class="k">return</span> <span class="p">[</span>
-    <span class="nx">ConfigurationInterface</span><span class="o">::</span><span class="na">CONFIGURATION_IDENTIFIER</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;allowed_origins&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;*.example.com&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;allowed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span> <span class="c1">// No custom headers allowed</span>
-        <span class="s1">&#39;allowed_max_age&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;3600&#39;</span><span class="p">,</span> <span class="c1">// 60 minutes</span>
-        <span class="s1">&#39;credentials_allowed&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span> <span class="c1">// Disallow cookies</span>
-        <span class="s1">&#39;exposed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[],</span> <span class="c1">// No headers are exposed  </span>
-    <span class="p">],</span>
-<span class="p">];</span>
-</code></pre></div>
+return [
+    ConfigurationInterface::CONFIGURATION_IDENTIFIER =&gt; [
+        'allowed_origins' =&gt; ['example.com', '*.example.com'],
+        'allowed_headers' =&gt; [], // No custom headers allowed
+        'allowed_max_age' =&gt; '3600', // 60 minutes
+        'credentials_allowed' =&gt; false, // Disallow cookies
+        'exposed_headers' =&gt; [], // No headers are exposed  
+    ],
+];</code></pre>
 
 <h3>Examples for route configurations</h3>
 <h4>Make the configuration explicit to avoid multiple router match requests</h4>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
-<span class="c1">// In config/autoload/cors.global.php</span>
-<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+<pre class="highlight"><code class="language-php">&lt;?php
+// In config/autoload/cors.global.php
+declare(strict_types=1);
 
-<span class="k">use</span> <span class="nx">Mezzio\Cors\Configuration\ConfigurationInterface</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Mezzio\Cors\Configuration\RouteConfigurationInterface</span><span class="p">;</span>
+use Mezzio\Cors\Configuration\ConfigurationInterface;
+use Mezzio\Cors\Configuration\RouteConfigurationInterface;
 
-<span class="k">return</span> <span class="p">[</span>
-    <span class="nx">ConfigurationInterface</span><span class="o">::</span><span class="na">CONFIGURATION_IDENTIFIER</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;allowed_origins&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;*.example.com&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;allowed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;X-Project-Header&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;exposed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;X-Some-Header&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;allowed_max_age&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;3600&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;credentials_allowed&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;routes&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-          <span class="p">[</span>
-            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo-get&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/foo&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;middleware&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="c1">// ...</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;options&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;defaults&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                    <span class="nx">RouteConfigurationInterface</span><span class="o">::</span><span class="na">PARAMETER_IDENTIFIER</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                        <span class="s1">&#39;explicit&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                        <span class="s1">&#39;allowed_origins&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;someotherdomain.com&#39;</span><span class="p">],</span>
-                        <span class="s1">&#39;allowed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;X-Specific-Header-For-Foo-Endpoint&#39;</span><span class="p">],</span>
-                        <span class="s1">&#39;allowed_max_age&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;3600&#39;</span><span class="p">,</span>
-                    <span class="p">],</span>
-                <span class="p">],</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;allowed_methods&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">],</span>
-        <span class="p">],</span>
-        <span class="p">[</span>
-            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo-delete&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/foo&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;middleware&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="c1">// ...</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;allowed_methods&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;DELETE&#39;</span><span class="p">],</span>
-        <span class="p">],</span>
-    <span class="p">],</span>
-<span class="p">];</span>
-</code></pre></div>
+return [
+    ConfigurationInterface::CONFIGURATION_IDENTIFIER =&gt; [
+        'allowed_origins' =&gt; ['example.com', '*.example.com'],
+        'allowed_headers' =&gt; ['X-Project-Header'],
+        'exposed_headers' =&gt; ['X-Some-Header'],
+        'allowed_max_age' =&gt; '3600',
+        'credentials_allowed' =&gt; true,
+    ],
+    'routes' =&gt; [
+          [
+            'name' =&gt; 'foo-get',
+            'path' =&gt; '/foo',
+            'middleware' =&gt; [
+                // ...
+            ],
+            'options' =&gt; [
+                'defaults' =&gt; [
+                    RouteConfigurationInterface::PARAMETER_IDENTIFIER =&gt; [
+                        'explicit' =&gt; true,
+                        'allowed_origins' =&gt; ['someotherdomain.com'],
+                        'allowed_headers' =&gt; ['X-Specific-Header-For-Foo-Endpoint'],
+                        'allowed_max_age' =&gt; '3600',
+                    ],
+                ],
+            ],
+            'allowed_methods' =&gt; ['GET'],
+        ],
+        [
+            'name' =&gt; 'foo-delete',
+            'path' =&gt; '/foo',
+            'middleware' =&gt; [
+                // ...
+            ],
+            'allowed_methods' =&gt; ['DELETE'],
+        ],
+    ],
+];</code></pre>
 
 <p>Result of this configuration for the <code>CORS preflight</code> of <code>/foo</code> for the upcoming <code>GET</code> request will look like this:</p>
 <div class="table-responsive"><table>
@@ -488,50 +485,49 @@
 </table></div>
 <p><strong>Did you note the missing <code>DELETE</code>? This is because of the <code>explicit</code> flag! Also note the empty <code>exposed_headers</code> which is due to the project overriding (<code>overrides_project_configuration</code>) parameter.</strong></p>
 <h4>Enable project merging</h4>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
-<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+<pre class="highlight"><code class="language-php">&lt;?php
+declare(strict_types=1);
 
-<span class="k">use</span> <span class="nx">Mezzio\Cors\Configuration\ConfigurationInterface</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Mezzio\Cors\Configuration\RouteConfigurationInterface</span><span class="p">;</span>
+use Mezzio\Cors\Configuration\ConfigurationInterface;
+use Mezzio\Cors\Configuration\RouteConfigurationInterface;
 
-<span class="k">return</span> <span class="p">[</span>
-    <span class="nx">ConfigurationInterface</span><span class="o">::</span><span class="na">CONFIGURATION_IDENTIFIER</span> <span class="o">=&gt;</span> <span class="p">[</span>
-        <span class="s1">&#39;allowed_origins&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;example.com&#39;</span><span class="p">,</span> <span class="s1">&#39;*.example.com&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;allowed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;X-Project-Header&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;exposed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;X-Some-Header&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;allowed_max_age&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;3600&#39;</span><span class="p">,</span>
-    <span class="p">],</span>
-    <span class="s1">&#39;routes&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-          <span class="p">[</span>
-            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo-get&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/foo&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;middleware&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="c1">// ...</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;options&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="s1">&#39;defaults&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                    <span class="nx">RouteConfigurationInterface</span><span class="o">::</span><span class="na">PARAMETER_IDENTIFIER</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                        <span class="s1">&#39;overrides_project_configuration&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
-                        <span class="s1">&#39;allowed_origins&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">RouteConfigurationInterface</span><span class="o">::</span><span class="na">ANY_ORIGIN</span><span class="p">],</span>
-                        <span class="s1">&#39;allowed_headers&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;X-Specific-Header-For-Foo-Endpoint&#39;</span><span class="p">],</span>
-                        <span class="s1">&#39;allowed_max_age&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;7200&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;credentials_allowed&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
-                    <span class="p">],</span>
-                <span class="p">],</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;allowed_methods&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">],</span>
-        <span class="p">],</span>
-        <span class="p">[</span>
-            <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo-delete&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/foo&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;middleware&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
-                <span class="c1">// ...</span>
-            <span class="p">],</span>
-            <span class="s1">&#39;allowed_methods&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;DELETE&#39;</span><span class="p">],</span>
-        <span class="p">],</span>
-    <span class="p">],</span>
-<span class="p">];</span>
-</code></pre></div>
+return [
+    ConfigurationInterface::CONFIGURATION_IDENTIFIER =&gt; [
+        'allowed_origins' =&gt; ['example.com', '*.example.com'],
+        'allowed_headers' =&gt; ['X-Project-Header'],
+        'exposed_headers' =&gt; ['X-Some-Header'],
+        'allowed_max_age' =&gt; '3600',
+    ],
+    'routes' =&gt; [
+          [
+            'name' =&gt; 'foo-get',
+            'path' =&gt; '/foo',
+            'middleware' =&gt; [
+                // ...
+            ],
+            'options' =&gt; [
+                'defaults' =&gt; [
+                    RouteConfigurationInterface::PARAMETER_IDENTIFIER =&gt; [
+                        'overrides_project_configuration' =&gt; false,
+                        'allowed_origins' =&gt; [RouteConfigurationInterface::ANY_ORIGIN],
+                        'allowed_headers' =&gt; ['X-Specific-Header-For-Foo-Endpoint'],
+                        'allowed_max_age' =&gt; '7200',
+                        'credentials_allowed' =&gt; true,
+                    ],
+                ],
+            ],
+            'allowed_methods' =&gt; ['GET'],
+        ],
+        [
+            'name' =&gt; 'foo-delete',
+            'path' =&gt; '/foo',
+            'middleware' =&gt; [
+                // ...
+            ],
+            'allowed_methods' =&gt; ['DELETE'],
+        ],
+    ],
+];</code></pre>
 
 <p>Result of this configuration for the <code>CORS preflight</code> of <code>/foo</code> for the upcoming <code>GET</code> request will look like this:</p>
 <div class="table-responsive"><table>

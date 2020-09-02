@@ -278,8 +278,7 @@ The <code>Router</code> is being used to detect every allowed request method by 
 In the end, the response contains <strong>every</strong> possible request method of the route due to what the router tells the <code>ConfigurationLocator</code>.</p>
 <p>The allowed origins can be configured as strings which can be matched with <a href="https://www.php.net/manual/en/function.fnmatch.php"><code>fnmatch</code></a>. Therefore, wildcards are possible.</p>
 <h2 id="installation">Installation</h2>
-<div class="highlight"><pre><span></span><code>$ composer require mezzio/mezzio-cors
-</code></pre></div>
+<pre class="highlight"><code class="language-bash">$ composer require mezzio/mezzio-cors</code></pre>
 
 <h2 id="features">Features</h2>
 <p>mezzio-cors provides a <a href="../middleware/"><code>CorsMiddleware</code></a> which works out of the box with once created a global configuration file. It can safely be added to the projects pipeline as CORS details are needed for <em>every</em> request (in case its a CORS request).</p>
