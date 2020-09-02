@@ -14,9 +14,6 @@ use Psr\Http\Message\ServerRequestFactoryInterface;
 
 final class ConfigurationLocatorFactoryTest extends AbstractFactoryTest
 {
-    /**
-     * @return array<string,string|array|object>
-     */
     protected function dependencies(): array
     {
         return [
@@ -32,11 +29,6 @@ final class ConfigurationLocatorFactoryTest extends AbstractFactoryTest
         return new ConfigurationLocatorFactory();
     }
 
-    /**
-     * Implement this for post creation assertions.
-     *
-     * @param mixed $instance
-     */
     protected function postCreationAssertions($instance): void
     {
         $this->assertInstanceOf(ConfigurationLocator::class, $instance);

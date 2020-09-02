@@ -11,9 +11,11 @@ use Mezzio\Router\Route;
 use Mezzio\Router\RouteResult;
 use Mezzio\Router\RouterInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
+use Webmozart\Assert\Assert;
 
 use function array_diff;
 use function array_merge;
+use function array_values;
 
 final class ConfigurationLocator implements ConfigurationLocatorInterface
 {
@@ -83,14 +85,15 @@ final class ConfigurationLocator implements ConfigurationLocatorInterface
     private function configurationFromRoute(RouteResult $result): RouteConfigurationInterface
     {
         $allowedMethods = $result->getAllowedMethods();
-        if ($allowedMethods === Route::HTTP_METHOD_ANY) {
-            $allowedMethods = CorsMetadata::ALLOWED_REQUEST_METHODS;
-        }
+        $allowedMethods = $allowedMethods === Route::HTTP_METHOD_ANY
+            ? CorsMetadata::ALLOWED_REQUEST_METHODS
+            : array_values($allowedMethods);
 
         $explicit                  = $this->explicit($allowedMethods);
         $routeConfigurationFactory = $this->routeConfigurationFactory;
 
         $routeParameters = $result->getMatchedParams()[RouteConfigurationInterface::PARAMETER_IDENTIFIER] ?? null;
+        Assert::nullOrIsMap($routeParameters);
         if ($routeParameters === null) {
             return $routeConfigurationFactory(['explicit' => $explicit])
                 ->mergeWithConfiguration($this->configuration)
@@ -109,6 +112,9 @@ final class ConfigurationLocator implements ConfigurationLocatorInterface
         return $routeConfiguration->mergeWithConfiguration($this->configuration);
     }
 
+    /**
+     * @psalm-param list<string> $allowedMethods
+     */
     private function explicit(array $allowedMethods): bool
     {
         return $allowedMethods === CorsMetadata::ALLOWED_REQUEST_METHODS;

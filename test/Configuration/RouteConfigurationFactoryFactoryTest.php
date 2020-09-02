@@ -10,9 +10,6 @@ use Mezzio\CorsTest\AbstractFactoryTest;
 
 final class RouteConfigurationFactoryFactoryTest extends AbstractFactoryTest
 {
-    /**
-     * @return array<string,string|array|object>
-     */
     protected function dependencies(): array
     {
         return [];
@@ -23,11 +20,6 @@ final class RouteConfigurationFactoryFactoryTest extends AbstractFactoryTest
         return new RouteConfigurationFactoryFactory();
     }
 
-    /**
-     * Implement this for post creation assertions.
-     *
-     * @param mixed $instance
-     */
     protected function postCreationAssertions($instance): void
     {
         $this->assertInstanceOf(RouteConfigurationFactory::class, $instance);

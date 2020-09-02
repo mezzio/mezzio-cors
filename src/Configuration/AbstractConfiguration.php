@@ -21,13 +21,19 @@ use function ucwords;
 
 abstract class AbstractConfiguration implements ConfigurationInterface
 {
-    /** @var string[] */
+    /**
+     * @psalm-var list<string>
+     */
     protected $allowedOrigins = [];
 
-    /** @var string[] */
+    /**
+     * @psalm-var list<string>
+     */
     protected $allowedMethods = [];
 
-    /** @var string[] */
+    /**
+     * @psalm-var list<string>
+     */
     protected $allowedHeaders = [];
 
     /** @var string */
@@ -36,9 +42,14 @@ abstract class AbstractConfiguration implements ConfigurationInterface
     /** @var bool */
     protected $credentialsAllowed = false;
 
-    /** @var string[] */
+    /**
+     * @psalm-var list<string>
+     */
     protected $exposedHeaders = [];
 
+    /**
+     * @psalm-param array<string,mixed> $parameters
+     */
     public function __construct(array $parameters)
     {
         try {
@@ -55,6 +66,7 @@ abstract class AbstractConfiguration implements ConfigurationInterface
     {
         $instance = clone $this;
 
+        /** @psalm-suppress MixedAssignment */
         foreach ($data as $property => $value) {
             $property = lcfirst(str_replace('_', '', ucwords($property, '_')));
             $setter   = sprintf('set%s', ucfirst($property));
@@ -69,6 +81,9 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         return $instance;
     }
 
+    /**
+     * @psalm-param list<string> $origins
+     */
     public function setAllowedOrigins(array $origins): void
     {
         Assert::allString($origins);
@@ -87,6 +102,9 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         return $this->allowedMethods;
     }
 
+    /**
+     * @psalm-param list<string> $headers
+     */
     public function setAllowedHeaders(array $headers): void
     {
         Assert::allString($headers);
@@ -112,6 +130,9 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         return $this->allowedMaxAge;
     }
 
+    /**
+     * @psalm-param list<string> $headers
+     */
     public function setExposedHeaders(array $headers): void
     {
         Assert::allString($headers);
@@ -133,9 +154,6 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         $this->credentialsAllowed = $credentialsAllowed;
     }
 
-    /**
-     * @return string[]
-     */
     public function allowedOrigins(): array
     {
         return $this->allowedOrigins;

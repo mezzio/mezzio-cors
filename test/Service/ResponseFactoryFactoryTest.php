@@ -11,9 +11,6 @@ use Psr\Http\Message\ResponseFactoryInterface;
 
 final class ResponseFactoryFactoryTest extends AbstractFactoryTest
 {
-    /**
-     * @return array<string,string|array|object>
-     */
     protected function dependencies(): array
     {
         return [
@@ -26,11 +23,6 @@ final class ResponseFactoryFactoryTest extends AbstractFactoryTest
         return new ResponseFactoryFactory();
     }
 
-    /**
-     * Implement this for post creation assertions.
-     *
-     * @param mixed $instance
-     */
     protected function postCreationAssertions($instance): void
     {
         $this->assertInstanceOf(ResponseFactory::class, $instance);

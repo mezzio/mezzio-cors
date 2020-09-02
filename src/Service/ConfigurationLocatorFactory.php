@@ -9,16 +9,26 @@ use Mezzio\Cors\Configuration\RouteConfigurationFactoryInterface;
 use Mezzio\Router\RouterInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
+use Webmozart\Assert\Assert;
 
 final class ConfigurationLocatorFactory
 {
     public function __invoke(ContainerInterface $container): ConfigurationLocator
     {
+        $configuration = $container->get(ConfigurationInterface::class);
+        Assert::isInstanceOf($configuration, ConfigurationInterface::class);
+        $requestFactory = $container->get(ServerRequestFactoryInterface::class);
+        Assert::isInstanceOf($requestFactory, ServerRequestFactoryInterface::class);
+        $router = $container->get(RouterInterface::class);
+        Assert::isInstanceOf($router, RouterInterface::class);
+        $routeConfigurationFactory = $container->get(RouteConfigurationFactoryInterface::class);
+        Assert::isInstanceOf($routeConfigurationFactory, RouteConfigurationFactoryInterface::class);
+
         return new ConfigurationLocator(
-            $container->get(ConfigurationInterface::class),
-            $container->get(ServerRequestFactoryInterface::class),
-            $container->get(RouterInterface::class),
-            $container->get(RouteConfigurationFactoryInterface::class)
+            $configuration,
+            $requestFactory,
+            $router,
+            $routeConfigurationFactory
         );
     }
 }
