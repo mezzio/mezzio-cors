@@ -100,7 +100,7 @@ final class ConfigurationLocator implements ConfigurationLocatorInterface
                 ->withRequestMethods($allowedMethods);
         }
 
-        $routeParameters = ['explicit' => $explicit] + $routeParameters;
+        $routeParameters = $routeParameters + ['explicit' => $explicit];
 
         $routeConfiguration = $routeConfigurationFactory($routeParameters)
             ->withRequestMethods($allowedMethods);
