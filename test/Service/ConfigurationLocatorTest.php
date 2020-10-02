@@ -357,10 +357,14 @@ final class ConfigurationLocatorTest extends TestCase
             ->method('isFailure')
             ->willReturn(false);
 
+        $routeConfigurationParameters = [RouteConfigurationInterface::PARAMETER_IDENTIFIER => [
+            'explicit' => true,
+        ]];
+
         $matchingExplicitRouteResult
             ->expects($this->once())
             ->method('getMatchedParams')
-            ->willReturn([RouteConfigurationInterface::PARAMETER_IDENTIFIER => []]);
+            ->willReturn($routeConfigurationParameters);
 
         $matchingExplicitRouteResult
             ->expects($this->once())
@@ -382,6 +386,7 @@ final class ConfigurationLocatorTest extends TestCase
         $this->routeConfigurationFactory
             ->expects($this->any())
             ->method('__invoke')
+            ->withConsecutive([], $routeConfigurationParameters)
             ->willReturn($routeConfiguration);
 
         $routeConfiguration
