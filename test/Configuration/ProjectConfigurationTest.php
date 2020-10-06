@@ -54,4 +54,10 @@ final class ProjectConfigurationTest extends TestCase
         $this->expectException(InvalidConfigurationException::class);
         new ProjectConfiguration(['foo' => 'bar']);
     }
+
+    public function testWillDisablePreflightCacheWhenAllowedMaxAgeIsNotConfigured(): void
+    {
+        $config = new ProjectConfiguration([]);
+        $this->assertSame('-1', $config->allowedMaxAge());
+    }
 }
