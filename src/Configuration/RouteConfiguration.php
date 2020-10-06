@@ -62,7 +62,7 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
             $instance->setCredentialsAllowed($configuration->credentialsAllowed());
         }
 
-        if (! $instance->allowedMaxAge()) {
+        if ($instance->allowedMaxAge() === ConfigurationInterface::PREFLIGHT_CACHE_DISABLED) {
             $instance->setAllowedMaxAge($configuration->allowedMaxAge());
         }
 
