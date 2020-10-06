@@ -178,6 +178,6 @@ final class RouteConfigurationTest extends TestCase
     public function testWillDisablePreflightCacheWhenAllowedMaxAgeIsNotConfigured(): void
     {
         $config = new ProjectConfiguration([]);
-        $this->assertSame('-1', $config->allowedMaxAge());
+        $this->assertSame(ConfigurationInterface::PREFLIGHT_CACHE_DISABLED, $config->allowedMaxAge());
     }
 }

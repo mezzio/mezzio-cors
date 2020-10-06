@@ -11,6 +11,7 @@ interface ConfigurationInterface
      */
     public const CONFIGURATION_IDENTIFIER = 'expressive.cors';
     public const ANY_ORIGIN               = '*';
+    public const PREFLIGHT_CACHE_DISABLED = '-1';
 
     /**
      * Should return all allowed methods, the requested path can handle.
@@ -27,7 +28,7 @@ interface ConfigurationInterface
     public function allowedHeaders(): array;
 
     /**
-     * Should return the maximum age, the response may be cached by a client.
+     * Should return the maximum age, the preflight response may be cached by a client.
      */
     public function allowedMaxAge(): string;
 

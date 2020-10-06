@@ -37,7 +37,7 @@ abstract class AbstractConfiguration implements ConfigurationInterface
     protected $allowedHeaders = [];
 
     /** @var string */
-    protected $allowedMaxAge = '';
+    protected $allowedMaxAge = ConfigurationInterface::PREFLIGHT_CACHE_DISABLED;
 
     /** @var bool */
     protected $credentialsAllowed = false;
