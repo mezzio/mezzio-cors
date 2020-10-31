@@ -24,24 +24,6 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
-## 1.0.2 - TBD
-
-### Added
-
-- Nothing.
-
-### Changed
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
 ## 1.0.2 - 2020-10-31
 
 ### Fixed
@@ -69,8 +51,6 @@ All notable changes to this project will be documented in this file, in reverse 
  - [10: Prefer route configuration over automatic `explicit` detection](https://github.com/mezzio/mezzio-cors/pull/10) thanks to @boesing and @cookieseller
 
 ## 1.0.1 - 2020-09-02
-
-
 
 -----
 
