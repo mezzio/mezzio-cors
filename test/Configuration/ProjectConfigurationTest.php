@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mezzio\CorsTest\Configuration;
 
+use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Configuration\Exception\InvalidConfigurationException;
 use Mezzio\Cors\Configuration\ProjectConfiguration;
 use PHPUnit\Framework\TestCase;
@@ -53,5 +54,22 @@ final class ProjectConfigurationTest extends TestCase
     {
         $this->expectException(InvalidConfigurationException::class);
         new ProjectConfiguration(['foo' => 'bar']);
+    }
+
+    public function testWillDisablePreflightCacheWhenAllowedMaxAgeIsNotConfigured(): void
+    {
+        $config = new ProjectConfiguration([]);
+        $this->assertSame(ConfigurationInterface::PREFLIGHT_CACHE_DISABLED, $config->allowedMaxAge());
+    }
+
+    public function testWillInstantiateProjectConfiguration(): void
+    {
+        $instance = new ProjectConfiguration([]);
+        self::assertEquals(ConfigurationInterface::PREFLIGHT_CACHE_DISABLED, $instance->allowedMaxAge());
+        self::assertEmpty($instance->allowedMethods());
+        self::assertEmpty($instance->allowedOrigins());
+        self::assertEmpty($instance->allowedHeaders());
+        self::assertEmpty($instance->exposedHeaders());
+        self::assertFalse($instance->credentialsAllowed());
     }
 }
