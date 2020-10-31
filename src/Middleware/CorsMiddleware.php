@@ -43,7 +43,7 @@ final class CorsMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        /** @var RouteResult|null $route */
+        /** @var null|RouteResult $route */
         $route = $request->getAttribute(RouteResult::class);
         if ($route) {
             throw InvalidConfigurationException::fromInvalidPipelineConfiguration();

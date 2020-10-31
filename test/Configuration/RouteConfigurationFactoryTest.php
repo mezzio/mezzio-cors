@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mezzio\CorsTest\Configuration;
 
+use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Configuration\RouteConfigurationFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -24,7 +25,7 @@ final class RouteConfigurationFactoryTest extends TestCase
     {
         $factory  = $this->factory;
         $instance = $factory([]);
-        self::assertEmpty($instance->allowedMaxAge());
+        self::assertEquals(ConfigurationInterface::PREFLIGHT_CACHE_DISABLED, $instance->allowedMaxAge());
         self::assertEmpty($instance->allowedMethods());
         self::assertEmpty($instance->allowedOrigins());
         self::assertEmpty($instance->allowedHeaders());

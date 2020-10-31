@@ -27,6 +27,9 @@ final class CorsMiddlewareFactoryTest extends AbstractFactoryTest
         return new CorsMiddlewareFactory();
     }
 
+    /**
+     * @param mixed $instance
+     */
     protected function postCreationAssertions($instance): void
     {
         $this->assertInstanceOf(CorsMiddleware::class, $instance);

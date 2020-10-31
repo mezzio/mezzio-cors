@@ -23,6 +23,9 @@ final class ResponseFactoryFactoryTest extends AbstractFactoryTest
         return new ResponseFactoryFactory();
     }
 
+    /**
+     * @param mixed $instance
+     */
     protected function postCreationAssertions($instance): void
     {
         $this->assertInstanceOf(ResponseFactory::class, $instance);
