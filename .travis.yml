@@ -36,9 +36,6 @@ matrix:
         - DEPS=latest
         - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
 
-  allow_failures:
-    - php: nightly
-
 
 before_install:
   - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
