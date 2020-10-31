@@ -202,7 +202,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -408,7 +408,6 @@ return [
         'exposed_headers' =&gt; ['X-Custom-Header'], // Tell client that the API will always return this header  
     ],
 ];</code></pre>
-
 <h4>Allow Every Origin from a Specific Domain and Its Subdomains</h4>
 <pre class="highlight"><code class="language-php">&lt;?php
 // In config/autoload/cors.global.php
@@ -426,7 +425,6 @@ return [
         'exposed_headers' =&gt; [], // No headers are exposed  
     ],
 ];</code></pre>
-
 <h3>Examples for Route Configurations</h3>
 <h4>Make the Configuration Explicit to Avoid Multiple Router Match Requests</h4>
 <pre class="highlight"><code class="language-php">&lt;?php
@@ -473,7 +471,6 @@ return [
         ],
     ],
 ];</code></pre>
-
 <p>Result of this configuration for the <code>CORS preflight</code> of <code>/foo</code> for the upcoming
 <code>GET</code> request will look like this:</p>
 <div class="table-responsive"><table>
@@ -555,7 +552,6 @@ return [
         ],
     ],
 ];</code></pre>
-
 <p>Result of this configuration for the <code>CORS preflight</code> of <code>/foo</code> for the upcoming
 <code>GET</code> request will look like this:</p>
 <div class="table-responsive"><table>
