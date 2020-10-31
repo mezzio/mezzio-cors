@@ -42,11 +42,31 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
+## 1.0.2 - 2020-10-31
+
 ### Fixed
 
 - [#10](https://github.com/mezzio/mezzio-cors/pull/10) Per-route `explicit` configuration is now properly handled.
 
 - [#13](https://github.com/mezzio/mezzio-cors/pull/13) Added missing default value for `allowed_max_age` which fixes [#12](https://github.com/mezzio/mezzio-cors/issues/12)
+
+
+-----
+
+### Release Notes for [1.0.2](https://github.com/mezzio/mezzio-cors/milestone/5)
+
+1.0.x bugfix release (patch)
+
+### 1.0.2
+
+- Total issues resolved: **2**
+- Total pull requests resolved: **2**
+- Total contributors: **2**
+
+#### Bug,hacktoberfest-accepted
+
+ - [13: bugfix: ensure non-empty string default for allowedMaxAge configuration](https://github.com/mezzio/mezzio-cors/pull/13) thanks to @boesing and @cookieseller
+ - [10: Prefer route configuration over automatic `explicit` detection](https://github.com/mezzio/mezzio-cors/pull/10) thanks to @boesing and @cookieseller
 
 ## 1.0.1 - 2020-09-02
 
