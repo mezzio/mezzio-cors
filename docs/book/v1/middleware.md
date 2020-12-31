@@ -37,9 +37,9 @@ On the project level, you can only configure the following Headers:
 |:-------------|:-------------:|:-----:
 | `allowed_origins` | string[] | Access-Control-Allow-Origin
 | `allowed_headers` | string[] | Access-Control-Allow-Headers
-| `allowed_max_age` | string (TTL in seconds) | Access-Control-Allowed-Max-Age
+| `allowed_max_age` | string (TTL in seconds) | Access-Control-Max-Age
 | `credentials_allowed` | bool | Access-Control-Allow-Credentials
-| `exposed_headers` | string[] | Access-Control-Exposed-Headers
+| `exposed_headers` | string[] | Access-Control-Expose-Headers
 
 On the route level, you can configure all of the projects configuration settings
 and if the configuration of the route should either override the project
@@ -52,9 +52,9 @@ configuration (default) or merge it.
 | `explicit` | bool | -
 | `allowed_origins` | string[] | Access-Control-Allow-Origin
 | `allowed_headers` | string[] | Access-Control-Allow-Headers
-| `allowed_max_age` | string (TTL in seconds) | Access-Control-Allowed-Max-Age
+| `allowed_max_age` | string (TTL in seconds) | Access-Control-Max-Age
 | `credentials_allowed` | bool | Access-Control-Allow-Credentials
-| `exposed_headers` | string[] | Access-Control-Exposed-Headers
+| `exposed_headers` | string[] | Access-Control-Expose-Headers
 
 The parameter `overrides_project_configuration` handles the way how the
 configuration is being merged. The default setting is `true` to ensure that a
