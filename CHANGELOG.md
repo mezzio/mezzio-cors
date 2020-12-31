@@ -2,27 +2,22 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 1.0.3 - TBD
+## 1.0.3 - 2020-12-31
 
-### Added
 
-- Nothing.
+-----
 
-### Changed
+### Release Notes for [1.0.3](https://github.com/mezzio/mezzio-cors/milestone/6)
 
-- Nothing.
+1.0.x bugfix release (patch)
 
-### Deprecated
+### 1.0.3
 
-- Nothing.
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
 
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
+ - [16: Fixed typo in docs where wrong headers are referenced](https://github.com/mezzio/mezzio-cors/pull/16) thanks to @acelaya
 
 ## 1.0.2 - 2020-10-31
 
