@@ -97,7 +97,7 @@ use Mezzio\Cors\Configuration\ConfigurationInterface;
 
 return [
     ConfigurationInterface::CONFIGURATION_IDENTIFIER => [
-        'allowed_origins' => ['example.com', '*.example.com'],
+        'allowed_origins' => ['*//example.com', '*.example.com'],
         'allowed_headers' => [], // No custom headers allowed
         'allowed_max_age' => '3600', // 60 minutes
         'credentials_allowed' => false, // Disallow cookies
@@ -120,7 +120,7 @@ use Mezzio\Cors\Configuration\RouteConfigurationInterface;
 
 return [
     ConfigurationInterface::CONFIGURATION_IDENTIFIER => [
-        'allowed_origins' => ['example.com', '*.example.com'],
+        'allowed_origins' => ['*//example.com', '*.example.com'],
         'allowed_headers' => ['X-Project-Header'],
         'exposed_headers' => ['X-Some-Header'],
         'allowed_max_age' => '3600',
@@ -137,7 +137,7 @@ return [
                 'defaults' => [
                     RouteConfigurationInterface::PARAMETER_IDENTIFIER => [
                         'explicit' => true,
-                        'allowed_origins' => ['someotherdomain.com'],
+                        'allowed_origins' => ['*//someotherdomain.com'],
                         'allowed_headers' => ['X-Specific-Header-For-Foo-Endpoint'],
                         'allowed_max_age' => '3600',
                     ],
@@ -162,7 +162,7 @@ Result of this configuration for the `CORS preflight` of `/foo` for the upcoming
 
 | Configuration | Parameter |
 |:------------- |:-------------:|
-| `allowed_origins` | `['someotherdomain.com']`
+| `allowed_origins` | `['*//someotherdomain.com']`
 | `allowed_headers` | `['X-Specific-Header-For-Foo-Endpoint']`
 | `allowed_max_age` | `3600`
 | `exposed_headers` | `[]`
@@ -182,7 +182,7 @@ use Mezzio\Cors\Configuration\RouteConfigurationInterface;
 
 return [
     ConfigurationInterface::CONFIGURATION_IDENTIFIER => [
-        'allowed_origins' => ['example.com', '*.example.com'],
+        'allowed_origins' => ['*//example.com', '*.example.com'],
         'allowed_headers' => ['X-Project-Header'],
         'exposed_headers' => ['X-Some-Header'],
         'allowed_max_age' => '3600',

@@ -14,7 +14,7 @@ use Psr\Http\Message\UriInterface;
 final class CorsMetadataTest extends TestCase
 {
     private const DOCUMENTATION_ALLOWED_ORIGINS = [
-        'example.com',
+        '*//example.com',
         '*.example.com',
     ];
 
