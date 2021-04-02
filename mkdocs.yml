@@ -4,6 +4,7 @@ nav:
   - Home: index.md
   - Introduction: v1/intro.md
   - Installation: v1/installation.md
+  - Quick Start: v1/quick-start.md
   - Middleware: v1/middleware.md
 site_name: mezzio-cors
 site_description: 'CORS component for Mezzio and other PSR-15 middleware runners.'
