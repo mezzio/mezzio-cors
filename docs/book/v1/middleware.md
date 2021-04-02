@@ -14,6 +14,7 @@ A Preflight request should be a light call which provides the Browser with the
 CORS informations it needs to execute the regular (CORS) request.
 
 These informations are:
+
 - Domain accepted for executing CORS request?
 - Cookies accepted?
 - Which Headers are allowed to be sent?
@@ -29,7 +30,7 @@ the request will be aborted with a `403 Forbidden` response.
 ## Configuration
 
 There are 2 ways of configuring CORS in your project. Either create a global
-configuration file like `cors.global.php` or add a route specific configuration.
+configuration file like `cors.global.php` and/or add a route specific configuration.
 
 On the project level, you can only configure the following Headers:
 
@@ -41,10 +42,13 @@ On the project level, you can only configure the following Headers:
 | `credentials_allowed` | bool | Access-Control-Allow-Credentials
 | `exposed_headers` | string[] | Access-Control-Expose-Headers
 
+> ### `fnmatch` Format
+>
+> The `allowed_origins` strings must fit the [`fnmatch`](https://www.php.net/manual/en/function.fnmatch.php) format.**
+
 On the route level, you can configure all of the projects configuration settings
 and if the configuration of the route should either override the project
 configuration (default) or merge it.
-
 
 | Configuration | Type | Header
 |:------------- |:-------------:|:-----:
@@ -97,7 +101,7 @@ use Mezzio\Cors\Configuration\ConfigurationInterface;
 
 return [
     ConfigurationInterface::CONFIGURATION_IDENTIFIER => [
-        'allowed_origins' => ['example.com', '*.example.com'],
+        'allowed_origins' => ['*//example.com', '*.example.com'],
         'allowed_headers' => [], // No custom headers allowed
         'allowed_max_age' => '3600', // 60 minutes
         'credentials_allowed' => false, // Disallow cookies
@@ -120,7 +124,7 @@ use Mezzio\Cors\Configuration\RouteConfigurationInterface;
 
 return [
     ConfigurationInterface::CONFIGURATION_IDENTIFIER => [
-        'allowed_origins' => ['example.com', '*.example.com'],
+        'allowed_origins' => ['*//example.com', '*.example.com'],
         'allowed_headers' => ['X-Project-Header'],
         'exposed_headers' => ['X-Some-Header'],
         'allowed_max_age' => '3600',
@@ -137,7 +141,7 @@ return [
                 'defaults' => [
                     RouteConfigurationInterface::PARAMETER_IDENTIFIER => [
                         'explicit' => true,
-                        'allowed_origins' => ['someotherdomain.com'],
+                        'allowed_origins' => ['*//someotherdomain.com'],
                         'allowed_headers' => ['X-Specific-Header-For-Foo-Endpoint'],
                         'allowed_max_age' => '3600',
                     ],
@@ -162,7 +166,7 @@ Result of this configuration for the `CORS preflight` of `/foo` for the upcoming
 
 | Configuration | Parameter |
 |:------------- |:-------------:|
-| `allowed_origins` | `['someotherdomain.com']`
+| `allowed_origins` | `['*//someotherdomain.com']`
 | `allowed_headers` | `['X-Specific-Header-For-Foo-Endpoint']`
 | `allowed_max_age` | `3600`
 | `exposed_headers` | `[]`
@@ -182,7 +186,7 @@ use Mezzio\Cors\Configuration\RouteConfigurationInterface;
 
 return [
     ConfigurationInterface::CONFIGURATION_IDENTIFIER => [
-        'allowed_origins' => ['example.com', '*.example.com'],
+        'allowed_origins' => ['*//example.com', '*.example.com'],
         'allowed_headers' => ['X-Project-Header'],
         'exposed_headers' => ['X-Some-Header'],
         'allowed_max_age' => '3600',
