@@ -2,27 +2,34 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 1.0.4 - TBD
+## 1.0.4 - 2021-04-02
 
-### Added
 
-- Nothing.
+-----
 
-### Changed
+### Release Notes for [1.0.4](https://github.com/mezzio/mezzio-cors/milestone/7)
 
-- Nothing.
+This release only contains documentation changes.
 
-### Deprecated
+1.0.x bugfix release (patch)
 
-- Nothing.
+### 1.0.4
 
-### Removed
+- Total issues resolved: **1**
+- Total pull requests resolved: **2**
+- Total contributors: **2**
 
-- Nothing.
+#### Documentation
 
-### Fixed
+ - [26: docs: add quick start guide](https://github.com/mezzio/mezzio-cors/pull/26) thanks to @boesing
 
-- Nothing.
+#### Bug,Documentation
+
+ - [21: Guide for a quick start is needed](https://github.com/mezzio/mezzio-cors/issues/21) thanks to @froschdesign
+
+#### Enhancement
+
+ - [20: continous integration](https://github.com/mezzio/mezzio-cors/pull/20) thanks to @boesing
 
 ## 1.0.3 - 2020-12-31
 
