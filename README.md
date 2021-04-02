@@ -1,7 +1,7 @@
 # mezzio-cors
 
-[![Build Status](https://travis-ci.org/mezzio/mezzio-cors.svg?branch=1.0.x)](https://travis-ci.org/mezzio/mezzio-cors)
-[![Coverage Status](https://coveralls.io/repos/github/mezzio/mezzio-cors/badge.svg?branch=1.0.x)](https://coveralls.io/github/mezzio/mezzio-cors?branch=1.0.x)
+[![Build Status](https://github.com/mezzio/mezzio-cors/actions/workflows/continous-integration.yml/badge.svg)](https://github.com/laminas/mezzio-cors/actions/workflows/continous-integration.yml)
+[![Coverage Status](https://coveralls.io/repos/github/mezzio/mezzio-cors/badge.svg)](https://coveralls.io/github/mezzio/mezzio-cors)
 
 CORS subcomponent for [Mezzio](https://github.com/mezzio/mezzio).
 
