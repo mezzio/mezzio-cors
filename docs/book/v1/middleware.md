@@ -14,6 +14,7 @@ A Preflight request should be a light call which provides the Browser with the
 CORS informations it needs to execute the regular (CORS) request.
 
 These informations are:
+
 - Domain accepted for executing CORS request?
 - Cookies accepted?
 - Which Headers are allowed to be sent?
@@ -44,7 +45,6 @@ On the project level, you can only configure the following Headers:
 On the route level, you can configure all of the projects configuration settings
 and if the configuration of the route should either override the project
 configuration (default) or merge it.
-
 
 | Configuration | Type | Header
 |:------------- |:-------------:|:-----:
