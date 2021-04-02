@@ -42,6 +42,8 @@ On the project level, you can only configure the following Headers:
 | `credentials_allowed` | bool | Access-Control-Allow-Credentials
 | `exposed_headers` | string[] | Access-Control-Expose-Headers
 
+> ### `fnmatch` Format
+>
 > The `allowed_origins` strings must fit the [`fnmatch`](https://www.php.net/manual/en/function.fnmatch.php) format.**
 
 On the route level, you can configure all of the projects configuration settings
