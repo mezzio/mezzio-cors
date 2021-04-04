@@ -157,6 +157,20 @@
                     
                     
                         
+                            <li class="subnavigation__list-item ">
+                                <a href="../quick-start/" class="subnavigation__link">Quick Start</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
                             <li class="subnavigation__list-item subnavigation__list-item--active">
                                 <a href="./" class="subnavigation__link">Middleware</a>
                             </li>
@@ -287,19 +301,21 @@ or the <a href="#cors-request">regular request</a>.</p>
 <h2 id="preflight-request">Preflight Request</h2>
 <p>A Preflight request should be a light call which provides the Browser with the
 CORS informations it needs to execute the regular (CORS) request.</p>
-<p>These informations are:
-- Domain accepted for executing CORS request?
-- Cookies accepted?
-- Which Headers are allowed to be sent?
-- Which Headers are provided in the response?
-- Which HTTP Methods are accepted by that Endpoint?</p>
+<p>These informations are:</p>
+<ul>
+<li>Domain accepted for executing CORS request?</li>
+<li>Cookies accepted?</li>
+<li>Which Headers are allowed to be sent?</li>
+<li>Which Headers are provided in the response?</li>
+<li>Which HTTP Methods are accepted by that Endpoint?</li>
+</ul>
 <h2 id="cors-request">CORS Request</h2>
 <p>The CORS request is the actual request. That request SHOULD to be already
 verified. If its not verified by a previous <a href="#preflight-request">Preflight request</a>,
 the request will be aborted with a <code>403 Forbidden</code> response.</p>
 <h2 id="configuration">Configuration</h2>
 <p>There are 2 ways of configuring CORS in your project. Either create a global
-configuration file like <code>cors.global.php</code> or add a route specific configuration.</p>
+configuration file like <code>cors.global.php</code> and/or add a route specific configuration.</p>
 <p>On the project level, you can only configure the following Headers:</p>
 <div class="table-responsive"><table>
 <thead>
@@ -323,7 +339,7 @@ configuration file like <code>cors.global.php</code> or add a route specific con
 <tr>
 <td align="left"><code>allowed_max_age</code></td>
 <td align="center">string (TTL in seconds)</td>
-<td align="center">Access-Control-Allowed-Max-Age</td>
+<td align="center">Access-Control-Max-Age</td>
 </tr>
 <tr>
 <td align="left"><code>credentials_allowed</code></td>
@@ -333,10 +349,14 @@ configuration file like <code>cors.global.php</code> or add a route specific con
 <tr>
 <td align="left"><code>exposed_headers</code></td>
 <td align="center">string[]</td>
-<td align="center">Access-Control-Exposed-Headers</td>
+<td align="center">Access-Control-Expose-Headers</td>
 </tr>
 </tbody>
 </table></div>
+<blockquote>
+<h3 id="fnmatch-format"><code>fnmatch</code> Format</h3>
+<p>The <code>allowed_origins</code> strings must fit the <a href="https://www.php.net/manual/en/function.fnmatch.php"><code>fnmatch</code></a> format.**</p>
+</blockquote>
 <p>On the route level, you can configure all of the projects configuration settings
 and if the configuration of the route should either override the project
 configuration (default) or merge it.</p>
@@ -372,7 +392,7 @@ configuration (default) or merge it.</p>
 <tr>
 <td align="left"><code>allowed_max_age</code></td>
 <td align="center">string (TTL in seconds)</td>
-<td align="center">Access-Control-Allowed-Max-Age</td>
+<td align="center">Access-Control-Max-Age</td>
 </tr>
 <tr>
 <td align="left"><code>credentials_allowed</code></td>
@@ -382,7 +402,7 @@ configuration (default) or merge it.</p>
 <tr>
 <td align="left"><code>exposed_headers</code></td>
 <td align="center">string[]</td>
-<td align="center">Access-Control-Exposed-Headers</td>
+<td align="center">Access-Control-Expose-Headers</td>
 </tr>
 </tbody>
 </table></div>
@@ -391,8 +411,8 @@ configuration is being merged. The default setting is <code>true</code> to ensur
 route configuration has to specify every information it will provide.</p>
 <p>The parameter <code>explicit</code> tells the <code>ConfigurationLocator</code> to stop trying other
 request methods to match the same route because there wont be any other method.</p>
-<h3>Examples for Project Configurations</h3>
-<h4>Allow Every Origin</h4>
+<h3 id="examples-for-project-configurations">Examples for Project Configurations</h3>
+<h4 id="allow-every-origin">Allow Every Origin</h4>
 <pre class="highlight"><code class="language-php">&lt;?php
 // In config/autoload/cors.global.php
 declare(strict_types=1);
@@ -408,7 +428,7 @@ return [
         'exposed_headers' =&gt; ['X-Custom-Header'], // Tell client that the API will always return this header  
     ],
 ];</code></pre>
-<h4>Allow Every Origin from a Specific Domain and Its Subdomains</h4>
+<h4 id="allow-every-origin-from-a-specific-domain-and-its-subdomains">Allow Every Origin from a Specific Domain and Its Subdomains</h4>
 <pre class="highlight"><code class="language-php">&lt;?php
 // In config/autoload/cors.global.php
 
@@ -418,15 +438,15 @@ use Mezzio\Cors\Configuration\ConfigurationInterface;
 
 return [
     ConfigurationInterface::CONFIGURATION_IDENTIFIER =&gt; [
-        'allowed_origins' =&gt; ['example.com', '*.example.com'],
+        'allowed_origins' =&gt; ['*//example.com', '*.example.com'],
         'allowed_headers' =&gt; [], // No custom headers allowed
         'allowed_max_age' =&gt; '3600', // 60 minutes
         'credentials_allowed' =&gt; false, // Disallow cookies
         'exposed_headers' =&gt; [], // No headers are exposed  
     ],
 ];</code></pre>
-<h3>Examples for Route Configurations</h3>
-<h4>Make the Configuration Explicit to Avoid Multiple Router Match Requests</h4>
+<h3 id="examples-for-route-configurations">Examples for Route Configurations</h3>
+<h4 id="make-the-configuration-explicit-to-avoid-multiple-router-match-requests">Make the Configuration Explicit to Avoid Multiple Router Match Requests</h4>
 <pre class="highlight"><code class="language-php">&lt;?php
 // In config/autoload/cors.global.php
 declare(strict_types=1);
@@ -436,7 +456,7 @@ use Mezzio\Cors\Configuration\RouteConfigurationInterface;
 
 return [
     ConfigurationInterface::CONFIGURATION_IDENTIFIER =&gt; [
-        'allowed_origins' =&gt; ['example.com', '*.example.com'],
+        'allowed_origins' =&gt; ['*//example.com', '*.example.com'],
         'allowed_headers' =&gt; ['X-Project-Header'],
         'exposed_headers' =&gt; ['X-Some-Header'],
         'allowed_max_age' =&gt; '3600',
@@ -453,7 +473,7 @@ return [
                 'defaults' =&gt; [
                     RouteConfigurationInterface::PARAMETER_IDENTIFIER =&gt; [
                         'explicit' =&gt; true,
-                        'allowed_origins' =&gt; ['someotherdomain.com'],
+                        'allowed_origins' =&gt; ['*//someotherdomain.com'],
                         'allowed_headers' =&gt; ['X-Specific-Header-For-Foo-Endpoint'],
                         'allowed_max_age' =&gt; '3600',
                     ],
@@ -483,7 +503,7 @@ return [
 <tbody>
 <tr>
 <td align="left"><code>allowed_origins</code></td>
-<td align="center"><code>['someotherdomain.com']</code></td>
+<td align="center"><code>['*//someotherdomain.com']</code></td>
 </tr>
 <tr>
 <td align="left"><code>allowed_headers</code></td>
@@ -508,7 +528,7 @@ return [
 </tbody>
 </table></div>
 <p><strong>Did you note the missing <code>DELETE</code>? This is because of the <code>explicit</code> flag! Also note the empty <code>exposed_headers</code> which is due to the project overriding (<code>overrides_project_configuration</code>) parameter.</strong></p>
-<h4>Enable Project Merging</h4>
+<h4 id="enable-project-merging">Enable Project Merging</h4>
 <pre class="highlight"><code class="language-php">&lt;?php
 declare(strict_types=1);
 
@@ -517,7 +537,7 @@ use Mezzio\Cors\Configuration\RouteConfigurationInterface;
 
 return [
     ConfigurationInterface::CONFIGURATION_IDENTIFIER =&gt; [
-        'allowed_origins' =&gt; ['example.com', '*.example.com'],
+        'allowed_origins' =&gt; ['*//example.com', '*.example.com'],
         'allowed_headers' =&gt; ['X-Project-Header'],
         'exposed_headers' =&gt; ['X-Some-Header'],
         'allowed_max_age' =&gt; '3600',
@@ -599,7 +619,7 @@ return [
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../installation/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../quick-start/">
                     <i class="fa fa-chevron-left"></i> Previous
                 </a>
             
@@ -689,6 +709,20 @@ return [
                     
                     
                         
+                            <li class="subnavigation__list-item ">
+                                <a href="../quick-start/" class="subnavigation__link">Quick Start</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
                             <li class="subnavigation__list-item subnavigation__list-item--active">
                                 <a href="./" class="subnavigation__link">Middleware</a>
                             </li>
@@ -699,6 +733,7 @@ return [
         </ul>
     </div>
 
+                    
                 
             </div>
         </div>
@@ -771,7 +806,7 @@ return [
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/mezzio/mezzio-cors/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="CORS component for Mezzio and other PSR-15 middleware runners.">  
-    <link rel="canonical" href="https://docs.mezzio.dev/mezzio-cors/v1/intro/">
+    <link rel="canonical" href="https://docs.mezzio.dev/mezzio-cors/v1/quick-start/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Introduction - mezzio-cors - Laminas Docs</title>
+    <title>Quick Start - mezzio-cors - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -129,8 +129,8 @@
                     
                     
                         
-                            <li class="subnavigation__list-item subnavigation__list-item--active">
-                                <a href="./" class="subnavigation__link">Introduction</a>
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
                             </li>
                         
                     
@@ -157,8 +157,8 @@
                     
                     
                         
-                            <li class="subnavigation__list-item ">
-                                <a href="../quick-start/" class="subnavigation__link">Quick Start</a>
+                            <li class="subnavigation__list-item subnavigation__list-item--active">
+                                <a href="./" class="subnavigation__link">Quick Start</a>
                             </li>
                         
                     
@@ -248,7 +248,11 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#features" class="toc__link nav-link">Features</a>
+                        <a href="#setting-up-the-corsmiddleware" class="toc__link nav-link">Setting up the CorsMiddleware</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#setting-up-configuration" class="toc__link nav-link">Setting Up Configuration</a>
                     </li>
                 
             </ul>
@@ -269,7 +273,7 @@
 
                 
 
-                <li class="breadcrumb-item active" aria-current="page">Introduction</li>
+                <li class="breadcrumb-item active" aria-current="page">Quick Start</li>
             
         
     </ol>
@@ -283,45 +287,58 @@
     
     
 
-    <h1 id="introduction">Introduction</h1>
-<p>This component creates CORS details for your application. If the
-<code>CorsMiddleware</code> detects a <code>CORS preflight</code>, the middleware will start do detect
-the proper <code>CORS</code> configuration. The <code>Router</code> is being used to detect every
-allowed request method by executing a route match with all possible request
-methods. Therefore, for every preflight request, there is at least one <code>Router</code>
-request (depending on the configuration of the route, it might be just one or we
-are executing a check for <strong>every</strong> request method).</p>
-<p>Here is a list of the request methods being checked for the <code>CORS preflight</code>
-information:</p>
-<ul>
-<li>DELETE</li>
-<li>GET</li>
-<li>HEAD</li>
-<li>OPTIONS</li>
-<li>PATCH</li>
-<li>POST</li>
-<li>PUT</li>
-<li>TRACE</li>
-</ul>
-<p>The order of the headers might vary, depending on what request method is being
-requested with the <code>CORS preflight</code> request. In the end, the response contains
-<strong>every</strong> possible request method of the route due to what the router tells the
-<code>ConfigurationLocator</code>.</p>
-<p>The allowed origins can be configured as strings which can be matched with
-<a href="https://www.php.net/manual/en/function.fnmatch.php"><code>fnmatch</code></a>. Therefore,
-wildcards are possible.</p>
-<h2 id="features">Features</h2>
-<p>mezzio-cors provides a <a href="../middleware/"><code>CorsMiddleware</code></a> which works out of the
-box with once created a global configuration file. It can safely be added to the
-projects pipeline as CORS details are needed for <em>every</em> request (in case its a
-CORS request).</p>
-<p>It uses the <a href="https://github.com/mezzio/mezzio-router">mezzio-router</a> to match
-the incoming URI. It starts with the HTTP request method which is provided by
-the Request via the <code>Access-Control-Request-Method</code> header and checks <em>all</em>
-request methods until it matches a route. If that route states to be explicit,
-the response is created immediately.</p>
-<p>If the route is not explicit, <em>all</em> request methods are checked to provide a
-list of possible request methods to the client.</p>
+    <h1 id="quick-start">Quick Start</h1>
+<h2 id="setting-up-the-corsmiddleware">Setting up the <code>CorsMiddleware</code></h2>
+<p>After installing this component, the <code>CorsMiddleware</code> has to be added to the pipeline configuration.</p>
+<p>Depending on the configuration style you've chosen for the project, the pipeline might be either an array (in combination with the <code>ApplicationConfigInjectionDelegator</code>) or an anonymous function.</p>
+<blockquote>
+<h3 id="positioning-of-the-corsmiddleware-is-crucial">Positioning of the <code>CorsMiddleware</code> is Crucial</h3>
+<p>The <code>CorsMiddleware</code> <strong>MUST</strong> be added to the pipeline <strong>before</strong> the <code>RouteMiddleware</code>.</p>
+</blockquote>
+<p>More details about the <code>CorsMiddleware</code> can be found <a href="../middleware/">here</a>.</p>
+<h3 id="anonymous-function-pipeline">Anonymous Function Pipeline</h3>
+<pre class="highlight"><code class="language-php">use Mezzio\Application;
+use Mezzio\Cors\Middleware\CorsMiddleware;
+use Mezzio\MiddlewareFactory;
+use Mezzio\Router\Middleware\DispatchMiddleware;
+use Mezzio\Router\Middleware\RouteMiddleware;
+use Psr\Container\ContainerInterface;
+
+return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container) : void {
+    // [...] 
+    $app-&gt;pipe(CorsMiddleware::class);
+    // [...]
+    $app-&gt;pipe(RouteMiddleware::class);
+    // [...]
+    $app-&gt;pipe(DispatchMiddleware::class);
+    // [...]
+};</code></pre>
+<h3 id="config-injection-pipeline">Config Injection Pipeline</h3>
+<pre class="highlight"><code class="language-php">use Mezzio\Application;
+use Mezzio\Container\ApplicationConfigInjectionDelegator;
+use Mezzio\Cors\Middleware\CorsMiddleware;
+use Mezzio\Router\Middleware\DispatchMiddleware;
+use Mezzio\Router\Middleware\RouteMiddleware;
+
+return [
+    'dependencies' =&gt; [
+        'delegators' =&gt; [
+            Application::class =&gt; [ApplicationConfigInjectionDelegator::class],
+        ],
+    ],
+    'middleware_pipeline' =&gt; [
+        // [...]
+        ['middleware' =&gt; CorsMiddleware::class],
+        // [...]
+        ['middleware' =&gt; RouteMiddleware::class],
+        // [...]
+        ['middleware' =&gt; DispatchMiddleware::class],
+        // [...]
+    ],
+];</code></pre>
+<h2 id="setting-up-configuration">Setting Up Configuration</h2>
+<p>After setting up the pipeline, a configuration is needed.
+Depending on how granular you want to add permissions, you need to add either a <a href="../middleware/#examples-for-project-configurations">project based configuration</a> file or a <a href="../middleware/#examples-for-route-configurations">per-route configuration</a>.</p>
 
 
 
@@ -332,7 +349,7 @@ list of possible request methods to the client.</p>
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../..">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../installation/">
                     <i class="fa fa-chevron-left"></i> Previous
                 </a>
             
@@ -341,7 +358,7 @@ list of possible request methods to the client.</p>
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../installation/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../middleware/">
                     Next <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -355,7 +372,7 @@ list of possible request methods to the client.</p>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/mezzio/mezzio-cors/edit/master/docs/book/v1/intro.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/mezzio/mezzio-cors/edit/master/docs/book/v1/quick-start.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>
@@ -398,8 +415,8 @@ list of possible request methods to the client.</p>
                     
                     
                         
-                            <li class="subnavigation__list-item subnavigation__list-item--active">
-                                <a href="./" class="subnavigation__link">Introduction</a>
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
                             </li>
                         
                     
@@ -426,8 +443,8 @@ list of possible request methods to the client.</p>
                     
                     
                         
-                            <li class="subnavigation__list-item ">
-                                <a href="../quick-start/" class="subnavigation__link">Quick Start</a>
+                            <li class="subnavigation__list-item subnavigation__list-item--active">
+                                <a href="./" class="subnavigation__link">Quick Start</a>
                             </li>
                         
                     
