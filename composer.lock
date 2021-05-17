@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "655be299de4cd97c728684daf64df5f3",
+    "content-hash": "14c04153608547f23e99abd65705b8de",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -1271,16 +1271,16 @@
         },
         {
             "name": "laminas/laminas-coding-standard",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-coding-standard.git",
-                "reference": "af23a4ceca36b887415585040c6afaff081ccc33"
+                "reference": "c953ecb1d37034f4aa326046e2c24a10fe0a2845"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-coding-standard/zipball/af23a4ceca36b887415585040c6afaff081ccc33",
-                "reference": "af23a4ceca36b887415585040c6afaff081ccc33",
+                "url": "https://api.github.com/repos/laminas/laminas-coding-standard/zipball/c953ecb1d37034f4aa326046e2c24a10fe0a2845",
+                "reference": "c953ecb1d37034f4aa326046e2c24a10fe0a2845",
                 "shasum": ""
             },
             "require": {
@@ -1320,86 +1320,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-05-15T09:20:49+00:00"
-        },
-        {
-            "name": "maglnet/composer-require-checker",
-            "version": "3.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/maglnet/ComposerRequireChecker.git",
-                "reference": "cd6c6b91ee3c065e60a35ca1a67becb0ae86dbb7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/maglnet/ComposerRequireChecker/zipball/cd6c6b91ee3c065e60a35ca1a67becb0ae86dbb7",
-                "reference": "cd6c6b91ee3c065e60a35ca1a67becb0ae86dbb7",
-                "shasum": ""
-            },
-            "require": {
-                "composer-runtime-api": "^2.0.0",
-                "ext-json": "*",
-                "ext-phar": "*",
-                "nikic/php-parser": "^4.10.2",
-                "php": "^7.4 || ^8.0",
-                "symfony/console": "^5.1.8",
-                "webmozart/assert": "^1.9.1",
-                "webmozart/glob": "^4.2.0"
-            },
-            "require-dev": {
-                "doctrine/coding-standard": "^8.2.0",
-                "ext-zend-opcache": "*",
-                "mikey179/vfsstream": "^1.6.8",
-                "phpstan/phpstan": "^0.12.64",
-                "phpunit/phpunit": "^9.5.0",
-                "vimeo/psalm": "^4.3.2"
-            },
-            "bin": [
-                "bin/composer-require-checker"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "ComposerRequireChecker\\": "src/ComposerRequireChecker"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com",
-                    "homepage": "http://ocramius.github.io/"
-                },
-                {
-                    "name": "Matthias Glaub",
-                    "email": "magl@magl.net",
-                    "homepage": "http://magl.net"
-                }
-            ],
-            "description": "CLI tool to analyze composer dependencies and verify that no unknown symbols are used in the sources of a package",
-            "homepage": "https://github.com/maglnet/ComposerRequireChecker",
-            "keywords": [
-                "analysis",
-                "cli",
-                "composer",
-                "dependency",
-                "imports",
-                "require",
-                "requirements"
-            ],
-            "support": {
-                "issues": "https://github.com/maglnet/ComposerRequireChecker/issues",
-                "source": "https://github.com/maglnet/ComposerRequireChecker/tree/3.2.0"
-            },
-            "time": "2021-03-11T11:57:20+00:00"
+            "time": "2021-05-17T17:39:41+00:00"
         },
         {
             "name": "myclabs/deep-copy",
