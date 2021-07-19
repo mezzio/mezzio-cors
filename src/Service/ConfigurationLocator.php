@@ -59,7 +59,7 @@ final class ConfigurationLocator implements ConfigurationLocatorInterface
 
         $anyRouteIsMatching = false;
         foreach ($requestMethods as $method) {
-            $request = $this->requestFactory->createServerRequest($method, $metadata->requestedUri);
+            $request = $this->requestFactory->createServerRequest($method, $metadata->requestedUri, $_SERVER);
             $route   = $this->router->match($request);
             if ($route->isFailure()) {
                 continue;
