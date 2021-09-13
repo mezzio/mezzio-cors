@@ -36,7 +36,7 @@ final class CorsMiddlewareTest extends TestCase
     private $middleware;
 
     /**
-     * @return array<string,mixed>
+     * @psalm-return array<non-empty-string,array{0:non-empty-string}>
      */
     public function varyHeaderProvider(): array
     {

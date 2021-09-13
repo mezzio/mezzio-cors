@@ -3,20 +3,17 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
-    totallyTyped="true"
+    errorLevel="1"
+    findUnusedPsalmSuppress="true"
 >
     <projectFiles>
-        <directory name="src" />
-        <directory name="test" />
+        <directory name="src"/>
+        <directory name="test"/>
         <ignoreFiles>
-            <directory name="vendor" />
+            <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
-    <issueHandlers>
-        <PropertyNotSetInConstructor>
-            <errorLevel type="suppress">
-                <directory name="test"/>
-            </errorLevel>
-        </PropertyNotSetInConstructor>
-    </issueHandlers>
+    <plugins>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+    </plugins>
 </psalm>

@@ -23,7 +23,8 @@
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.2.0",
         "phpunit/phpunit": "^9.3",
-        "vimeo/psalm": "^3.14"
+        "psalm/plugin-phpunit": "^0.16.1",
+        "vimeo/psalm": "^4.10"
     },
     "config": {
         "preferred-install": "dist",

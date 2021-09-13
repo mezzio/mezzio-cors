@@ -145,7 +145,7 @@ final class CorsTest extends TestCase
     }
 
     /**
-     * @psalm-return Generator<string,array<int,string|int>>
+     * @psalm-return Generator<non-empty-string,array{0:non-empty-string,1:non-empty-string,2?:int}>
      */
     public function crossOriginProvider(): Generator
     {
