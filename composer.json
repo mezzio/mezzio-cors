@@ -24,7 +24,7 @@
         "laminas/laminas-coding-standard": "~2.3.0",
         "phpunit/phpunit": "^9.5",
         "psalm/plugin-phpunit": "^0.16.1",
-        "vimeo/psalm": "^4.10"
+        "vimeo/psalm": "^4.15"
     },
     "config": {
         "preferred-install": "dist",
