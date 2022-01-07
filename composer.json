@@ -22,13 +22,17 @@
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.3.0",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^9.5.11",
         "psalm/plugin-phpunit": "^0.16.1",
-        "vimeo/psalm": "^4.15"
+        "vimeo/psalm": "^4.17"
     },
     "config": {
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "extra": {
         "laminas": {
