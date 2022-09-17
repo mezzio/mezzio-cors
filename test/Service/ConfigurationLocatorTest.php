@@ -20,37 +20,31 @@ use Psr\Http\Message\UriInterface;
 
 use function array_diff;
 use function array_fill;
-use function array_merge;
 use function count;
 
 final class ConfigurationLocatorTest extends TestCase
 {
-    /** @var ConfigurationLocator */
-    private $locator;
+    private ConfigurationLocator $locator;
 
     /**
-     * @var MockObject
-     * @psalm-var ConfigurationInterface&MockObject
+     * @psalm-var MockObject&ConfigurationInterface
      */
-    private $projectConfiguration;
+    private ConfigurationInterface $projectConfiguration;
 
     /**
-     * @var MockObject
      * @psalm-var MockObject&ServerRequestFactoryInterface
      */
-    private $requestFactory;
+    private ServerRequestFactoryInterface $requestFactory;
 
     /**
-     * @var MockObject
      * @psalm-var MockObject&RouterInterface
      */
-    private $router;
+    private RouterInterface $router;
 
     /**
-     * @var MockObject
-     * @psalm-var RouteConfigurationFactoryInterface&MockObject
+     * @psalm-var MockObject&RouteConfigurationFactoryInterface
      */
-    private $routeConfigurationFactory;
+    private RouteConfigurationFactoryInterface $routeConfigurationFactory;
 
     public function testWontLocateAnyConfigurationIfRouteIsUnknown(): void
     {
@@ -334,7 +328,7 @@ final class ConfigurationLocatorTest extends TestCase
             $consecutiveArguments[] = [$requestMethod, $requestUri];
         }
 
-        return array_merge([$initialArgument], $consecutiveArguments);
+        return [...[$initialArgument], ...$consecutiveArguments];
     }
 
     public function testWillEarlyReturnExplicitRouteConfiguration(): void

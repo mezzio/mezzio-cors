@@ -23,10 +23,7 @@ final class CorsTest extends TestCase
      */
     private $uriFactory;
 
-    /**
-     * @var Cors
-     */
-    private $cors;
+    private Cors $cors;
 
     /**
      * @dataProvider crossOriginProvider

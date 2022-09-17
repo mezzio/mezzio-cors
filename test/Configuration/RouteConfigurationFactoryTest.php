@@ -10,10 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 final class RouteConfigurationFactoryTest extends TestCase
 {
-    /**
-     * @var RouteConfigurationFactory
-     */
-    private $factory;
+    private RouteConfigurationFactory $factory;
 
     protected function setUp(): void
     {

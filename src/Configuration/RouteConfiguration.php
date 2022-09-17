@@ -7,7 +7,6 @@ namespace Mezzio\Cors\Configuration;
 use Mezzio\Cors\Service\CorsMetadata;
 use Webmozart\Assert\Assert;
 
-use function array_merge;
 use function array_unique;
 use function sort;
 
@@ -16,11 +15,9 @@ use const SORT_STRING;
 
 final class RouteConfiguration extends AbstractConfiguration implements RouteConfigurationInterface
 {
-    /** @var bool */
-    protected $overridesProjectConfiguration = true;
+    private bool $overridesProjectConfiguration = true;
 
-    /** @var bool */
-    protected $explicit = false;
+    private bool $explicit = false;
 
     public function setOverridesProjectConfiguration(bool $overridesProjectConfiguration): void
     {
@@ -65,9 +62,9 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
             $instance->setAllowedMaxAge($configuration->allowedMaxAge());
         }
 
-        $instance->setAllowedHeaders(array_merge($configuration->allowedHeaders(), $instance->allowedHeaders()));
-        $instance->setAllowedOrigins(array_merge($configuration->allowedOrigins(), $instance->allowedOrigins()));
-        $instance->setExposedHeaders(array_merge($configuration->exposedHeaders(), $instance->exposedHeaders()));
+        $instance->setAllowedHeaders([...$configuration->allowedHeaders(), ...$instance->allowedHeaders()]);
+        $instance->setAllowedOrigins([...$configuration->allowedOrigins(), ...$instance->allowedOrigins()]);
+        $instance->setExposedHeaders([...$configuration->exposedHeaders(), ...$instance->exposedHeaders()]);
 
         return $instance->withRequestMethods($configuration->allowedMethods());
     }
@@ -79,7 +76,7 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
      */
     public function withRequestMethods(array $methods): RouteConfigurationInterface
     {
-        $methods = $this->normalizeRequestMethods(array_merge($this->allowedMethods, $methods));
+        $methods = $this->normalizeRequestMethods([...$this->allowedMethods, ...$methods]);
 
         $instance                 = clone $this;
         $instance->allowedMethods = $methods;

@@ -15,16 +15,12 @@ use function implode;
 
 final class ResponseFactoryTest extends TestCase
 {
-    /**
-     * @var ResponseFactory
-     */
-    private $responseFactory;
+    private ResponseFactory $responseFactory;
 
     /**
-     * @var MockObject
      * @psalm-var MockObject&ResponseFactoryInterface
      */
-    private $psrResponseFactory;
+    private MockObject $psrResponseFactory;
 
     protected function setUp(): void
     {

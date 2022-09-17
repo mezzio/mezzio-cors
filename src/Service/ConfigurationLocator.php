@@ -19,17 +19,13 @@ use function array_values;
 
 final class ConfigurationLocator implements ConfigurationLocatorInterface
 {
-    /** @var ConfigurationInterface */
-    private $configuration;
+    private ConfigurationInterface $configuration;
 
-    /** @var ServerRequestFactoryInterface */
-    private $requestFactory;
+    private ServerRequestFactoryInterface $requestFactory;
 
-    /** @var RouterInterface */
-    private $router;
+    private RouterInterface $router;
 
-    /** @var RouteConfigurationFactoryInterface */
-    private $routeConfigurationFactory;
+    private RouteConfigurationFactoryInterface $routeConfigurationFactory;
 
     public function __construct(
         ConfigurationInterface $configuration,

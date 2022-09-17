@@ -32,8 +32,7 @@ final class CorsMiddlewareTest extends TestCase
     /** @psalm-var ResponseFactoryInterface&MockObject */
     private $responseFactoryInterface;
 
-    /** @var CorsMiddleware */
-    private $middleware;
+    private CorsMiddleware $middleware;
 
     /**
      * @psalm-return array<non-empty-string,array{0:non-empty-string}>
