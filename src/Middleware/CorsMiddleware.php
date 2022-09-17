@@ -19,14 +19,11 @@ use function preg_match;
 
 final class CorsMiddleware implements MiddlewareInterface
 {
-    /** @var CorsInterface */
-    private $cors;
+    private CorsInterface $cors;
 
-    /** @var ConfigurationLocatorInterface */
-    private $configurationLocator;
+    private ConfigurationLocatorInterface $configurationLocator;
 
-    /** @var ResponseFactoryInterface */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     public function __construct(
         CorsInterface $cors,

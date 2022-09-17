@@ -17,8 +17,7 @@ use function trim;
 
 final class Cors implements CorsInterface
 {
-    /** @var UriFactoryInterface */
-    private $uriFactory;
+    private UriFactoryInterface $uriFactory;
 
     public function __construct(UriFactoryInterface $uriFactory)
     {

@@ -13,8 +13,7 @@ use function sprintf;
 
 final class ResponseFactory implements ResponseFactoryInterface
 {
-    /** @var PsrResponseFactoryInterface */
-    private $responseFactory;
+    private PsrResponseFactoryInterface $responseFactory;
 
     public function __construct(PsrResponseFactoryInterface $responseFactory)
     {
