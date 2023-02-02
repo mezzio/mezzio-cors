@@ -15,7 +15,6 @@ use Webmozart\Assert\Assert;
 
 use function array_diff;
 use function array_merge;
-use function array_values;
 
 final class ConfigurationLocator implements ConfigurationLocatorInterface
 {
@@ -83,7 +82,7 @@ final class ConfigurationLocator implements ConfigurationLocatorInterface
         $allowedMethods = $result->getAllowedMethods();
         $allowedMethods = $allowedMethods === Route::HTTP_METHOD_ANY
             ? CorsMetadata::ALLOWED_REQUEST_METHODS
-            : array_values($allowedMethods);
+            : $allowedMethods;
 
         $explicit                  = $this->explicit($allowedMethods);
         $routeConfigurationFactory = $this->routeConfigurationFactory;
