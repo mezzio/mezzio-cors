@@ -7,7 +7,7 @@ namespace Mezzio\CorsTest;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
-abstract class AbstractFactoryTest extends TestCase
+abstract class AbstractFactoryTestCase extends TestCase
 {
     private InMemoryContainer $container;
 

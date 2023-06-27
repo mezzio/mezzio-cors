@@ -9,9 +9,9 @@ use Mezzio\Cors\Middleware\CorsMiddlewareFactory;
 use Mezzio\Cors\Service\ConfigurationLocatorInterface;
 use Mezzio\Cors\Service\CorsInterface;
 use Mezzio\Cors\Service\ResponseFactoryInterface;
-use Mezzio\CorsTest\AbstractFactoryTest;
+use Mezzio\CorsTest\AbstractFactoryTestCase;
 
-final class CorsMiddlewareFactoryTest extends AbstractFactoryTest
+final class CorsMiddlewareFactoryTest extends AbstractFactoryTestCase
 {
     protected function dependencies(): array
     {

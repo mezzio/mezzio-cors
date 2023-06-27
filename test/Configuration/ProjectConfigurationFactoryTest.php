@@ -7,9 +7,9 @@ namespace Mezzio\CorsTest\Configuration;
 use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Configuration\ProjectConfiguration;
 use Mezzio\Cors\Configuration\ProjectConfigurationFactory;
-use Mezzio\CorsTest\AbstractFactoryTest;
+use Mezzio\CorsTest\AbstractFactoryTestCase;
 
-final class ProjectConfigurationFactoryTest extends AbstractFactoryTest
+final class ProjectConfigurationFactoryTest extends AbstractFactoryTestCase
 {
     protected function dependencies(): array
     {

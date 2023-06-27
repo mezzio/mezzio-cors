@@ -6,10 +6,10 @@ namespace Mezzio\CorsTest\Service;
 
 use Mezzio\Cors\Service\ResponseFactory;
 use Mezzio\Cors\Service\ResponseFactoryFactory;
-use Mezzio\CorsTest\AbstractFactoryTest;
+use Mezzio\CorsTest\AbstractFactoryTestCase;
 use Psr\Http\Message\ResponseFactoryInterface;
 
-final class ResponseFactoryFactoryTest extends AbstractFactoryTest
+final class ResponseFactoryFactoryTest extends AbstractFactoryTestCase
 {
     protected function dependencies(): array
     {

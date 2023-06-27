@@ -8,11 +8,11 @@ use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Configuration\RouteConfigurationFactoryInterface;
 use Mezzio\Cors\Service\ConfigurationLocator;
 use Mezzio\Cors\Service\ConfigurationLocatorFactory;
-use Mezzio\CorsTest\AbstractFactoryTest;
+use Mezzio\CorsTest\AbstractFactoryTestCase;
 use Mezzio\Router\RouterInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 
-final class ConfigurationLocatorFactoryTest extends AbstractFactoryTest
+final class ConfigurationLocatorFactoryTest extends AbstractFactoryTestCase
 {
     protected function dependencies(): array
     {

@@ -6,9 +6,9 @@ namespace Mezzio\CorsTest\Configuration;
 
 use Mezzio\Cors\Configuration\RouteConfigurationFactory;
 use Mezzio\Cors\Configuration\RouteConfigurationFactoryFactory;
-use Mezzio\CorsTest\AbstractFactoryTest;
+use Mezzio\CorsTest\AbstractFactoryTestCase;
 
-final class RouteConfigurationFactoryFactoryTest extends AbstractFactoryTest
+final class RouteConfigurationFactoryFactoryTest extends AbstractFactoryTestCase
 {
     protected function dependencies(): array
     {
