@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mezzio\CorsTest\Service;
 
+use Laminas\Diactoros\Response\TextResponse;
 use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Service\ResponseFactory;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -16,11 +17,7 @@ use function implode;
 final class ResponseFactoryTest extends TestCase
 {
     private ResponseFactory $responseFactory;
-
-    /**
-     * @psalm-var MockObject&ResponseFactoryInterface
-     */
-    private MockObject $psrResponseFactory;
+    private ResponseFactoryInterface&MockObject $psrResponseFactory;
 
     protected function setUp(): void
     {
@@ -34,10 +31,10 @@ final class ResponseFactoryTest extends TestCase
         $origin        = 'http://www.example.org';
         $configuration = $this->createMock(ConfigurationInterface::class);
 
-        $response = $this->createMock(ResponseInterface::class);
+        $response = new TextResponse('');
 
         $this->psrResponseFactory
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('createResponse')
             ->with(204, 'CORS Details')
             ->willReturn($response);
@@ -46,39 +43,45 @@ final class ResponseFactoryTest extends TestCase
         $headers = ['X-Foo-Bar', 'X-Bar-Baz'];
 
         $configuration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('allowedMethods')
             ->willReturn($methods);
 
         $configuration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('allowedHeaders')
             ->willReturn($headers);
 
         $configuration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('allowedMaxAge')
             ->willReturn('0');
 
         $configuration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('credentialsAllowed')
             ->willReturn(false);
 
-        $response
-            ->expects($this->any())
-            ->method('withAddedHeader')
-            ->withConsecutive(
-                ['Content-Length', 0],
-                ['Access-Control-Allow-Origin', $origin],
-                ['Access-Control-Allow-Methods', implode(', ', $methods)],
-                ['Access-Control-Allow-Headers', implode(', ', $headers)],
-                ['Access-Control-Max-Age', 0],
-            )
-            ->willReturnSelf();
-
         $responseFromFactory = $this->responseFactory->preflight($origin, $configuration);
-        $this->assertEquals($response, $responseFromFactory);
+
+        self::assertNotSame($response, $responseFromFactory);
+        self::assertEquals('0', $responseFromFactory->getHeader('Content-Length')[0] ?? null);
+        self::assertEquals($origin, $responseFromFactory->getHeader('Access-Control-Allow-Origin')[0] ?? null);
+        $expectAllowMethods = implode(', ', $methods);
+        self::assertEquals(
+            $expectAllowMethods,
+            $responseFromFactory->getHeader('Access-Control-Allow-Methods')[0] ?? null,
+        );
+
+        $expectAllowHeaders = implode(', ', $headers);
+        self::assertEquals(
+            $expectAllowHeaders,
+            $responseFromFactory->getHeader('Access-Control-Allow-Headers')[0] ?? null,
+        );
+        self::assertEquals(
+            '0',
+            $responseFromFactory->getHeader('Access-Control-Max-Age')[0] ?? null,
+        );
     }
 
     public function testWillApplyExpectedHeadersToPreflightResponseWithCredentialsAllowed(): void
@@ -86,10 +89,10 @@ final class ResponseFactoryTest extends TestCase
         $origin        = 'http://www.example.org';
         $configuration = $this->createMock(ConfigurationInterface::class);
 
-        $response = $this->createMock(ResponseInterface::class);
+        $response = new TextResponse('');
 
         $this->psrResponseFactory
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('createResponse')
             ->with(204, 'CORS Details')
             ->willReturn($response);
@@ -98,41 +101,49 @@ final class ResponseFactoryTest extends TestCase
         $headers = ['X-Foo-Bar'];
 
         $configuration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('allowedMethods')
             ->willReturn($methods);
 
         $configuration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('allowedHeaders')
             ->willReturn($headers);
 
         $configuration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('allowedMaxAge')
             ->willReturn('0');
 
         $configuration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('credentialsAllowed')
             ->willReturn(true);
 
-        $response
-            ->expects($this->any())
-            ->method('withAddedHeader')
-            ->withConsecutive(
-                ['Content-Length', 0],
-                ['Access-Control-Allow-Origin', $origin],
-                ['Access-Control-Allow-Methods', implode(', ', $methods)],
-                ['Access-Control-Allow-Headers', implode(', ', $headers)],
-                ['Access-Control-Max-Age', 0],
-                ['Access-Control-Allow-Credentials', 'true'],
-            )
-            ->willReturnSelf();
-
         $responseFromFactory = $this->responseFactory->preflight($origin, $configuration);
 
-        $this->assertEquals($response, $responseFromFactory);
+        self::assertNotSame($response, $responseFromFactory);
+        self::assertEquals('0', $responseFromFactory->getHeader('Content-Length')[0] ?? null);
+        self::assertEquals($origin, $responseFromFactory->getHeader('Access-Control-Allow-Origin')[0] ?? null);
+        $expectAllowMethods = implode(', ', $methods);
+        self::assertEquals(
+            $expectAllowMethods,
+            $responseFromFactory->getHeader('Access-Control-Allow-Methods')[0] ?? null,
+        );
+
+        $expectAllowHeaders = implode(', ', $headers);
+        self::assertEquals(
+            $expectAllowHeaders,
+            $responseFromFactory->getHeader('Access-Control-Allow-Headers')[0] ?? null,
+        );
+        self::assertEquals(
+            '0',
+            $responseFromFactory->getHeader('Access-Control-Max-Age')[0] ?? null,
+        );
+        self::assertEquals(
+            'true',
+            $responseFromFactory->getHeader('Access-Control-Allow-Credentials')[0] ?? null,
+        );
     }
 
     public function testWillCreateUnauthorizedResponse(): void
@@ -140,7 +151,7 @@ final class ResponseFactoryTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
 
         $this->psrResponseFactory
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('createResponse')
             ->with(403)
             ->willReturn($response);
@@ -148,7 +159,7 @@ final class ResponseFactoryTest extends TestCase
         $origin = 'foo';
 
         $responseFromFactory = $this->responseFactory->unauthorized($origin);
-        $this->assertEquals($response, $responseFromFactory);
+        self::assertEquals($response, $responseFromFactory);
     }
 
     public function testWillApplyExpectedHeadersToCorsResponseWithoutCredentialsAllowed(): void
@@ -156,35 +167,33 @@ final class ResponseFactoryTest extends TestCase
         $origin        = 'http://www.example.org';
         $configuration = $this->createMock(ConfigurationInterface::class);
 
-        $response = $this->createMock(ResponseInterface::class);
+        $response = new TextResponse('Hey There');
 
         $this->psrResponseFactory
-            ->expects($this->never())
-            ->method($this->anything());
+            ->expects(self::never())
+            ->method(self::anything());
 
         $headers = ['X-Bar'];
 
         $configuration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('exposedHeaders')
             ->willReturn($headers);
 
         $configuration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('credentialsAllowed')
             ->willReturn(false);
 
-        $response
-            ->expects($this->any())
-            ->method('withAddedHeader')
-            ->withConsecutive(
-                ['Access-Control-Allow-Origin', $origin],
-                ['Access-Control-Expose-Headers', implode(', ', $headers)]
-            )
-            ->willReturnSelf();
-
         $responseFromFactory = $this->responseFactory->cors($response, $origin, $configuration);
-        $this->assertEquals($response, $responseFromFactory);
+
+        self::assertNotSame($response, $responseFromFactory);
+        self::assertEquals($origin, $responseFromFactory->getHeader('Access-Control-Allow-Origin')[0] ?? null);
+        $expectExposeHeaders = implode(', ', $headers);
+        self::assertEquals(
+            $expectExposeHeaders,
+            $responseFromFactory->getHeader('Access-Control-Expose-Headers')[0] ?? null,
+        );
     }
 
     public function testWillApplyExpectedHeadersToCorsResponseWithCredentialsAllowed(): void
@@ -192,35 +201,36 @@ final class ResponseFactoryTest extends TestCase
         $origin        = 'http://www.example.org';
         $configuration = $this->createMock(ConfigurationInterface::class);
 
-        $response = $this->createMock(ResponseInterface::class);
+        $response = new TextResponse('Hey There');
 
         $this->psrResponseFactory
-            ->expects($this->never())
-            ->method($this->anything());
+            ->expects(self::never())
+            ->method(self::anything());
 
         $headers = ['X-Bar', 'X-Baz'];
 
         $configuration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('exposedHeaders')
             ->willReturn($headers);
 
         $configuration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('credentialsAllowed')
             ->willReturn(true);
 
-        $response
-            ->expects($this->any())
-            ->method('withAddedHeader')
-            ->withConsecutive(
-                ['Access-Control-Allow-Origin', $origin],
-                ['Access-Control-Expose-Headers', implode(', ', $headers)],
-                ['Access-Control-Allow-Credentials', 'true']
-            )
-            ->willReturnSelf();
-
         $responseFromFactory = $this->responseFactory->cors($response, $origin, $configuration);
-        $this->assertEquals($response, $responseFromFactory);
+
+        self::assertNotSame($response, $responseFromFactory);
+        self::assertEquals($origin, $responseFromFactory->getHeader('Access-Control-Allow-Origin')[0] ?? null);
+        $expectExposeHeaders = implode(', ', $headers);
+        self::assertEquals(
+            $expectExposeHeaders,
+            $responseFromFactory->getHeader('Access-Control-Expose-Headers')[0] ?? null,
+        );
+        self::assertEquals(
+            'true',
+            $responseFromFactory->getHeader('Access-Control-Allow-Credentials')[0] ?? null,
+        );
     }
 }

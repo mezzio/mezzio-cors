@@ -23,10 +23,7 @@ final class ProjectConfigurationFactoryTest extends AbstractFactoryTest
         return new ProjectConfigurationFactory();
     }
 
-    /**
-     * @param mixed $instance
-     */
-    protected function postCreationAssertions($instance): void
+    protected function postCreationAssertions(mixed $instance): void
     {
         $this->assertInstanceOf(ProjectConfiguration::class, $instance);
         $this->assertEquals(['X-Foo'], $instance->exposedHeaders());

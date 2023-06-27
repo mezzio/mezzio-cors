@@ -16,9 +16,9 @@ final class CorsMiddlewareFactoryTest extends AbstractFactoryTest
     protected function dependencies(): array
     {
         return [
-            CorsInterface::class                 => CorsInterface::class,
-            ConfigurationLocatorInterface::class => ConfigurationLocatorInterface::class,
-            ResponseFactoryInterface::class      => ResponseFactoryInterface::class,
+            CorsInterface::class                 => $this->createMock(CorsInterface::class),
+            ConfigurationLocatorInterface::class => $this->createMock(ConfigurationLocatorInterface::class),
+            ResponseFactoryInterface::class      => $this->createMock(ResponseFactoryInterface::class),
         ];
     }
 
@@ -27,10 +27,7 @@ final class CorsMiddlewareFactoryTest extends AbstractFactoryTest
         return new CorsMiddlewareFactory();
     }
 
-    /**
-     * @param mixed $instance
-     */
-    protected function postCreationAssertions($instance): void
+    protected function postCreationAssertions(mixed $instance): void
     {
         $this->assertInstanceOf(CorsMiddleware::class, $instance);
     }

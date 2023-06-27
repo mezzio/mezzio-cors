@@ -14,7 +14,7 @@ final class CorsFactoryTest extends AbstractFactoryTest
     protected function dependencies(): array
     {
         return [
-            UriFactoryInterface::class => UriFactoryInterface::class,
+            UriFactoryInterface::class => $this->createMock(UriFactoryInterface::class),
         ];
     }
 
@@ -23,10 +23,7 @@ final class CorsFactoryTest extends AbstractFactoryTest
         return new CorsFactory();
     }
 
-    /**
-     * @param mixed $instance
-     */
-    protected function postCreationAssertions($instance): void
+    protected function postCreationAssertions(mixed $instance): void
     {
         $this->assertInstanceOf(Cors::class, $instance);
     }
