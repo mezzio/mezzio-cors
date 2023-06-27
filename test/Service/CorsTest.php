@@ -142,7 +142,7 @@ final class CorsTest extends TestCase
     /**
      * @psalm-return Generator<non-empty-string,array{0:non-empty-string,1:non-empty-string,2?:int}>
      */
-    public function crossOriginProvider(): Generator
+    public static function crossOriginProvider(): Generator
     {
         yield 'secured' => [
             'https',
