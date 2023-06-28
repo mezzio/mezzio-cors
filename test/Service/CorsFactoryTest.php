@@ -6,15 +6,15 @@ namespace Mezzio\CorsTest\Service;
 
 use Mezzio\Cors\Service\Cors;
 use Mezzio\Cors\Service\CorsFactory;
-use Mezzio\CorsTest\AbstractFactoryTest;
+use Mezzio\CorsTest\AbstractFactoryTestCase;
 use Psr\Http\Message\UriFactoryInterface;
 
-final class CorsFactoryTest extends AbstractFactoryTest
+final class CorsFactoryTest extends AbstractFactoryTestCase
 {
     protected function dependencies(): array
     {
         return [
-            UriFactoryInterface::class => UriFactoryInterface::class,
+            UriFactoryInterface::class => $this->createMock(UriFactoryInterface::class),
         ];
     }
 
@@ -23,10 +23,7 @@ final class CorsFactoryTest extends AbstractFactoryTest
         return new CorsFactory();
     }
 
-    /**
-     * @param mixed $instance
-     */
-    protected function postCreationAssertions($instance): void
+    protected function postCreationAssertions(mixed $instance): void
     {
         $this->assertInstanceOf(Cors::class, $instance);
     }

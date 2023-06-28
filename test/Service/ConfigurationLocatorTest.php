@@ -18,33 +18,17 @@ use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 
-use function array_diff;
 use function array_fill;
 use function count;
+use function in_array;
 
 final class ConfigurationLocatorTest extends TestCase
 {
     private ConfigurationLocator $locator;
-
-    /**
-     * @psalm-var MockObject&ConfigurationInterface
-     */
-    private ConfigurationInterface $projectConfiguration;
-
-    /**
-     * @psalm-var MockObject&ServerRequestFactoryInterface
-     */
-    private ServerRequestFactoryInterface $requestFactory;
-
-    /**
-     * @psalm-var MockObject&RouterInterface
-     */
-    private RouterInterface $router;
-
-    /**
-     * @psalm-var MockObject&RouteConfigurationFactoryInterface
-     */
-    private RouteConfigurationFactoryInterface $routeConfigurationFactory;
+    private ConfigurationInterface&MockObject $projectConfiguration;
+    private ServerRequestFactoryInterface&MockObject $requestFactory;
+    private RouterInterface&MockObject $router;
+    private RouteConfigurationFactoryInterface&MockObject $routeConfigurationFactory;
 
     public function testWontLocateAnyConfigurationIfRouteIsUnknown(): void
     {
@@ -54,37 +38,37 @@ final class ConfigurationLocatorTest extends TestCase
 
         $request = $this->createMock(ServerRequestInterface::class);
         $this->requestFactory
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('createServerRequest')
             ->willReturn($request);
 
         $routeResult = $this->createMock(RouteResult::class);
         $routeResult
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('isFailure')
             ->willReturn(true);
 
         $this->router
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('match')
             ->willReturn($routeResult);
 
         $routeConfiguration = $this->createMock(RouteConfigurationInterface::class);
 
         $this->routeConfigurationFactory
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('__invoke')
             ->with([])
             ->willReturn($routeConfiguration);
 
         $routeConfiguration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('mergeWithConfiguration')
             ->with($this->projectConfiguration)
             ->willReturn($routeConfiguration);
 
         $located = $this->locator->locate($metadata);
-        $this->assertNull($located);
+        self::assertNull($located);
     }
 
     public function testWillLocateProjectConfigDueRoutesWithoutConfigWithMergedRouteResultsMethods(): void
@@ -95,55 +79,55 @@ final class ConfigurationLocatorTest extends TestCase
 
         $request = $this->createMock(ServerRequestInterface::class);
         $this->requestFactory
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('createServerRequest')
             ->with(RequestMethodInterface::METHOD_GET, $requestUri)
             ->willReturn($request);
 
         $routeResult = $this->createMock(RouteResult::class);
         $routeResult
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('isFailure')
             ->willReturn(false);
 
         $this->router
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('match')
             ->willReturn($routeResult);
 
         $allowedMethods = [RequestMethodInterface::METHOD_GET];
 
         $routeResult
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getAllowedMethods')
             ->willReturn($allowedMethods);
 
         $routeConfiguration = $this->createMock(RouteConfigurationInterface::class);
 
         $routeConfiguration
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('mergeWithConfiguration')
             ->with($this->projectConfiguration)
             ->willReturnSelf();
 
         $routeConfiguration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('withRequestMethods')
             ->with($allowedMethods)
             ->willReturnSelf();
 
         $this->routeConfigurationFactory
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('__invoke')
             ->willReturn($routeConfiguration);
 
         $routeConfiguration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('explicit')
             ->willReturn(true);
 
         $located = $this->locator->locate($metadata);
-        $this->assertEquals($routeConfiguration, $located);
+        self::assertEquals($routeConfiguration, $located);
     }
 
     public function testWillHandleRouteThatOverridesProjectConfiguration(): void
@@ -155,7 +139,7 @@ final class ConfigurationLocatorTest extends TestCase
         $request = $this->createMock(ServerRequestInterface::class);
 
         $this->requestFactory
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('createServerRequest')
             ->with($method, $requestUri)
             ->willReturn($request);
@@ -164,23 +148,23 @@ final class ConfigurationLocatorTest extends TestCase
 
         $routeResult = $this->createMock(RouteResult::class);
         $routeResult
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('isFailure')
             ->willReturn(false);
 
         $routeResult
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getMatchedParams')
             ->willReturn([RouteConfigurationInterface::PARAMETER_IDENTIFIER => []]);
 
         $routeResult
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getAllowedMethods')
             ->willReturn([]);
 
         $routeConfigurationForProject = $this->createMock(RouteConfigurationInterface::class);
         $routeConfigurationForProject
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('mergeWithConfiguration')
             ->with($this->projectConfiguration)
             ->willReturnSelf();
@@ -188,37 +172,37 @@ final class ConfigurationLocatorTest extends TestCase
         $routeConfiguration = $this->createMock(RouteConfigurationInterface::class);
 
         $routeConfiguration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('overridesProjectConfiguration')
             ->willReturn(true);
 
         $routeConfiguration
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('mergeWithConfiguration');
 
         $routeConfiguration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('withRequestMethods')
             ->willReturnSelf();
 
         $routeConfiguration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('explicit')
             ->willReturn(true);
 
         $this->routeConfigurationFactory
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('__invoke')
             ->willReturnOnConsecutiveCalls($routeConfigurationForProject, $routeConfiguration);
 
         $this->router
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('match')
             ->with($request)
             ->willReturn($routeResult);
 
         $config = $this->locator->locate($metadata);
-        $this->assertEquals($routeConfiguration, $config);
+        self::assertEquals($routeConfiguration, $config);
     }
 
     public function testWillMergeFromMultipleMatchingRoutes(): void
@@ -228,32 +212,35 @@ final class ConfigurationLocatorTest extends TestCase
 
         $method   = 'GET';
         $metadata = new CorsMetadata($originUri, $requestUri, $method);
-
-        $consecutiveParameters = $this->createServerRequestArguments($method, $requestUri);
-        $request               = $this->createMock(ServerRequestInterface::class);
+        $request  = $this->createMock(ServerRequestInterface::class);
 
         $this->requestFactory
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('createServerRequest')
-            ->withConsecutive(
-                ...$consecutiveParameters
+            ->with(
+                self::callback(static function (string $method): bool {
+                    self::assertTrue(in_array($method, CorsMetadata::ALLOWED_REQUEST_METHODS, true));
+
+                    return true;
+                }),
+                $requestUri,
             )
             ->willReturn($request);
 
         $matchingRouteResult = $this->createMock(RouteResult::class);
         $matchingRouteResult
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('isFailure')
             ->willReturn(false);
 
         $matchingRouteResult
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getAllowedMethods')
             ->willReturn(['OPTIONS', 'HEAD']);
 
         $failedRouteResult = $this->createMock(RouteResult::class);
         $failedRouteResult
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('isFailure')
             ->willReturn(true);
 
@@ -262,22 +249,22 @@ final class ConfigurationLocatorTest extends TestCase
         ];
         $matchingRouteResultWithConfiguration = $this->createMock(RouteResult::class);
         $matchingRouteResultWithConfiguration
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('isFailure')
             ->willReturn(false);
 
         $matchingRouteResultWithConfiguration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getAllowedMethods')
             ->willReturn(['POST']);
 
         $matchingRouteResultWithConfiguration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getMatchedParams')
             ->willReturn($routeConfigurationParameters);
 
         $this->router
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('match')
             ->with($request)
             ->willReturnOnConsecutiveCalls(
@@ -289,46 +276,31 @@ final class ConfigurationLocatorTest extends TestCase
 
         $routeConfiguration = $this->createMock(RouteConfigurationInterface::class);
         $routeConfiguration
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('withRequestMethods')
-            ->withConsecutive(
-                [
+            ->with(self::callback(static function (array $argument): bool {
+                $expectedArguments = [
                     ['OPTIONS', 'HEAD'],
-                ],
-                [
                     ['POST'],
-                ]
-            )
+                ];
+                self::assertContains($argument, $expectedArguments);
+
+                return true;
+            }))
             ->willReturnSelf();
 
         $routeConfiguration
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('mergeWithConfiguration')
             ->willReturnSelf();
 
         $this->routeConfigurationFactory
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('__invoke')
             ->willReturn($routeConfiguration);
 
         $locatedConfiguration = $this->locator->locate($metadata);
-        $this->assertSame($routeConfiguration, $locatedConfiguration);
-    }
-
-    /**
-     * @psalm-return list<list<string|UriInterface>>
-     */
-    private function createServerRequestArguments(string $initialRequestMethod, UriInterface $requestUri): array
-    {
-        $initialArgument     = [$initialRequestMethod, $requestUri];
-        $otherRequestMethods = array_diff(CorsMetadata::ALLOWED_REQUEST_METHODS, [$initialRequestMethod]);
-
-        $consecutiveArguments = [];
-        foreach ($otherRequestMethods as $requestMethod) {
-            $consecutiveArguments[] = [$requestMethod, $requestUri];
-        }
-
-        return [...[$initialArgument], ...$consecutiveArguments];
+        self::assertSame($routeConfiguration, $locatedConfiguration);
     }
 
     public function testWillEarlyReturnExplicitRouteConfiguration(): void
@@ -341,13 +313,13 @@ final class ConfigurationLocatorTest extends TestCase
 
         $failedRouteResult = $this->createMock(RouteResult::class);
         $failedRouteResult
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('isFailure')
             ->willReturn(true);
 
         $matchingExplicitRouteResult = $this->createMock(RouteResult::class);
         $matchingExplicitRouteResult
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('isFailure')
             ->willReturn(false);
 
@@ -358,46 +330,46 @@ final class ConfigurationLocatorTest extends TestCase
         ];
 
         $matchingExplicitRouteResult
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getMatchedParams')
             ->willReturn($routeConfigurationParameters);
 
         $matchingExplicitRouteResult
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getAllowedMethods')
             ->willReturn(['POST']);
 
         $routeConfiguration = $this->createMock(RouteConfigurationInterface::class);
         $routeConfiguration
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('mergeWithConfiguration')
             ->willReturnSelf();
 
         $routeConfiguration
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('withRequestMethods')
             ->with(['POST'])
             ->willReturnSelf();
 
         $this->routeConfigurationFactory
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('__invoke')
-            ->withConsecutive([], $routeConfigurationParameters)
+            ->with(self::isType('array'))
             ->willReturn($routeConfiguration);
 
         $routeConfiguration
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('explicit')
             ->willReturn(true);
 
         $this
             ->router
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('match')
             ->willReturnOnConsecutiveCalls($failedRouteResult, $matchingExplicitRouteResult);
 
         $locatedConfiguration = $this->locator->locate($metadata);
-        $this->assertSame($routeConfiguration, $locatedConfiguration);
+        self::assertSame($routeConfiguration, $locatedConfiguration);
     }
 
     protected function setUp(): void

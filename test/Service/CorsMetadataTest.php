@@ -6,6 +6,7 @@ namespace Mezzio\CorsTest\Service;
 
 use Fig\Http\Message\RequestMethodInterface;
 use Generator;
+use Laminas\Diactoros\Uri;
 use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Service\CorsMetadata;
 use PHPUnit\Framework\TestCase;
@@ -42,35 +43,20 @@ final class CorsMetadataTest extends TestCase
     /**
      * @psalm-return Generator<non-empty-string,array{0:UriInterface,1:list<non-empty-string>}>
      */
-    public function allowedOrigins(): Generator
+    public static function allowedOrigins(): Generator
     {
-        $exampleUriWithSubdomain = $this->createMock(UriInterface::class);
-        $exampleUriWithSubdomain
-            ->method('__toString')
-            ->willReturn('https://www.example.com');
-
         yield 'documentation example with subdomain' => [
-            $exampleUriWithSubdomain,
+            new Uri('https://www.example.com'),
             self::DOCUMENTATION_ALLOWED_ORIGINS,
         ];
-
-        $exampleUriWithSubSubdomain = $this->createMock(UriInterface::class);
-        $exampleUriWithSubSubdomain
-            ->method('__toString')
-            ->willReturn('https://subsubdomain.www.example.com');
 
         yield 'documentation example with sub subdomain' => [
-            $exampleUriWithSubSubdomain,
+            new Uri('https://subsubdomain.www.example.com'),
             self::DOCUMENTATION_ALLOWED_ORIGINS,
         ];
 
-        $exampleUriWithoutSubdomain = $this->createMock(UriInterface::class);
-        $exampleUriWithoutSubdomain
-            ->method('__toString')
-            ->willReturn('https://example.com');
-
         yield 'documentation example without subdomain' => [
-            $exampleUriWithoutSubdomain,
+            new Uri('https://example.com'),
             self::DOCUMENTATION_ALLOWED_ORIGINS,
         ];
     }

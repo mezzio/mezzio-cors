@@ -37,7 +37,7 @@ final class CorsMiddlewareTest extends TestCase
     /**
      * @psalm-return array<non-empty-string,array{0:non-empty-string}>
      */
-    public function varyHeaderProvider(): array
+    public static function varyHeaderProvider(): array
     {
         return [
             'just origin'                                => [

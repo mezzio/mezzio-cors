@@ -8,19 +8,19 @@ use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Configuration\RouteConfigurationFactoryInterface;
 use Mezzio\Cors\Service\ConfigurationLocator;
 use Mezzio\Cors\Service\ConfigurationLocatorFactory;
-use Mezzio\CorsTest\AbstractFactoryTest;
+use Mezzio\CorsTest\AbstractFactoryTestCase;
 use Mezzio\Router\RouterInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 
-final class ConfigurationLocatorFactoryTest extends AbstractFactoryTest
+final class ConfigurationLocatorFactoryTest extends AbstractFactoryTestCase
 {
     protected function dependencies(): array
     {
         return [
-            ConfigurationInterface::class             => ConfigurationInterface::class,
-            ServerRequestFactoryInterface::class      => ServerRequestFactoryInterface::class,
-            RouterInterface::class                    => RouterInterface::class,
-            RouteConfigurationFactoryInterface::class => RouteConfigurationFactoryInterface::class,
+            ConfigurationInterface::class             => $this->createMock(ConfigurationInterface::class),
+            ServerRequestFactoryInterface::class      => $this->createMock(ServerRequestFactoryInterface::class),
+            RouterInterface::class                    => $this->createMock(RouterInterface::class),
+            RouteConfigurationFactoryInterface::class => $this->createMock(RouteConfigurationFactoryInterface::class),
         ];
     }
 
@@ -29,10 +29,7 @@ final class ConfigurationLocatorFactoryTest extends AbstractFactoryTest
         return new ConfigurationLocatorFactory();
     }
 
-    /**
-     * @param mixed $instance
-     */
-    protected function postCreationAssertions($instance): void
+    protected function postCreationAssertions(mixed $instance): void
     {
         $this->assertInstanceOf(ConfigurationLocator::class, $instance);
     }

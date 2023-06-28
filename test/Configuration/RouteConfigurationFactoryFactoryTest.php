@@ -6,9 +6,9 @@ namespace Mezzio\CorsTest\Configuration;
 
 use Mezzio\Cors\Configuration\RouteConfigurationFactory;
 use Mezzio\Cors\Configuration\RouteConfigurationFactoryFactory;
-use Mezzio\CorsTest\AbstractFactoryTest;
+use Mezzio\CorsTest\AbstractFactoryTestCase;
 
-final class RouteConfigurationFactoryFactoryTest extends AbstractFactoryTest
+final class RouteConfigurationFactoryFactoryTest extends AbstractFactoryTestCase
 {
     protected function dependencies(): array
     {
@@ -20,10 +20,7 @@ final class RouteConfigurationFactoryFactoryTest extends AbstractFactoryTest
         return new RouteConfigurationFactoryFactory();
     }
 
-    /**
-     * @param mixed $instance
-     */
-    protected function postCreationAssertions($instance): void
+    protected function postCreationAssertions(mixed $instance): void
     {
         $this->assertInstanceOf(RouteConfigurationFactory::class, $instance);
     }
