@@ -19,6 +19,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 
 use function array_fill;
+use function array_shift;
+use function array_values;
 use function count;
 use function in_array;
 
@@ -190,10 +192,27 @@ final class ConfigurationLocatorTest extends TestCase
             ->method('explicit')
             ->willReturn(true);
 
+        $configurations = new class (
+            $routeConfigurationForProject,
+            $routeConfiguration
+        ) {
+            /** @var list<RouteConfigurationInterface>  */
+            private array $configurations;
+            public function __construct(RouteConfigurationInterface ...$configuration)
+            {
+                $this->configurations = array_values($configuration);
+            }
+
+            public function next(): RouteConfigurationInterface|false
+            {
+                return array_shift($this->configurations);
+            }
+        };
+
         $this->routeConfigurationFactory
             ->expects(self::any())
             ->method('__invoke')
-            ->willReturnOnConsecutiveCalls($routeConfigurationForProject, $routeConfiguration);
+            ->willReturnCallback([$configurations, 'next']);
 
         $this->router
             ->expects(self::once())
@@ -263,16 +282,30 @@ final class ConfigurationLocatorTest extends TestCase
             ->method('getMatchedParams')
             ->willReturn($routeConfigurationParameters);
 
+        $routeMatches = new class (
+            $failedRouteResult,
+            $matchingRouteResult,
+            $matchingRouteResultWithConfiguration,
+            ...array_fill(0, count(CorsMetadata::ALLOWED_REQUEST_METHODS) - 3, $failedRouteResult)
+        ) {
+            /** @var list<RouteResult>  */
+            private array $routeResults;
+            public function __construct(RouteResult ...$results)
+            {
+                $this->routeResults = array_values($results);
+            }
+
+            public function next(): RouteResult|false
+            {
+                return array_shift($this->routeResults);
+            }
+        };
+
         $this->router
             ->expects(self::any())
             ->method('match')
             ->with($request)
-            ->willReturnOnConsecutiveCalls(
-                $failedRouteResult,
-                $matchingRouteResult,
-                $matchingRouteResultWithConfiguration,
-                ...array_fill(0, count(CorsMetadata::ALLOWED_REQUEST_METHODS) - 3, $failedRouteResult)
-            );
+            ->willReturnCallback([$routeMatches, 'next']);
 
         $routeConfiguration = $this->createMock(RouteConfigurationInterface::class);
         $routeConfiguration
@@ -362,11 +395,28 @@ final class ConfigurationLocatorTest extends TestCase
             ->method('explicit')
             ->willReturn(true);
 
+        $routeMatches = new class (
+            $failedRouteResult,
+            $matchingExplicitRouteResult
+        ) {
+            /** @var list<RouteResult>  */
+            private array $routeResults;
+            public function __construct(RouteResult ...$results)
+            {
+                $this->routeResults = array_values($results);
+            }
+
+            public function next(): RouteResult|false
+            {
+                return array_shift($this->routeResults);
+            }
+        };
+
         $this
             ->router
             ->expects(self::any())
             ->method('match')
-            ->willReturnOnConsecutiveCalls($failedRouteResult, $matchingExplicitRouteResult);
+            ->willReturnCallback([$routeMatches, 'next']);
 
         $locatedConfiguration = $this->locator->locate($metadata);
         self::assertSame($routeConfiguration, $locatedConfiguration);
