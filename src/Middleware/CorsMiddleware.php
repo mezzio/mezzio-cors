@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Mezzio\Cors\Middleware;
 
+use Mezzio\Cors\Exception\InvalidOriginValueException;
 use Mezzio\Cors\Middleware\Exception\InvalidConfigurationException;
 use Mezzio\Cors\Service\ConfigurationLocatorInterface;
 use Mezzio\Cors\Service\CorsInterface;
@@ -46,11 +47,18 @@ final class CorsMiddleware implements MiddlewareInterface
             throw InvalidConfigurationException::fromInvalidPipelineConfiguration();
         }
 
-        if (! $this->cors->isCorsRequest($request)) {
+        try {
+            $isCorsRequest = $this->cors->isCorsRequest($request);
+        } catch (InvalidOriginValueException $exception) {
+            return $this->responseFactory->unauthorized($exception->origin);
+        }
+
+        if (! $isCorsRequest) {
             return $this->vary($handler->handle($request));
         }
 
         $metadata = $this->cors->metadata($request);
+
         if ($this->cors->isPreflightRequest($request)) {
             return $this->preflight($metadata) ?? $handler->handle($request);
         }

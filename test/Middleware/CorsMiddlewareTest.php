@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Mezzio\CorsTest\Middleware;
 
 use Fig\Http\Message\RequestMethodInterface;
+use InvalidArgumentException;
 use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Configuration\RouteConfigurationInterface;
+use Mezzio\Cors\Exception\InvalidOriginValueException;
 use Mezzio\Cors\Middleware\CorsMiddleware;
 use Mezzio\Cors\Middleware\Exception\InvalidConfigurationException;
 use Mezzio\Cors\Service\ConfigurationLocatorInterface;
@@ -483,6 +485,37 @@ final class CorsMiddlewareTest extends TestCase
             ->expects($this->once())
             ->method('locate')
             ->willReturn(null);
+
+        $this->middleware->process($request, $handler);
+    }
+
+    public function testWillHandleRequestsWithInvalidOriginAsUnauthorized(): void
+    {
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request
+            ->method('getHeaderLine')
+            ->willReturnMap([['Origin', 'foobarbaz://example.org']]);
+
+        $this->cors
+            ->expects(self::once())
+            ->method('isCorsRequest')
+            ->with($request)
+            ->willThrowException(
+                InvalidOriginValueException::fromThrowable(
+                    'foobarbaz://example.org',
+                    new InvalidArgumentException('Some exception from PSR-17 factory.')
+                ),
+            );
+
+        $handler = $this->createMock(RequestHandlerInterface::class);
+        $handler
+            ->expects(self::never())
+            ->method('handle');
+
+        $this->responseFactoryInterface
+            ->expects(self::once())
+            ->method('unauthorized')
+            ->with('foobarbaz://example.org');
 
         $this->middleware->process($request, $handler);
     }
