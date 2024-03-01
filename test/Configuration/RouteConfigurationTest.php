@@ -7,6 +7,7 @@ namespace Mezzio\CorsTest\Configuration;
 use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Configuration\ProjectConfiguration;
 use Mezzio\Cors\Configuration\RouteConfiguration;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 use function in_array;
@@ -14,7 +15,7 @@ use function sprintf;
 
 final class RouteConfigurationTest extends TestCase
 {
-    public function testConstructorWillSetProperties(): void
+    public function testConstructorWillSetProperties(): RouteConfiguration
     {
         $parameters = [
             'overrides_project_configuration' => false,
@@ -33,6 +34,31 @@ final class RouteConfigurationTest extends TestCase
         $this->assertSame('123', $config->allowedMaxAge());
         $this->assertTrue($config->credentialsAllowed());
         $this->assertSame(['foo', 'bar', 'baz'], $config->exposedHeaders());
+
+        return $config;
+    }
+
+    #[Depends('testConstructorWillSetProperties')]
+    public function testOverridesProjectConfigurationMutatesValue(RouteConfiguration $configuration): void
+    {
+        self::assertFalse($configuration->overridesProjectConfiguration());
+        $configuration->setOverridesProjectConfiguration(true);
+        self::assertTrue($configuration->overridesProjectConfiguration());
+    }
+
+    #[Depends('testConstructorWillSetProperties')]
+    public function testSetExplicitMutatesValue(RouteConfiguration $configuration): void
+    {
+        self::assertFalse($configuration->explicit());
+        $configuration->setExplicit(true);
+        self::assertTrue($configuration->explicit());
+    }
+
+    #[Depends('testConstructorWillSetProperties')]
+    public function testExchangeArrayReturnsAClone(RouteConfiguration $configuration): void
+    {
+        $clone = $configuration->exchangeArray([]);
+        self::assertNotSame($configuration, $clone);
     }
 
     public function testWillMergeAnyValueFromConfiguration(): void
@@ -145,7 +171,7 @@ final class RouteConfigurationTest extends TestCase
         foreach (['X-Baz', 'X-Foo', 'X-Bar'] as $header) {
             $this->assertTrue(
                 in_array($header, $routeConfiguration->allowedHeaders(), true),
-                sprintf('Missing header %s', $header)
+                sprintf('Missing header %s', $header),
             );
         }
         $this->assertEquals(['*'], $routeConfiguration->allowedOrigins());

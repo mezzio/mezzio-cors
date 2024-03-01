@@ -164,8 +164,8 @@ return [
 Result of this configuration for the `CORS preflight` of `/foo` for the upcoming
 `GET` request will look like this:
 
-| Configuration | Parameter |
-|:------------- |:-------------:|
+| Configuration | Parameter
+|:------------- |:-------------
 | `allowed_origins` | `['*//someotherdomain.com']`
 | `allowed_headers` | `['X-Specific-Header-For-Foo-Endpoint']`
 | `allowed_max_age` | `3600`
@@ -226,8 +226,8 @@ return [
 Result of this configuration for the `CORS preflight` of `/foo` for the upcoming
 `GET` request will look like this:
 
-| Configuration | Parameter |
-|:-------------|:-------------:|
+| Configuration | Parameter
+|:-------------|:-------------
 | `allowed_origins` | `[RouteConfigurationInterface::ANY_ORIGIN]`
 | `allowed_headers` | `['X-Specific-Header-For-Foo-Endpoint', 'X-Project-Header']`
 | `allowed_max_age` | `7200`
