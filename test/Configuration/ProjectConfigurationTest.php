@@ -20,6 +20,7 @@ final class ProjectConfigurationTest extends TestCase
         $parameters = [
             'allowed_origins'     => ['foo'],
             'allowed_headers'     => ['baz'],
+            'allowed_methods'     => ['GET'],
             'allowed_max_age'     => '123',
             'credentials_allowed' => true,
             'exposed_headers'     => ['foo', 'bar', 'baz'],
@@ -28,6 +29,7 @@ final class ProjectConfigurationTest extends TestCase
 
         $this->assertSame(['foo'], $config->allowedOrigins());
         $this->assertSame(['baz'], $config->allowedHeaders());
+        $this->assertSame(['GET'], $config->allowedMethods());
         $this->assertSame('123', $config->allowedMaxAge());
         $this->assertTrue($config->credentialsAllowed());
         $this->assertSame(['foo', 'bar', 'baz'], $config->exposedHeaders());
@@ -45,6 +47,7 @@ final class ProjectConfigurationTest extends TestCase
         $config = new ProjectConfiguration($camelCasedParameters);
         $this->assertSame(['foo'], $config->allowedOrigins());
         $this->assertSame(['baz'], $config->allowedHeaders());
+        $this->assertSame(['GET'], $config->allowedMethods());
         $this->assertSame('123', $config->allowedMaxAge());
         $this->assertTrue($config->credentialsAllowed());
         $this->assertSame(['foo', 'bar', 'baz'], $config->exposedHeaders());

@@ -4,15 +4,6 @@ declare(strict_types=1);
 
 namespace Mezzio\Cors\Configuration;
 
-use Mezzio\Cors\Service\CorsMetadata;
-use Webmozart\Assert\Assert;
-
-use function array_unique;
-use function sort;
-
-use const SORT_ASC;
-use const SORT_STRING;
-
 final class RouteConfiguration extends AbstractConfiguration implements RouteConfigurationInterface
 {
     private bool $overridesProjectConfiguration = true;
@@ -65,8 +56,9 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
         $instance->setAllowedHeaders([...$configuration->allowedHeaders(), ...$instance->allowedHeaders()]);
         $instance->setAllowedOrigins([...$configuration->allowedOrigins(), ...$instance->allowedOrigins()]);
         $instance->setExposedHeaders([...$configuration->exposedHeaders(), ...$instance->exposedHeaders()]);
+        $instance->setAllowedMethods([...$configuration->allowedMethods(), ...$instance->allowedMethods()]);
 
-        return $instance->withRequestMethods($configuration->allowedMethods());
+        return $instance;
     }
 
     /**
@@ -76,25 +68,9 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
      */
     public function withRequestMethods(array $methods): RouteConfigurationInterface
     {
-        $methods = $this->normalizeRequestMethods([...$this->allowedMethods, ...$methods]);
-
-        $instance                 = clone $this;
-        $instance->allowedMethods = $methods;
+        $instance = clone $this;
+        $instance->setAllowedMethods([...$this->allowedMethods, ...$methods]);
 
         return $instance;
-    }
-
-    /**
-     * @param array<int|string,string> $methods
-     * @psalm-return list<string>
-     */
-    private function normalizeRequestMethods(array $methods): array
-    {
-        Assert::allOneOf($methods, CorsMetadata::ALLOWED_REQUEST_METHODS);
-
-        $methods = array_unique($methods);
-        sort($methods, SORT_ASC | SORT_STRING);
-
-        return $methods;
     }
 }

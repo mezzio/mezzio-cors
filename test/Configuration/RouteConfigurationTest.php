@@ -20,6 +20,7 @@ final class RouteConfigurationTest extends TestCase
         $parameters = [
             'overrides_project_configuration' => false,
             'allowed_origins'                 => ['foo'],
+            'allowed_methods'                 => ['GET'],
             'allowed_headers'                 => ['baz'],
             'allowed_max_age'                 => '123',
             'credentials_allowed'             => true,
@@ -29,7 +30,7 @@ final class RouteConfigurationTest extends TestCase
 
         $this->assertFalse($config->overridesProjectConfiguration());
         $this->assertSame(['foo'], $config->allowedOrigins());
-        $this->assertSame([], $config->allowedMethods());
+        $this->assertSame(['GET'], $config->allowedMethods());
         $this->assertSame(['baz'], $config->allowedHeaders());
         $this->assertSame('123', $config->allowedMaxAge());
         $this->assertTrue($config->credentialsAllowed());

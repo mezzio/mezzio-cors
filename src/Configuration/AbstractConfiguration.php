@@ -6,6 +6,7 @@ namespace Mezzio\Cors\Configuration;
 
 use Mezzio\Cors\Configuration\Exception\InvalidConfigurationException;
 use Mezzio\Cors\Exception\BadMethodCallException;
+use Mezzio\Cors\Service\CorsMetadata;
 use Webmozart\Assert\Assert;
 
 use function array_unique;
@@ -14,10 +15,14 @@ use function call_user_func;
 use function in_array;
 use function is_callable;
 use function lcfirst;
+use function sort;
 use function sprintf;
 use function str_replace;
 use function ucfirst;
 use function ucwords;
+
+use const SORT_ASC;
+use const SORT_STRING;
 
 abstract class AbstractConfiguration implements ConfigurationInterface
 {
@@ -137,6 +142,19 @@ abstract class AbstractConfiguration implements ConfigurationInterface
     {
         Assert::allString($headers);
         $this->exposedHeaders = array_values(array_unique($headers));
+    }
+
+    /**
+     * @psalm-param list<string> $methods
+     */
+    public function setAllowedMethods(array $methods): void
+    {
+        Assert::allOneOf($methods, CorsMetadata::ALLOWED_REQUEST_METHODS);
+
+        $methods = array_values(array_unique($methods));
+        sort($methods, SORT_ASC | SORT_STRING);
+
+        $this->allowedMethods = $methods;
     }
 
     public function exposedHeaders(): array
