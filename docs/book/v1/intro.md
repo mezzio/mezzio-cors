@@ -1,7 +1,7 @@
 # Introduction
 
 This component creates CORS details for your application. If the
-`CorsMiddleware` detects a `CORS preflight`, the middleware will start do detect
+`CorsMiddleware` detects a `CORS preflight`, the middleware will start to detect
 the proper `CORS` configuration. The `Router` is being used to detect every
 allowed request method by executing a route match with all possible request
 methods. Therefore, for every preflight request, there is at least one `Router`
