@@ -17,11 +17,8 @@ use function trim;
 
 final class Cors implements CorsInterface
 {
-    private UriFactoryInterface $uriFactory;
-
-    public function __construct(UriFactoryInterface $uriFactory)
+    public function __construct(private readonly UriFactoryInterface $uriFactory)
     {
-        $this->uriFactory = $uriFactory;
     }
 
     public function isPreflightRequest(ServerRequestInterface $request): bool

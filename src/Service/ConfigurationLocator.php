@@ -18,24 +18,12 @@ use function array_merge;
 
 final class ConfigurationLocator implements ConfigurationLocatorInterface
 {
-    private ConfigurationInterface $configuration;
-
-    private ServerRequestFactoryInterface $requestFactory;
-
-    private RouterInterface $router;
-
-    private RouteConfigurationFactoryInterface $routeConfigurationFactory;
-
     public function __construct(
-        ConfigurationInterface $configuration,
-        ServerRequestFactoryInterface $requestFactory,
-        RouterInterface $router,
-        RouteConfigurationFactoryInterface $routeConfigurationFactory
+        private readonly ConfigurationInterface $configuration,
+        private readonly ServerRequestFactoryInterface $requestFactory,
+        private readonly RouterInterface $router,
+        private readonly RouteConfigurationFactoryInterface $routeConfigurationFactory
     ) {
-        $this->configuration             = $configuration;
-        $this->requestFactory            = $requestFactory;
-        $this->router                    = $router;
-        $this->routeConfigurationFactory = $routeConfigurationFactory;
     }
 
     /**
