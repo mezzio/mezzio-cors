@@ -212,7 +212,7 @@ final class ConfigurationLocatorTest extends TestCase
         $this->routeConfigurationFactory
             ->expects(self::any())
             ->method('__invoke')
-            ->willReturnCallback([$configurations, 'next']);
+            ->willReturnCallback($configurations->next(...));
 
         $this->router
             ->expects(self::once())
@@ -305,7 +305,7 @@ final class ConfigurationLocatorTest extends TestCase
             ->expects(self::any())
             ->method('match')
             ->with($request)
-            ->willReturnCallback([$routeMatches, 'next']);
+            ->willReturnCallback($routeMatches->next(...));
 
         $routeConfiguration = $this->createMock(RouteConfigurationInterface::class);
         $routeConfiguration
@@ -416,7 +416,7 @@ final class ConfigurationLocatorTest extends TestCase
             ->router
             ->expects(self::any())
             ->method('match')
-            ->willReturnCallback([$routeMatches, 'next']);
+            ->willReturnCallback($routeMatches->next(...));
 
         $locatedConfiguration = $this->locator->locate($metadata);
         self::assertSame($routeConfiguration, $locatedConfiguration);

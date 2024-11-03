@@ -20,20 +20,11 @@ use function preg_match;
 
 final class CorsMiddleware implements MiddlewareInterface
 {
-    private CorsInterface $cors;
-
-    private ConfigurationLocatorInterface $configurationLocator;
-
-    private ResponseFactoryInterface $responseFactory;
-
     public function __construct(
-        CorsInterface $cors,
-        ConfigurationLocatorInterface $configurationLocator,
-        ResponseFactoryInterface $responseFactory
+        private readonly CorsInterface $cors,
+        private readonly ConfigurationLocatorInterface $configurationLocator,
+        private readonly ResponseFactoryInterface $responseFactory
     ) {
-        $this->cors                 = $cors;
-        $this->configurationLocator = $configurationLocator;
-        $this->responseFactory      = $responseFactory;
     }
 
     /**

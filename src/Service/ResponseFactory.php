@@ -13,11 +13,8 @@ use function sprintf;
 
 final class ResponseFactory implements ResponseFactoryInterface
 {
-    private PsrResponseFactoryInterface $responseFactory;
-
-    public function __construct(PsrResponseFactoryInterface $responseFactory)
+    public function __construct(private readonly PsrResponseFactoryInterface $responseFactory)
     {
-        $this->responseFactory = $responseFactory;
     }
 
     public function preflight(string $origin, ConfigurationInterface $config): ResponseInterface
