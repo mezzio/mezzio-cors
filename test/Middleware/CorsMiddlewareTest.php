@@ -16,6 +16,7 @@ use Mezzio\Cors\Service\CorsInterface;
 use Mezzio\Cors\Service\CorsMetadata;
 use Mezzio\Cors\Service\ResponseFactoryInterface;
 use Mezzio\Router\RouteResult;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -387,9 +388,7 @@ final class CorsMiddlewareTest extends TestCase
         $this->assertEquals($response, $responseFromMiddleware);
     }
 
-    /**
-     * @dataProvider varyHeaderProvider
-     */
+    #[DataProvider('varyHeaderProvider')]
     public function testWillFindOriginInResponseHeaders(string $vary): void
     {
         $request  = $this->createMock(ServerRequestInterface::class);

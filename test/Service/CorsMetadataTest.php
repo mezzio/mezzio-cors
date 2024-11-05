@@ -9,6 +9,7 @@ use Generator;
 use Laminas\Diactoros\Uri;
 use Mezzio\Cors\Configuration\ConfigurationInterface;
 use Mezzio\Cors\Service\CorsMetadata;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UriInterface;
 
@@ -21,8 +22,8 @@ final class CorsMetadataTest extends TestCase
 
     /**
      * @psalm-param list<non-empty-string> $allowedOrigins
-     * @dataProvider allowedOrigins
      */
+    #[DataProvider('allowedOrigins')]
     public function testAllowsOrigin(UriInterface $origin, array $allowedOrigins): void
     {
         $metadata = new CorsMetadata(

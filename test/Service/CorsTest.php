@@ -10,6 +10,7 @@ use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Uri;
 use Mezzio\Cors\Exception\InvalidOriginValueException;
 use Mezzio\Cors\Service\Cors;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
@@ -23,9 +24,7 @@ final class CorsTest extends TestCase
     private UriFactoryInterface&MockObject $uriFactory;
     private Cors $cors;
 
-    /**
-     * @dataProvider crossOriginProvider
-     */
+    #[DataProvider('crossOriginProvider')]
     public function testWillDetectIfARequestIsACrossOriginRequest(string $scheme, string $host, ?int $port = null): void
     {
         $requestUri = $this->createMock(UriInterface::class);
