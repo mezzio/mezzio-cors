@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b726f737a295bb7564b5bcbfa531fa99",
+    "content-hash": "c8dc729da8c96dd6a4b8cbcb5d0b4cb9",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -64,16 +64,16 @@
         },
         {
             "name": "mezzio/mezzio-router",
-            "version": "3.18.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-router.git",
-                "reference": "75e9a3e636ee69f3a51006772cf29c00cb5da675"
+                "reference": "4f85ce4dd439340a6805bf337a5abcd2e954dc51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-router/zipball/75e9a3e636ee69f3a51006772cf29c00cb5da675",
-                "reference": "75e9a3e636ee69f3a51006772cf29c00cb5da675",
+                "url": "https://api.github.com/repos/mezzio/mezzio-router/zipball/4f85ce4dd439340a6805bf337a5abcd2e954dc51",
+                "reference": "4f85ce4dd439340a6805bf337a5abcd2e954dc51",
                 "shasum": ""
             },
             "require": {
@@ -90,16 +90,15 @@
                 "zendframework/zend-expressive-router": "*"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~2.5.0",
-                "laminas/laminas-diactoros": "^3.4.0",
-                "laminas/laminas-servicemanager": "^4.2.0",
-                "laminas/laminas-stratigility": "^4.0.2",
-                "phpunit/phpunit": "^10.5.36",
-                "psalm/plugin-phpunit": "^0.19.0",
-                "vimeo/psalm": "^5.26.1"
+                "laminas/laminas-coding-standard": "~3.0.1",
+                "laminas/laminas-diactoros": "^3.5.0",
+                "laminas/laminas-servicemanager": "^4.4.0",
+                "laminas/laminas-stratigility": "^4.1.0",
+                "phpunit/phpunit": "^10.5.45",
+                "psalm/plugin-phpunit": "^0.19.5",
+                "vimeo/psalm": "^6.10.1"
             },
             "suggest": {
-                "mezzio/mezzio-aurarouter": "^3.0 to use the Aura.Router routing adapter",
                 "mezzio/mezzio-fastroute": "^3.0 to use the FastRoute routing adapter",
                 "mezzio/mezzio-laminasrouter": "^3.0 to use the laminas-router routing adapter"
             },
@@ -142,7 +141,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2024-10-16T21:18:01+00:00"
+            "time": "2025-04-26T20:43:46+00:00"
         },
         {
             "name": "psr/container",
