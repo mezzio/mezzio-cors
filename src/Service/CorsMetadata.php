@@ -12,6 +12,7 @@ use Webmozart\Assert\Assert;
 use function fnmatch;
 use function in_array;
 
+/** @final */
 class CorsMetadata
 {
     public const ALLOWED_REQUEST_METHODS = [
