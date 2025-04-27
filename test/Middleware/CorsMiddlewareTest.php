@@ -15,6 +15,7 @@ use Mezzio\Cors\Service\ConfigurationLocatorInterface;
 use Mezzio\Cors\Service\CorsInterface;
 use Mezzio\Cors\Service\CorsMetadata;
 use Mezzio\Cors\Service\ResponseFactoryInterface;
+use Mezzio\Router\Route;
 use Mezzio\Router\RouteResult;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -22,6 +23,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 final class CorsMiddlewareTest extends TestCase
@@ -86,7 +88,7 @@ final class CorsMiddlewareTest extends TestCase
     {
         $this->expectException(InvalidConfigurationException::class);
 
-        $routeResult = $this->createMock(RouteResult::class);
+        $routeResult = RouteResult::fromRoute(new Route('/', $this->createMock(MiddlewareInterface::class)));
         $request     = $this->createMock(ServerRequestInterface::class);
         $request
             ->expects($this->once())

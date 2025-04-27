@@ -10,6 +10,7 @@ use Mezzio\Cors\Configuration\RouteConfigurationFactoryInterface;
 use Mezzio\Cors\Configuration\RouteConfigurationInterface;
 use Mezzio\Cors\Service\ConfigurationLocator;
 use Mezzio\Cors\Service\CorsMetadata;
+use Mezzio\Router\Route;
 use Mezzio\Router\RouteResult;
 use Mezzio\Router\RouterInterface;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -17,6 +18,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
+use Psr\Http\Server\MiddlewareInterface;
 
 use function array_fill;
 use function array_shift;
@@ -32,6 +34,32 @@ final class ConfigurationLocatorTest extends TestCase
     private RouterInterface&MockObject $router;
     private RouteConfigurationFactoryInterface&MockObject $routeConfigurationFactory;
 
+    /**
+     * phpcs:disable WebimpressCodingStandard.Commenting.TagWithType
+     *
+     * @param array<string, mixed> $matchedParams
+     * @param non-empty-string $path
+     * @param list<non-empty-string>|null $allowedMethods
+     */
+    private function generateRouteResult(
+        bool $failure,
+        string $path = '/foo',
+        array|null $allowedMethods = null,
+        string|null $name = null,
+        array $matchedParams = [],
+    ): RouteResult {
+        if ($failure) {
+            return RouteResult::fromRouteFailure($allowedMethods);
+        }
+
+        return RouteResult::fromRoute(new Route(
+            $path,
+            $this->createMock(MiddlewareInterface::class),
+            $allowedMethods,
+            $name,
+        ), $matchedParams);
+    }
+
     public function testWontLocateAnyConfigurationIfRouteIsUnknown(): void
     {
         $originUri  = $this->createMock(UriInterface::class);
@@ -44,11 +72,7 @@ final class ConfigurationLocatorTest extends TestCase
             ->method('createServerRequest')
             ->willReturn($request);
 
-        $routeResult = $this->createMock(RouteResult::class);
-        $routeResult
-            ->expects(self::any())
-            ->method('isFailure')
-            ->willReturn(true);
+        $routeResult = $this->generateRouteResult(true);
 
         $this->router
             ->expects(self::any())
@@ -86,23 +110,13 @@ final class ConfigurationLocatorTest extends TestCase
             ->with(RequestMethodInterface::METHOD_GET, $requestUri)
             ->willReturn($request);
 
-        $routeResult = $this->createMock(RouteResult::class);
-        $routeResult
-            ->expects(self::any())
-            ->method('isFailure')
-            ->willReturn(false);
+        $allowedMethods = [RequestMethodInterface::METHOD_GET];
+        $routeResult    = $this->generateRouteResult(false, '/', $allowedMethods);
 
         $this->router
             ->expects(self::any())
             ->method('match')
             ->willReturn($routeResult);
-
-        $allowedMethods = [RequestMethodInterface::METHOD_GET];
-
-        $routeResult
-            ->expects(self::once())
-            ->method('getAllowedMethods')
-            ->willReturn($allowedMethods);
 
         $routeConfiguration = $this->createMock(RouteConfigurationInterface::class);
 
@@ -148,21 +162,13 @@ final class ConfigurationLocatorTest extends TestCase
 
         $metadata = new CorsMetadata($originUri, $requestUri, $method);
 
-        $routeResult = $this->createMock(RouteResult::class);
-        $routeResult
-            ->expects(self::once())
-            ->method('isFailure')
-            ->willReturn(false);
-
-        $routeResult
-            ->expects(self::once())
-            ->method('getMatchedParams')
-            ->willReturn([RouteConfigurationInterface::PARAMETER_IDENTIFIER => []]);
-
-        $routeResult
-            ->expects(self::once())
-            ->method('getAllowedMethods')
-            ->willReturn([]);
+        $routeResult = $this->generateRouteResult(
+            false,
+            '/',
+            null,
+            'some-route',
+            [RouteConfigurationInterface::PARAMETER_IDENTIFIER => []],
+        );
 
         $routeConfigurationForProject = $this->createMock(RouteConfigurationInterface::class);
         $routeConfigurationForProject
@@ -246,41 +252,21 @@ final class ConfigurationLocatorTest extends TestCase
             )
             ->willReturn($request);
 
-        $matchingRouteResult = $this->createMock(RouteResult::class);
-        $matchingRouteResult
-            ->expects(self::any())
-            ->method('isFailure')
-            ->willReturn(false);
+        $matchingRouteResult = $this->generateRouteResult(false, '/', ['OPTIONS', 'HEAD']);
 
-        $matchingRouteResult
-            ->expects(self::once())
-            ->method('getAllowedMethods')
-            ->willReturn(['OPTIONS', 'HEAD']);
+        $failedRouteResult = $this->generateRouteResult(true);
 
-        $failedRouteResult = $this->createMock(RouteResult::class);
-        $failedRouteResult
-            ->expects(self::any())
-            ->method('isFailure')
-            ->willReturn(true);
-
-        $routeConfigurationParameters         = [
+        $routeConfigurationParameters = [
             RouteConfigurationInterface::PARAMETER_IDENTIFIER => [],
         ];
-        $matchingRouteResultWithConfiguration = $this->createMock(RouteResult::class);
-        $matchingRouteResultWithConfiguration
-            ->expects(self::any())
-            ->method('isFailure')
-            ->willReturn(false);
 
-        $matchingRouteResultWithConfiguration
-            ->expects(self::once())
-            ->method('getAllowedMethods')
-            ->willReturn(['POST']);
-
-        $matchingRouteResultWithConfiguration
-            ->expects(self::once())
-            ->method('getMatchedParams')
-            ->willReturn($routeConfigurationParameters);
+        $matchingRouteResultWithConfiguration = $this->generateRouteResult(
+            false,
+            '/',
+            ['POST'],
+            'whatever',
+            $routeConfigurationParameters,
+        );
 
         $routeMatches = new class (
             $failedRouteResult,
@@ -344,17 +330,7 @@ final class ConfigurationLocatorTest extends TestCase
         $method   = 'GET';
         $metadata = new CorsMetadata($originUri, $requestUri, $method);
 
-        $failedRouteResult = $this->createMock(RouteResult::class);
-        $failedRouteResult
-            ->expects(self::any())
-            ->method('isFailure')
-            ->willReturn(true);
-
-        $matchingExplicitRouteResult = $this->createMock(RouteResult::class);
-        $matchingExplicitRouteResult
-            ->expects(self::any())
-            ->method('isFailure')
-            ->willReturn(false);
+        $failedRouteResult = $this->generateRouteResult(true);
 
         $routeConfigurationParameters = [
             RouteConfigurationInterface::PARAMETER_IDENTIFIER => [
@@ -362,15 +338,13 @@ final class ConfigurationLocatorTest extends TestCase
             ],
         ];
 
-        $matchingExplicitRouteResult
-            ->expects(self::once())
-            ->method('getMatchedParams')
-            ->willReturn($routeConfigurationParameters);
-
-        $matchingExplicitRouteResult
-            ->expects(self::once())
-            ->method('getAllowedMethods')
-            ->willReturn(['POST']);
+        $matchingExplicitRouteResult = $this->generateRouteResult(
+            false,
+            '/',
+            ['POST'],
+            'foo',
+            $routeConfigurationParameters,
+        );
 
         $routeConfiguration = $this->createMock(RouteConfigurationInterface::class);
         $routeConfiguration
