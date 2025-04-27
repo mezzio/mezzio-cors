@@ -211,7 +211,7 @@ final class ConfigurationLocatorTest extends TestCase
 
             public function next(): RouteConfigurationInterface|false
             {
-                return array_shift($this->configurations);
+                return array_shift($this->configurations) ?? false;
             }
         };
 
@@ -283,7 +283,7 @@ final class ConfigurationLocatorTest extends TestCase
 
             public function next(): RouteResult|false
             {
-                return array_shift($this->routeResults);
+                return array_shift($this->routeResults) ?? false;
             }
         };
 
@@ -382,7 +382,7 @@ final class ConfigurationLocatorTest extends TestCase
 
             public function next(): RouteResult|false
             {
-                return array_shift($this->routeResults);
+                return array_shift($this->routeResults) ?? false;
             }
         };
 

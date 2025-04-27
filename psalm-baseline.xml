@@ -1,18 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
-  <file src="test/Middleware/CorsMiddlewareTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[varyHeaderProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/Service/CorsMetadataTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[allowedOrigins]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/Service/CorsTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[crossOriginProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-</files>
+<files psalm-version="6.10.1@f9fd6bc117e9ce1e854c2ed6777e7135aaa4966b"/>
