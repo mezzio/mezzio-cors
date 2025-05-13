@@ -151,7 +151,7 @@ final class CorsTest extends TestCase
             'http',
             'example.org',
         ];
-        yield'custom scheme' => [
+        yield 'custom scheme' => [
             'android',
             'example.org',
         ];
