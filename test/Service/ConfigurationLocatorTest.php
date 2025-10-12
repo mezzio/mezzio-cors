@@ -361,7 +361,7 @@ final class ConfigurationLocatorTest extends TestCase
         $this->routeConfigurationFactory
             ->expects(self::any())
             ->method('__invoke')
-            ->with(self::isType('array'))
+            ->with(self::isArray())
             ->willReturn($routeConfiguration);
 
         $routeConfiguration
