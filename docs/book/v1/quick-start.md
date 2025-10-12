@@ -10,7 +10,7 @@ Depending on the configuration style you've chosen for the project, the pipeline
 >
 > The `CorsMiddleware` **MUST** be added to the pipeline **before** the `RouteMiddleware`.
 
-More details about the `CorsMiddleware` can be found [here](middleware.md).
+More details about the `CorsMiddleware` [can be found here](middleware.md).
 
 ### Anonymous Function Pipeline
 
