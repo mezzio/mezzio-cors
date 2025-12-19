@@ -1,6 +1,6 @@
 # mezzio-cors
 
-[![Build Status](https://github.com/mezzio/mezzio-cors/workflows/Continuous%20Integration/badge.svg)](https://github.com/mezzio/mezzio-cors/actions?query=workflow%3A"Continuous+Integration")
+[![Build Status](https://github.com/mezzio/mezzio-cors/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/mezzio/mezzio-cors/actions/workflows/continuous-integration.yml)
 
 > ## 🇷🇺 Русским гражданам
 >
