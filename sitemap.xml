@@ -2,22 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.mezzio.dev/mezzio-cors/</loc>
-         <lastmod>2026-02-17</lastmod>
+         <lastmod>2026-03-06</lastmod>
     </url>
     <url>
          <loc>https://docs.mezzio.dev/mezzio-cors/v1/installation/</loc>
-         <lastmod>2026-02-17</lastmod>
+         <lastmod>2026-03-06</lastmod>
     </url>
     <url>
          <loc>https://docs.mezzio.dev/mezzio-cors/v1/intro/</loc>
-         <lastmod>2026-02-17</lastmod>
+         <lastmod>2026-03-06</lastmod>
     </url>
     <url>
          <loc>https://docs.mezzio.dev/mezzio-cors/v1/middleware/</loc>
-         <lastmod>2026-02-17</lastmod>
+         <lastmod>2026-03-06</lastmod>
     </url>
     <url>
          <loc>https://docs.mezzio.dev/mezzio-cors/v1/quick-start/</loc>
-         <lastmod>2026-02-17</lastmod>
+         <lastmod>2026-03-06</lastmod>
     </url>
 </urlset>
