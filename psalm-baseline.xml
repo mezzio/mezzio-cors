@@ -1,2 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.10.1@f9fd6bc117e9ce1e854c2ed6777e7135aaa4966b"/>
+<files psalm-version="6.20.10@7fc81490f861c801061836a9010603d2393bf8da">
+  <file src="src/Configuration/ConfigurationInterface.php">
+    <MissingClassConstType>
+      <code><![CDATA[ANY_ORIGIN               = '*']]></code>
+      <code><![CDATA[CONFIGURATION_IDENTIFIER = 'expressive.cors']]></code>
+      <code><![CDATA[PREFLIGHT_CACHE_DISABLED = '-1']]></code>
+    </MissingClassConstType>
+  </file>
+  <file src="src/Configuration/RouteConfigurationInterface.php">
+    <MissingClassConstType>
+      <code><![CDATA[PARAMETER_IDENTIFIER = 'cors']]></code>
+    </MissingClassConstType>
+  </file>
+</files>
