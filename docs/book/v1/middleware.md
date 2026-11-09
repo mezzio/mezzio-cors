@@ -34,13 +34,13 @@ configuration file like `cors.global.php` and/or add a route specific configurat
 
 On the project level, you can only configure the following Headers:
 
-| Configuration | Type | Header
-|:-------------|:-------------:|:-----:
-| `allowed_origins` | string[] | Access-Control-Allow-Origin
-| `allowed_headers` | string[] | Access-Control-Allow-Headers
-| `allowed_max_age` | string (TTL in seconds) | Access-Control-Max-Age
-| `credentials_allowed` | bool | Access-Control-Allow-Credentials
-| `exposed_headers` | string[] | Access-Control-Expose-Headers
+| Configuration         |          Type           |              Header              |
+|:----------------------|:-----------------------:|:--------------------------------:|
+| `allowed_origins`     |        string[]         |   Access-Control-Allow-Origin    |
+| `allowed_headers`     |        string[]         |   Access-Control-Allow-Headers   |
+| `allowed_max_age`     | string (TTL in seconds) |      Access-Control-Max-Age      |
+| `credentials_allowed` |          bool           | Access-Control-Allow-Credentials |
+| `exposed_headers`     |        string[]         |  Access-Control-Expose-Headers   |
 
 > ### `fnmatch` Format
 >
@@ -50,15 +50,15 @@ On the route level, you can configure all of the projects configuration settings
 and if the configuration of the route should either override the project
 configuration (default) or merge it.
 
-| Configuration | Type | Header
-|:------------- |:-------------:|:-----:
-| `overrides_project_configuration` | bool | -
-| `explicit` | bool | -
-| `allowed_origins` | string[] | Access-Control-Allow-Origin
-| `allowed_headers` | string[] | Access-Control-Allow-Headers
-| `allowed_max_age` | string (TTL in seconds) | Access-Control-Max-Age
-| `credentials_allowed` | bool | Access-Control-Allow-Credentials
-| `exposed_headers` | string[] | Access-Control-Expose-Headers
+| Configuration                     |          Type           |              Header              |
+|:----------------------------------|:-----------------------:|:--------------------------------:|
+| `overrides_project_configuration` |          bool           |                -                 |
+| `explicit`                        |          bool           |                -                 |
+| `allowed_origins`                 |        string[]         |   Access-Control-Allow-Origin    |
+| `allowed_headers`                 |        string[]         |   Access-Control-Allow-Headers   |
+| `allowed_max_age`                 | string (TTL in seconds) |      Access-Control-Max-Age      |
+| `credentials_allowed`             |          bool           | Access-Control-Allow-Credentials |
+| `exposed_headers`                 |        string[]         |  Access-Control-Expose-Headers   |
 
 The parameter `overrides_project_configuration` handles the way how the
 configuration is being merged. The default setting is `true` to ensure that a
@@ -164,14 +164,14 @@ return [
 Result of this configuration for the `CORS preflight` of `/foo` for the upcoming
 `GET` request will look like this:
 
-| Configuration | Parameter
-|:------------- |:-------------
-| `allowed_origins` | `['*//someotherdomain.com']`
-| `allowed_headers` | `['X-Specific-Header-For-Foo-Endpoint']`
-| `allowed_max_age` | `3600`
-| `exposed_headers` | `[]`
-| `credentials_allowed` | `false`
-| `allowed_methods` | `['GET']`
+| Configuration         | Parameter                                |
+|:----------------------|:-----------------------------------------|
+| `allowed_origins`     | `['*//someotherdomain.com']`             |
+| `allowed_headers`     | `['X-Specific-Header-For-Foo-Endpoint']` |
+| `allowed_max_age`     | `3600`                                   |
+| `exposed_headers`     | `[]`                                     |
+| `credentials_allowed` | `false`                                  |
+| `allowed_methods`     | `['GET']`                                |
 
 **Did you note the missing `DELETE`? This is because of the `explicit` flag! Also note the empty `exposed_headers` which is due to the project overriding (`overrides_project_configuration`) parameter.**
 
@@ -226,13 +226,13 @@ return [
 Result of this configuration for the `CORS preflight` of `/foo` for the upcoming
 `GET` request will look like this:
 
-| Configuration | Parameter
-|:-------------|:-------------
-| `allowed_origins` | `[RouteConfigurationInterface::ANY_ORIGIN]`
-| `allowed_headers` | `['X-Specific-Header-For-Foo-Endpoint', 'X-Project-Header']`
-| `allowed_max_age` | `7200`
-| `exposed_headers` | `['X-Some-Header']`
-| `credentials_allowed` | `true`
-| `allowed_methods` | `['GET', 'DELETE']`
+| Configuration         | Parameter                                                    |
+|:----------------------|:-------------------------------------------------------------|
+| `allowed_origins`     | `[RouteConfigurationInterface::ANY_ORIGIN]`                  |
+| `allowed_headers`     | `['X-Specific-Header-For-Foo-Endpoint', 'X-Project-Header']` |
+| `allowed_max_age`     | `7200`                                                       |
+| `exposed_headers`     | `['X-Some-Header']`                                          |
+| `credentials_allowed` | `true`                                                       |
+| `allowed_methods`     | `['GET', 'DELETE']`                                          |
 
 **Did you note the `ANY_ORIGIN` detail? This is, because if `ANY_ORIGIN` is allowed for an endpoint, we remove all other origins for that route.**
